@@ -550,7 +550,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x6e ./system/src/stm32f4-hal/stm32f4xx_hal_dfsdm.o
  .debug_macro   0x00000000      0x11e ./system/src/stm32f4-hal/stm32f4xx_hal_dfsdm.o
  .debug_line    0x00000000      0xa13 ./system/src/stm32f4-hal/stm32f4xx_hal_dfsdm.o
- .debug_str     0x00000000    0x6ffd4 ./system/src/stm32f4-hal/stm32f4xx_hal_dfsdm.o
+ .debug_str     0x00000000    0x6ffe7 ./system/src/stm32f4-hal/stm32f4xx_hal_dfsdm.o
  .comment       0x00000000       0x76 ./system/src/stm32f4-hal/stm32f4xx_hal_dfsdm.o
  .ARM.attributes
                 0x00000000       0x33 ./system/src/stm32f4-hal/stm32f4xx_hal_dfsdm.o
@@ -769,7 +769,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x6e ./system/src/stm32f4-hal/stm32f4xx_hal_flash.o
  .debug_macro   0x00000000      0x11e ./system/src/stm32f4-hal/stm32f4xx_hal_flash.o
  .debug_line    0x00000000      0xf84 ./system/src/stm32f4-hal/stm32f4xx_hal_flash.o
- .debug_str     0x00000000    0x70367 ./system/src/stm32f4-hal/stm32f4xx_hal_flash.o
+ .debug_str     0x00000000    0x7037a ./system/src/stm32f4-hal/stm32f4xx_hal_flash.o
  .comment       0x00000000       0x76 ./system/src/stm32f4-hal/stm32f4xx_hal_flash.o
  .debug_frame   0x00000000      0x18c ./system/src/stm32f4-hal/stm32f4xx_hal_flash.o
  .ARM.attributes
@@ -1440,7 +1440,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x6e ./system/src/stm32f4-hal/stm32f4xx_hal_iwdg.o
  .debug_macro   0x00000000      0x11e ./system/src/stm32f4-hal/stm32f4xx_hal_iwdg.o
  .debug_line    0x00000000      0xac4 ./system/src/stm32f4-hal/stm32f4xx_hal_iwdg.o
- .debug_str     0x00000000    0x700cf ./system/src/stm32f4-hal/stm32f4xx_hal_iwdg.o
+ .debug_str     0x00000000    0x700e2 ./system/src/stm32f4-hal/stm32f4xx_hal_iwdg.o
  .comment       0x00000000       0x76 ./system/src/stm32f4-hal/stm32f4xx_hal_iwdg.o
  .debug_frame   0x00000000       0x44 ./system/src/stm32f4-hal/stm32f4xx_hal_iwdg.o
  .ARM.attributes
@@ -1660,7 +1660,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x6e ./system/src/stm32f4-hal/stm32f4xx_hal_pwr.o
  .debug_macro   0x00000000      0x11e ./system/src/stm32f4-hal/stm32f4xx_hal_pwr.o
  .debug_line    0x00000000      0xdbb ./system/src/stm32f4-hal/stm32f4xx_hal_pwr.o
- .debug_str     0x00000000    0x7041b ./system/src/stm32f4-hal/stm32f4xx_hal_pwr.o
+ .debug_str     0x00000000    0x7042e ./system/src/stm32f4-hal/stm32f4xx_hal_pwr.o
  .comment       0x00000000       0x76 ./system/src/stm32f4-hal/stm32f4xx_hal_pwr.o
  .debug_frame   0x00000000      0x154 ./system/src/stm32f4-hal/stm32f4xx_hal_pwr.o
  .ARM.attributes
@@ -2119,7 +2119,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x6e ./system/src/stm32f4-hal/stm32f4xx_hal_uart.o
  .debug_macro   0x00000000      0x11e ./system/src/stm32f4-hal/stm32f4xx_hal_uart.o
  .debug_line    0x00000000     0x1f61 ./system/src/stm32f4-hal/stm32f4xx_hal_uart.o
- .debug_str     0x00000000    0x70896 ./system/src/stm32f4-hal/stm32f4xx_hal_uart.o
+ .debug_str     0x00000000    0x708a9 ./system/src/stm32f4-hal/stm32f4xx_hal_uart.o
  .comment       0x00000000       0x76 ./system/src/stm32f4-hal/stm32f4xx_hal_uart.o
  .debug_frame   0x00000000      0x3e8 ./system/src/stm32f4-hal/stm32f4xx_hal_uart.o
  .ARM.attributes
@@ -2218,7 +2218,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x35 ./system/src/newlib/_cxx.o
  .debug_macro   0x00000000      0x51a ./system/src/newlib/_cxx.o
  .debug_line    0x00000000      0x528 ./system/src/newlib/_cxx.o
- .debug_str     0x00000000     0x9ab5 ./system/src/newlib/_cxx.o
+ .debug_str     0x00000000     0x9ac8 ./system/src/newlib/_cxx.o
  .comment       0x00000000       0x76 ./system/src/newlib/_cxx.o
  .debug_frame   0x00000000       0x40 ./system/src/newlib/_cxx.o
  .ARM.attributes
@@ -3160,7 +3160,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x6e ./system/src/cortexm/_reset_hardware.o
  .debug_macro   0x00000000      0x11e ./system/src/cortexm/_reset_hardware.o
  .debug_line    0x00000000      0xa7d ./system/src/cortexm/_reset_hardware.o
- .debug_str     0x00000000    0x70079 ./system/src/cortexm/_reset_hardware.o
+ .debug_str     0x00000000    0x7008c ./system/src/cortexm/_reset_hardware.o
  .comment       0x00000000       0x76 ./system/src/cortexm/_reset_hardware.o
  .debug_frame   0x00000000       0x20 ./system/src/cortexm/_reset_hardware.o
  .ARM.attributes
@@ -3714,7 +3714,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x6e ./src/BlinkLed.o
  .debug_macro   0x00000000      0x11e ./src/BlinkLed.o
  .debug_line    0x00000000      0xb96 ./src/BlinkLed.o
- .debug_str     0x00000000    0x705e8 ./src/BlinkLed.o
+ .debug_str     0x00000000    0x705fb ./src/BlinkLed.o
  .comment       0x00000000       0x76 ./src/BlinkLed.o
  .debug_frame   0x00000000       0x8c ./src/BlinkLed.o
  .ARM.attributes
@@ -4075,7 +4075,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x11 ./src/_write.o
  .debug_macro   0x00000000      0xaa2 ./src/_write.o
  .debug_line    0x00000000       0x30 ./src/_write.o
- .debug_str     0x00000000     0x2ddd ./src/_write.o
+ .debug_str     0x00000000     0x2df0 ./src/_write.o
  .comment       0x00000000       0x76 ./src/_write.o
  .ARM.attributes
                 0x00000000       0x33 ./src/_write.o
@@ -4560,8 +4560,6 @@ Discarded input sections
  .text          0x00000000        0x0 ./src/main.o
  .data          0x00000000        0x0 ./src/main.o
  .bss           0x00000000        0x0 ./src/main.o
- .text._Z4testv
-                0x00000000       0x44 ./src/main.o
  .bss.a         0x00000000        0x4 ./src/main.o
  .bss.color     0x00000000        0x4 ./src/main.o
  .bss.gest_evt_old
@@ -5031,7 +5029,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x35 ./src/uart.o
  .debug_macro   0x00000000      0x51a ./src/uart.o
  .debug_line    0x00000000      0xb1d ./src/uart.o
- .debug_str     0x00000000    0x71968 ./src/uart.o
+ .debug_str     0x00000000    0x7197b ./src/uart.o
  .comment       0x00000000       0x76 ./src/uart.o
  .debug_frame   0x00000000       0x28 ./src/uart.o
  .ARM.attributes
@@ -5906,7 +5904,7 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x8d0
+.debug_aranges  0x00000000      0x8c8
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0xc0 ./system/src/stm32f4-hal/stm32f4xx_hal.o
@@ -5949,14 +5947,14 @@ END GROUP
  .debug_aranges
                 0x00000820       0x40 ./src/i2c.o
  .debug_aranges
-                0x00000860       0x38 ./src/main.o
+                0x00000860       0x30 ./src/main.o
  .debug_aranges
-                0x00000898       0x38 ./src/stm32f4xx_hal_msp.o
+                0x00000890       0x38 ./src/stm32f4xx_hal_msp.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000    0x17843
+.debug_info     0x00000000    0x1775b
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000     0x1192 ./system/src/stm32f4-hal/stm32f4xx_hal.o
  .debug_info    0x00001192     0x1aab ./system/src/stm32f4-hal/stm32f4xx_hal_cortex.o
@@ -5978,8 +5976,8 @@ END GROUP
  .debug_info    0x0001177a      0xe04 ./src/_initialize_hardware.o
  .debug_info    0x0001257e     0x150e ./src/gesture.o
  .debug_info    0x00013a8c     0x15db ./src/i2c.o
- .debug_info    0x00015067     0x1e45 ./src/main.o
- .debug_info    0x00016eac      0x997 ./src/stm32f4xx_hal_msp.o
+ .debug_info    0x00015067     0x1d5d ./src/main.o
+ .debug_info    0x00016dc4      0x997 ./src/stm32f4xx_hal_msp.o
 
 .debug_abbrev   0x00000000     0x3e17
  *(.debug_abbrev)
@@ -6006,7 +6004,7 @@ END GROUP
  .debug_abbrev  0x00003776      0x4c8 ./src/main.o
  .debug_abbrev  0x00003c3e      0x1d9 ./src/stm32f4xx_hal_msp.o
 
-.debug_line     0x00000000    0x132bb
+.debug_line     0x00000000    0x13271
  *(.debug_line)
  .debug_line    0x00000000      0xca7 ./system/src/stm32f4-hal/stm32f4xx_hal.o
  .debug_line    0x00000ca7      0xfdd ./system/src/stm32f4-hal/stm32f4xx_hal_cortex.o
@@ -6028,10 +6026,10 @@ END GROUP
  .debug_line    0x0000e78a      0xaba ./src/_initialize_hardware.o
  .debug_line    0x0000f244     0x19f6 ./src/gesture.o
  .debug_line    0x00010c3a      0xb8e ./src/i2c.o
- .debug_line    0x000117c8     0x10a9 ./src/main.o
- .debug_line    0x00012871      0xa4a ./src/stm32f4xx_hal_msp.o
+ .debug_line    0x000117c8     0x105f ./src/main.o
+ .debug_line    0x00012827      0xa4a ./src/stm32f4xx_hal_msp.o
 
-.debug_frame    0x00000000     0x19f4
+.debug_frame    0x00000000     0x19d8
  *(.debug_frame)
  .debug_frame   0x00000000      0x188 ./system/src/stm32f4-hal/stm32f4xx_hal.o
  .debug_frame   0x00000188      0x17c ./system/src/stm32f4-hal/stm32f4xx_hal_cortex.o
@@ -6053,68 +6051,68 @@ END GROUP
  .debug_frame   0x00001234       0x4c ./src/_initialize_hardware.o
  .debug_frame   0x00001280      0x294 ./src/gesture.o
  .debug_frame   0x00001514       0x9c ./src/i2c.o
- .debug_frame   0x000015b0       0x78 ./src/main.o
- .debug_frame   0x00001628       0x50 ./src/stm32f4xx_hal_msp.o
- .debug_frame   0x00001678       0x20 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-errno.o)
- .debug_frame   0x00001698       0x4c c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-vsnprintf.o)
- .debug_frame   0x000016e4       0x90 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-nano-svfprintf.o)
- .debug_frame   0x00001774       0x60 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-nano-vfprintf_i.o)
- .debug_frame   0x000017d4       0x28 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-memcpy-stub.o)
- .debug_frame   0x000017fc       0x28 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-memmove.o)
- .debug_frame   0x00001824       0x38 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-nano-freer.o)
- .debug_frame   0x0000185c       0x30 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-nano-mallocr.o)
- .debug_frame   0x0000188c       0x3c c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-nano-reallocr.o)
- .debug_frame   0x000018c8       0x2c c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-sbrkr.o)
- .debug_frame   0x000018f4       0x30 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-mlock.o)
- .debug_frame   0x00001924       0x20 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-nano-msizer.o)
- .debug_frame   0x00001944       0xb0 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-lock.o)
+ .debug_frame   0x000015b0       0x5c ./src/main.o
+ .debug_frame   0x0000160c       0x50 ./src/stm32f4xx_hal_msp.o
+ .debug_frame   0x0000165c       0x20 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-errno.o)
+ .debug_frame   0x0000167c       0x4c c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-vsnprintf.o)
+ .debug_frame   0x000016c8       0x90 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-nano-svfprintf.o)
+ .debug_frame   0x00001758       0x60 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-nano-vfprintf_i.o)
+ .debug_frame   0x000017b8       0x28 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x000017e0       0x28 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-memmove.o)
+ .debug_frame   0x00001808       0x38 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-nano-freer.o)
+ .debug_frame   0x00001840       0x30 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-nano-mallocr.o)
+ .debug_frame   0x00001870       0x3c c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-nano-reallocr.o)
+ .debug_frame   0x000018ac       0x2c c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-sbrkr.o)
+ .debug_frame   0x000018d8       0x30 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-mlock.o)
+ .debug_frame   0x00001908       0x20 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-nano-msizer.o)
+ .debug_frame   0x00001928       0xb0 c:/program files (x86)/gnu tools arm embedded/8 2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg_nano.a(lib_a-lock.o)
 
-.debug_str      0x00000000    0x77a47
+.debug_str      0x00000000    0x77a4a
  *(.debug_str)
- .debug_str     0x00000000    0x705b6 ./system/src/stm32f4-hal/stm32f4xx_hal.o
-                              0x70a2c (size before relaxing)
- .debug_str     0x000705b6      0x37b ./system/src/stm32f4-hal/stm32f4xx_hal_cortex.o
-                              0x70896 (size before relaxing)
- .debug_str     0x00070931      0x2ab ./system/src/stm32f4-hal/stm32f4xx_hal_gpio.o
-                              0x70416 (size before relaxing)
- .debug_str     0x00070bdc      0xeb8 ./system/src/stm32f4-hal/stm32f4xx_hal_i2c.o
-                              0x70fec (size before relaxing)
- .debug_str     0x00071a94      0x37e ./system/src/stm32f4-hal/stm32f4xx_hal_rcc.o
-                              0x705a4 (size before relaxing)
- .debug_str     0x00071e12     0x10ff ./system/src/newlib/_exit.o
-                               0x7e89 (size before relaxing)
- .debug_str     0x00072f11      0x4ed ./system/src/newlib/_sbrk.o
-                               0x723b (size before relaxing)
- .debug_str     0x000733fe      0x2c6 ./system/src/newlib/_startup.o
-                               0x69dc (size before relaxing)
- .debug_str     0x000736c4      0xf90 ./system/src/newlib/_syscalls.o
-                               0x822a (size before relaxing)
- .debug_str     0x00074654       0xd0 ./system/src/newlib/assert.o
-                               0x898e (size before relaxing)
- .debug_str     0x00074724      0x176 ./system/src/diag/Trace.o
-                               0x8601 (size before relaxing)
- .debug_str     0x0007489a      0x37b ./system/src/diag/trace_impl.o
-                              0x71321 (size before relaxing)
- .debug_str     0x00074c15       0x5e ./system/src/cortexm/_initialize_hardware.o
-                              0x700b3 (size before relaxing)
- .debug_str     0x00074c73      0x19d ./system/src/cortexm/exception_handlers.o
-                              0x714ab (size before relaxing)
- .debug_str     0x00074e10       0x46 ./system/src/cmsis/system_stm32f4xx.o
-                              0x70194 (size before relaxing)
- .debug_str     0x00074e56       0x59 ./system/src/cmsis/vectors_stm32f411xe.o
-                               0x3923 (size before relaxing)
- .debug_str     0x00074eaf      0x70c ./src/Timer.o
-                              0x70399 (size before relaxing)
- .debug_str     0x000755bb       0x31 ./src/_initialize_hardware.o
-                              0x702aa (size before relaxing)
- .debug_str     0x000755ec      0x828 ./src/gesture.o
-                              0x70c02 (size before relaxing)
- .debug_str     0x00075e14      0x2b2 ./src/i2c.o
-                              0x71d07 (size before relaxing)
- .debug_str     0x000760c6     0x1944 ./src/main.o
-                              0x73429 (size before relaxing)
- .debug_str     0x00077a0a       0x3d ./src/stm32f4xx_hal_msp.o
-                              0x6fffb (size before relaxing)
+ .debug_str     0x00000000    0x705c9 ./system/src/stm32f4-hal/stm32f4xx_hal.o
+                              0x70a3f (size before relaxing)
+ .debug_str     0x000705c9      0x384 ./system/src/stm32f4-hal/stm32f4xx_hal_cortex.o
+                              0x708a9 (size before relaxing)
+ .debug_str     0x0007094d      0x2ab ./system/src/stm32f4-hal/stm32f4xx_hal_gpio.o
+                              0x70429 (size before relaxing)
+ .debug_str     0x00070bf8      0xeb8 ./system/src/stm32f4-hal/stm32f4xx_hal_i2c.o
+                              0x70fff (size before relaxing)
+ .debug_str     0x00071ab0      0x37e ./system/src/stm32f4-hal/stm32f4xx_hal_rcc.o
+                              0x705b7 (size before relaxing)
+ .debug_str     0x00071e2e     0x10ff ./system/src/newlib/_exit.o
+                               0x7e9c (size before relaxing)
+ .debug_str     0x00072f2d      0x4ed ./system/src/newlib/_sbrk.o
+                               0x724e (size before relaxing)
+ .debug_str     0x0007341a      0x2c6 ./system/src/newlib/_startup.o
+                               0x69ef (size before relaxing)
+ .debug_str     0x000736e0      0xf90 ./system/src/newlib/_syscalls.o
+                               0x823d (size before relaxing)
+ .debug_str     0x00074670       0xd0 ./system/src/newlib/assert.o
+                               0x89a1 (size before relaxing)
+ .debug_str     0x00074740      0x176 ./system/src/diag/Trace.o
+                               0x8614 (size before relaxing)
+ .debug_str     0x000748b6      0x37b ./system/src/diag/trace_impl.o
+                              0x71334 (size before relaxing)
+ .debug_str     0x00074c31       0x5e ./system/src/cortexm/_initialize_hardware.o
+                              0x700c6 (size before relaxing)
+ .debug_str     0x00074c8f      0x19d ./system/src/cortexm/exception_handlers.o
+                              0x714be (size before relaxing)
+ .debug_str     0x00074e2c       0x46 ./system/src/cmsis/system_stm32f4xx.o
+                              0x701a7 (size before relaxing)
+ .debug_str     0x00074e72       0x59 ./system/src/cmsis/vectors_stm32f411xe.o
+                               0x3936 (size before relaxing)
+ .debug_str     0x00074ecb      0x70c ./src/Timer.o
+                              0x703ac (size before relaxing)
+ .debug_str     0x000755d7       0x31 ./src/_initialize_hardware.o
+                              0x702bd (size before relaxing)
+ .debug_str     0x00075608      0x828 ./src/gesture.o
+                              0x70c15 (size before relaxing)
+ .debug_str     0x00075e30      0x2b2 ./src/i2c.o
+                              0x71d1a (size before relaxing)
+ .debug_str     0x000760e2     0x192b ./src/main.o
+                              0x733bf (size before relaxing)
+ .debug_str     0x00077a0d       0x3d ./src/stm32f4xx_hal_msp.o
+                              0x7000e (size before relaxing)
 
 .debug_loc      0x00000000     0x66eb
  *(.debug_loc)
@@ -6152,7 +6150,7 @@ END GROUP
  *(.debug_varnames)
 OUTPUT(stm32f411.elf elf32-littlearm)
 
-.debug_ranges   0x00000000      0x848
+.debug_ranges   0x00000000      0x840
  .debug_ranges  0x00000000       0xb0 ./system/src/stm32f4-hal/stm32f4xx_hal.o
  .debug_ranges  0x000000b0       0xe8 ./system/src/stm32f4-hal/stm32f4xx_hal_cortex.o
  .debug_ranges  0x00000198       0x48 ./system/src/stm32f4-hal/stm32f4xx_hal_gpio.o
@@ -6173,8 +6171,8 @@ OUTPUT(stm32f411.elf elf32-littlearm)
  .debug_ranges  0x000006d8       0x18 ./src/_initialize_hardware.o
  .debug_ranges  0x000006f0       0xd8 ./src/gesture.o
  .debug_ranges  0x000007c8       0x30 ./src/i2c.o
- .debug_ranges  0x000007f8       0x28 ./src/main.o
- .debug_ranges  0x00000820       0x28 ./src/stm32f4xx_hal_msp.o
+ .debug_ranges  0x000007f8       0x20 ./src/main.o
+ .debug_ranges  0x00000818       0x28 ./src/stm32f4xx_hal_msp.o
 
 .debug_macro    0x00000000    0x1700d
  .debug_macro   0x00000000      0x532 ./system/src/stm32f4-hal/stm32f4xx_hal.o

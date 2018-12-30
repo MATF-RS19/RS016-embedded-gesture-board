@@ -1,11 +1,31 @@
-14:26:26 **** Incremental Build of configuration Debug for project stm32f411 ****
+15:38:22 **** Incremental Build of configuration Debug for project stm32f411 ****
 make all 
-Invoking: GNU ARM Cross Print Size
-arm-none-eabi-size --format=berkeley "stm32f411.elf"
-   text	   data	    bss	    dec	    hex	filename
-  13167	    160	    848	  14175	   375f	stm32f411.elf
-Finished building: stm32f411.siz
+Building file: ../src/gesture.cpp
+Invoking: GNU ARM Cross C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Og -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -ffreestanding -fno-move-loop-invariants -Wall -Wextra  -g3 -DDEBUG -DUSE_FULL_ASSERT -DTRACE -DOS_USE_TRACE_SEMIHOSTING_DEBUG -DSTM32F411xE -DUSE_HAL_DRIVER -DHSE_VALUE=8000000 -I"../include" -I"../system/include" -I"../system/include/cmsis" -I"../system/include/stm32f4-hal" -std=gnu++11 -fabi-version=0 -fno-exceptions -fno-rtti -fno-use-cxa-atexit -fno-threadsafe-statics -MMD -MP -MF"src/gesture.d" -MT"src/gesture.o" -c -o "src/gesture.o" "../src/gesture.cpp"
+../src/gesture.cpp: In function 'void getFWInfo()':
+../src/gesture.cpp:774:40: warning: array subscript has type 'char' [-Wchar-subscripts]
+      mGesture.FWVersionInfo.FwVersion[i] = raw_data[i+12];
+                                        ^
+Finished building: ../src/gesture.cpp
  
+Building file: ../src/main.cpp
+Invoking: GNU ARM Cross C++ Compiler
+arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Og -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -ffreestanding -fno-move-loop-invariants -Wall -Wextra  -g3 -DDEBUG -DUSE_FULL_ASSERT -DTRACE -DOS_USE_TRACE_SEMIHOSTING_DEBUG -DSTM32F411xE -DUSE_HAL_DRIVER -DHSE_VALUE=8000000 -I"../include" -I"../system/include" -I"../system/include/cmsis" -I"../system/include/stm32f4-hal" -std=gnu++11 -fabi-version=0 -fno-exceptions -fno-rtti -fno-use-cxa-atexit -fno-threadsafe-statics -MMD -MP -MF"src/main.d" -MT"src/main.o" -c -o "src/main.o" "../src/main.cpp"
+Finished building: ../src/main.cpp
+ 
+Building target: stm32f411.elf
+Invoking: GNU ARM Cross C++ Linker
+arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -mfloat-abi=soft -Og -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -ffreestanding -fno-move-loop-invariants -Wall -Wextra  -g3 -T mem.ld -T libs.ld -T sections.ld -nostartfiles -Xlinker --gc-sections -L"../ldscripts" -Wl,-Map,"stm32f411.map" --specs=nano.specs -o "stm32f411.elf"  ./system/src/stm32f4-hal/stm32f4xx_hal.o ./system/src/stm32f4-hal/stm32f4xx_hal_cortex.o ./system/src/stm32f4-hal/stm32f4xx_hal_dfsdm.o ./system/src/stm32f4-hal/stm32f4xx_hal_flash.o ./system/src/stm32f4-hal/stm32f4xx_hal_gpio.o ./system/src/stm32f4-hal/stm32f4xx_hal_i2c.o ./system/src/stm32f4-hal/stm32f4xx_hal_iwdg.o ./system/src/stm32f4-hal/stm32f4xx_hal_pwr.o ./system/src/stm32f4-hal/stm32f4xx_hal_rcc.o ./system/src/stm32f4-hal/stm32f4xx_hal_uart.o  ./system/src/newlib/_cxx.o ./system/src/newlib/_exit.o ./system/src/newlib/_sbrk.o ./system/src/newlib/_startup.o ./system/src/newlib/_syscalls.o ./system/src/newlib/assert.o  ./system/src/diag/Trace.o ./system/src/diag/trace_impl.o  ./system/src/cortexm/_initialize_hardware.o ./system/src/cortexm/_reset_hardware.o ./system/src/cortexm/exception_handlers.o  ./system/src/cmsis/system_stm32f4xx.o ./system/src/cmsis/vectors_stm32f411xe.o  ./src/BlinkLed.o ./src/Timer.o ./src/_initialize_hardware.o ./src/_write.o ./src/gesture.o ./src/i2c.o ./src/main.o ./src/stm32f4xx_hal_msp.o ./src/uart.o   
+Finished building target: stm32f411.elf
+ 
+Invoking: GNU ARM Cross Create Flash Image
+arm-none-eabi-objcopy -O ihex "stm32f411.elf"  "stm32f411.hex"
+arm-none-eabi-objcopy: stm32f411.hex 64-bit address 0x4b4fa308000000 out of range for Intel Hex file
+arm-none-eabi-objcopy:stm32f411.hex: bad value
+makefile:69: recipe for target 'stm32f411.hex' failed
+make: *** [stm32f411.hex] Error 1
+"make all" terminated with exit code 2. Build might be incomplete.
 
-14:26:27 Build Finished. 0 errors, 0 warnings. (took 541ms)
+15:38:28 Build Failed. 2 errors, 1 warnings. (took 5s.815ms)
 

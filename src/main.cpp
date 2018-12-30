@@ -9,8 +9,6 @@
 #include "gesture.h"
 #include "gestureDefs.h"
 
-
-
 unsigned int touch_evt, touch_evt_old;
 char gest_evt, gest_evt_old, gest_class, gest_recognition, gest_edge_flick;
 unsigned int color, flag, clk, cclk;
@@ -30,8 +28,6 @@ namespace {
       - BLINK_ON_TICKS;
 }
 
-
-
 // ----- main() ---------------------------------------------------------------
 
 // Sample pragmas to cope with warnings. Please note the related line at
@@ -48,30 +44,17 @@ void initPins() {
 	HAL_Init();
 	__GPIOA_CLK_ENABLE();
 	__GPIOC_CLK_ENABLE();
+	__GPIOD_CLK_ENABLE();
 	setRSTPinToOutput();
 	setRDYPinToInput();
 }
 
-void test()
-{
-	GPIO_InitTypeDef gpioInitStruct;
-	HAL_Init();
-	//__GPIOA_CLK_ENABLE();
-	__HAL_RCC_GPIOA_CLK_ENABLE();
-	//HAL_GPIO_StructInit(&gpioInitStruct);
-	gpioInitStruct.Pin = GPIO_PIN_7;
-	gpioInitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	gpioInitStruct.Speed = GPIO_SPEED_FAST;
-	gpioInitStruct.Pull = GPIO_NOPULL;
-	HAL_GPIO_Init(GPIOA, &gpioInitStruct);
-}
-int a;
 uint32_t portRead = 0;
 int
 main(int argc, char* argv[]) {
-  //initUart();
-	//test();
+
   initPins();
+  //initUart();
   setRSTpin(0);
   initI2c();
   trace_puts("Hello ARM World!");
@@ -119,20 +102,6 @@ main(int argc, char* argv[]) {
 
 
 void Display_Values() {
-	/*
-    //Position X
-    TFT_Rectangle(25,10,80,25);
-    WordToStr(mGesture.DataOut.Position.X,txt);
-    TFT_WRITE_TEXT(txt,25,10);
-    //Position Y
-    TFT_Rectangle(25,30,80,45);
-    WordToStr(mGesture.DataOut.Position.Y,txt);
-    TFT_WRITE_TEXT(txt,25,30);
-    //Position Z
-    TFT_Rectangle(25,50,80,65);
-    WordToStr(mGesture.DataOut.Position.Z,txt);
-    TFT_WRITE_TEXT(txt,25,50);
-    */
 
 	//trace_printf("%u \r\n",mGesture.DataOut.Position.X);
 
@@ -142,25 +111,26 @@ void Display_Values() {
       //TFT_Rectangle(80,60,320,240);
       if(touch_evt < 0x00000201) {
         flag=1;
-        if(touch_evt & TouchSouth) trace_printf("touch south\r\n");//TFT_WRITE_TEXT("TOUCH SOUTH",120,90);
-        if(touch_evt & TouchWest) trace_printf("touch west\r\n"); //TFT_WRITE_TEXT("TOUCH WEST",120,90);
-        if(touch_evt & TouchNorth) trace_printf("touch north\r\n"); //TFT_WRITE_TEXT("TOUCH NORTH",120,90);
-        if(touch_evt & TouchEast) trace_printf("touch east\r\n"); //TFT_WRITE_TEXT("TOUCH EAST",120,90);
+/*
+        if(touch_evt & TouchSouth) trace_printf("touch south\r\n");
+        if(touch_evt & TouchWest) trace_printf("touch west\r\n");
+        if(touch_evt & TouchNorth) trace_printf("touch north\r\n");
+        if(touch_evt & TouchEast) trace_printf("touch east\r\n");
         //if(touch_evt & TouchSouth) TFT_WRITE_TEXT("TOUCH SOUTH",120,90);
-        if(touch_evt & TouchCenter) trace_printf("touch center\r\n"); //TFT_WRITE_TEXT("TOUCH CENTER",120,90);
-        if(touch_evt & TapSouth) trace_printf("tap south\r\n"); //TFT_WRITE_TEXT("TAP SOUTH",120,90);
-        if(touch_evt & TapWest) trace_printf("tap west\r\n"); //TFT_WRITE_TEXT("TAP WEST",120,90);
-        if(touch_evt & TapNorth) trace_printf("tap north\r\n"); //TFT_WRITE_TEXT("TAP NORTH",120,90);
-        if(touch_evt & TapEast) trace_printf("tap east\r\n"); //TFT_WRITE_TEXT("TAP EAST",120,90);
-        //if(touch_evt & TapSouth) TFT_WRITE_TEXT("TAP SOUTH",120,90);
-        if(touch_evt & TapCenter) trace_printf("tap center\r\n"); //TFT_WRITE_TEXT("TAP CENTER",120,90);
+        if(touch_evt & TouchCenter) trace_printf("touch center\r\n");
+*/
+        if(touch_evt & TapSouth) trace_printf("tap south\r\n");
+        if(touch_evt & TapWest) trace_printf("tap west\r\n");
+        if(touch_evt & TapNorth) trace_printf("tap north\r\n");
+        if(touch_evt & TapEast) trace_printf("tap east\r\n");
+        if(touch_evt & TapCenter) trace_printf("tap center\r\n");
+
       }else{
-        if(touch_evt & DoubleTapSouth) trace_printf("double tap south\r\n"); //TFT_WRITE_TEXT("DOUBLE TAP SOUTH",120,90);
-        if(touch_evt & DoubleTapWest) trace_printf("double tap west\r\n"); //TFT_WRITE_TEXT("DOUBLE TAP WEST",120,90);
-        if(touch_evt & DoubleTapNorth) trace_printf("double tap north\r\n"); //TFT_WRITE_TEXT("DOUBLE TAP NORTH",120,90);
-        if(touch_evt & DoubleTapEast) trace_printf("double tap east\r\n"); //TFT_WRITE_TEXT("DOUBLE TAP EAST",120,90);
-       // if(touch_evt & DoubleTapSouth) trace_printf("double ta\r\n")TFT_WRITE_TEXT("DOUBLE TAP SOUTH",120,90);
-        if(touch_evt & DoubleTapCenter) trace_printf("double tap center\r\n"); //TFT_WRITE_TEXT("DOUBLE TAP CENTER",120,90);
+        if(touch_evt & DoubleTapSouth) trace_printf("double tap south\r\n");
+        if(touch_evt & DoubleTapWest) trace_printf("double tap west\r\n");
+        if(touch_evt & DoubleTapNorth) trace_printf("double tap north\r\n");
+        if(touch_evt & DoubleTapEast) trace_printf("double tap east\r\n");
+        if(touch_evt & DoubleTapCenter) trace_printf("double tap center\r\n");
       }
       touch_evt_old = touch_evt;
     }
@@ -177,29 +147,23 @@ void Display_Values() {
          //TFT_Rectangle(80,60,320,240);
           switch (gest_evt) {
             case 1:
-             // TFT_Image(90,60, icon_recycle_bin_bmp, 1);
-              trace_printf("GARBAGE\r\n");
-			  //TFT_WRITE_TEXT("GARBAGE",90,200);                                    // Unprocessed gestures are defined as "garbage"
+
+              trace_printf("GARBAGE\r\n");  // Unprocessed gestures are defined as "garbage"
               break;
             case 2:
-              //TFT_Image(90,60, icon_right_bmp, 1);
+
               trace_printf("flick left to right\r\n");
-			  //TFT_WRITE_TEXT("FLICK LEFT TO RIGHT",90,200);
               break;
             case 3:
-              //TFT_Image(90,60, icon_left_bmp, 1);
+
              trace_printf("flick right to left\r\n");
-			 //TFT_WRITE_TEXT("FLICK RIGHT TO LEFT",90,200);
               break;
             case 4:
-             // TFT_Image(90,60, icon_up_bmp, 1);
+
               trace_printf("flick up\r\n");
-			 // TFT_WRITE_TEXT("FLICK UP",90,200);
               break;
             case 5:
-              //TFT_Image(90,60, icon_down_bmp, 1);
               trace_printf("flick down\r\n");
-			  //TFT_WRITE_TEXT("FLICK DOWN",90,200);
               break;
           }
 
@@ -209,62 +173,47 @@ void Display_Values() {
     //Air Wheel info
      if (mGesture.DataOut.AirWheelInfo !=0) {
       if (flag!=3) {                                                                     // check if the air wheel has been toggled the first time
-       //TFT_Rectangle(80,60,320,240);                                                     // if so, display the circle image on TFT
+                                                            // if so, display the circle image on TFT
        if (mGesture.DataOut.AirWheelInfo > OLDAirWheelInfo)                              // if the airwheel counter increments,
-       { clk=1;
-       //TFT_Image(90,60, icon_rotate_cw_bmp, 1);
+       {
+    	 clk=1;
          trace_printf("Clockwise\r\n");
-		 //TFT_WRITE_TEXT("Clockwise" ,90,200);                                           // it is a clockwise rotation
+		                                            // it is a clockwise rotation
          }
        else if  (mGesture.DataOut.AirWheelInfo < OLDAirWheelInfo)                       // if it decrements,
-       { cclk=1;
-        //TFT_Image(90,60, icon_rotate_ccw_bmp, 1);
-        trace_printf("Counter-Clockwise\r\n");
-		// TFT_WRITE_TEXT("Counter-Clockwise" ,90,200);                                   // it is counter-clokwise
-         }
-        // LongWordToStr(mGesture.DataOut.AirWheelInfo,txt);
-        //TFT_Rectangle(230,10,360,30);
-		// TFT_WRITE_TEXT(txt,240,10);                                                   // print out the airwheel counter info
+       {
+    	  cclk=1;
+
+    	  trace_printf("Counter-Clockwise\r\n");
+		                                   // it is counter-clokwise
+       }
+                                                    // print out the airwheel counter info
          flag=3;
        }
 
        else if (flag==3) {                                                            // if the previous gesture is already the airwheel
         if ((clk==1) & (mGesture.DataOut.AirWheelInfo > OLDAirWheelInfo))             // if the rotation was clockwise and now is incrementing,
         {
-         // LongWordToStr(mGesture.DataOut.AirWheelInfo,txt);                           // just update the airwheel counter
-        // TFT_Rectangle(230,10,360,30);
-        // TFT_WRITE_TEXT(txt,240,10);
+
         }
 
         else if  ((clk==1) & (mGesture.DataOut.AirWheelInfo < OLDAirWheelInfo)) {    // if the rotation was clockwise and now is decrementing,
           cclk=1;                                                                    // print out counter-clokwise, and update airwheel info
           clk=0;
-          //TFT_Rectangle(80,60,320,240);
-          //TFT_Image(90,60, icon_rotate_ccw_bmp, 1);
-          trace_printf("counter-clockwise\r\n");
-		  //TFT_WRITE_TEXT("Counter-Clockwise" ,90,200);
 
-         // LongWordToStr(mGesture.DataOut.AirWheelInfo,txt);
-         // TFT_Rectangle(230,10,360,30);
-         // TFT_WRITE_TEXT(txt,240,10);
+          trace_printf("counter-clockwise\r\n");
         }
 
         else if ((cclk==1) & (mGesture.DataOut.AirWheelInfo < OLDAirWheelInfo)) {   //if the rotation was counter-clokwise and now is decrementing,
-         // LongWordToStr(mGesture.DataOut.AirWheelInfo,txt);                         // just update the airwheel counter
-         //TFT_Rectangle(230,10,360,30);
-         //TFT_WRITE_TEXT(txt,240,10);
+
         }
 
         else if ((cclk==1) & (mGesture.DataOut.AirWheelInfo > OLDAirWheelInfo)) {   //if the rotation was counter-clockwise and now is incrementing,
           cclk=0;                                                                   // print out clockwise, and update airwheel counter info
           clk=1;
-          // TFT_Rectangle(80,60,320,240);
-          // TFT_Image(90,60, icon_rotate_cw_bmp, 1);
+
          trace_printf("Clockwise\r\n");
-		 //TFT_WRITE_TEXT("Clockwise" ,90,200);
-         // LongWordToStr(mGesture.DataOut.AirWheelInfo,txt);
-         // TFT_Rectangle(230,10,360,30);
-         // TFT_WRITE_TEXT(txt,240,10);
+
         }
        }
 
