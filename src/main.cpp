@@ -49,7 +49,6 @@ void initPins() {
 	setRDYPinToInput();
 }
 
-uint32_t portRead = 0;
 int
 main(int argc, char* argv[]) {
 
@@ -101,6 +100,67 @@ main(int argc, char* argv[]) {
 }
 
 
+void gestureDisplayValues()
+{
+	touch_evt = (unsigned int) mGesture.DataOut.TouchInfo & 0xFFFF;
+    if ((touch_evt != 0) && (touch_evt != touch_evt_old))
+    {
+
+    	if(touch_evt < 0x00000201)
+    	{
+    		flag=1;
+/*
+        if(touch_evt & TouchSouth) trace_printf("touch south\r\n");
+        if(touch_evt & TouchWest) trace_printf("touch west\r\n");
+        if(touch_evt & TouchNorth) trace_printf("touch north\r\n");
+        if(touch_evt & TouchEast) trace_printf("touch east\r\n");
+        //if(touch_evt & TouchSouth) TFT_WRITE_TEXT("TOUCH SOUTH",120,90);
+        if(touch_evt & TouchCenter) trace_printf("touch center\r\n");
+*/
+    		if(touch_evt & TapSouth)  uartSendGestureData(7);     //trace_printf("tap south\r\n");
+    		if(touch_evt & TapWest)   uartSendGestureData(9); 	  //trace_printf("tap west\r\n");
+    		if(touch_evt & TapNorth)  uartSendGestureData(6);     //trace_printf("tap north\r\n");
+    		if(touch_evt & TapEast)   uartSendGestureData(8);     //trace_printf("tap east\r\n");
+    		if(touch_evt & TapCenter) uartSendGestureData(14);    //trace_printf("tap center\r\n");
+    	}
+    	else
+    	{
+    		if(touch_evt & DoubleTapSouth)  uartSendGestureData(11); //trace_printf("double tap south\r\n");
+    		if(touch_evt & DoubleTapWest)   uartSendGestureData(7);	//trace_printf("double tap west\r\n");
+    		if(touch_evt & DoubleTapNorth)  uartSendGestureData(13);	//trace_printf("double tap north\r\n");
+    		if(touch_evt & DoubleTapEast)   uartSendGestureData(12);	//trace_printf("double tap east\r\n");
+    		if(touch_evt & DoubleTapCenter) uartSendGestureData(15);//trace_printf("double tap center\r\n");
+    	}
+    	touch_evt_old = touch_evt;
+    }
+
+
+    gest_evt = (char) mGesture.DataOut.GestureInfo & 0xFF;
+    gest_class = (char) (mGesture.DataOut.GestureInfo >> 12) & 0x0F;
+    gest_edge_flick = (char) (mGesture.DataOut.GestureInfo >> 16) & 0x01;
+    gest_recognition = (char) (mGesture.DataOut.GestureInfo >> 31) & 0x01;
+
+    if (gest_evt)
+    	uartSendGestureData(gest_evt);
+
+    if (mGesture.DataOut.AirWheelInfo !=0)
+    {
+
+    	if (mGesture.DataOut.AirWheelInfo > OLDAirWheelInfo)            // if the airwheel counter increments,// it is a clockwise rotation
+    	{
+    		uartSendGestureData(16);
+    	}
+    	else if  (mGesture.DataOut.AirWheelInfo < OLDAirWheelInfo)                       // if it decrements, // it is counter-clokwise
+    	{
+    		uartSendGestureData(17);
+    	}
+                                                        // print out the airwheel counter info
+    	OLDAirWheelInfo=mGesture.DataOut.AirWheelInfo;
+    }
+
+}
+
+
 void Display_Values() {
 
 	//trace_printf("%u \r\n",mGesture.DataOut.Position.X);
@@ -144,11 +204,10 @@ void Display_Values() {
 
       if (gest_evt) {
         flag=2;
-         //TFT_Rectangle(80,60,320,240);
           switch (gest_evt) {
             case 1:
 
-              trace_printf("GARBAGE\r\n");  // Unprocessed gestures are defined as "garbage"
+              trace_printf("GARBAGE\r\n");
               break;
             case 2:
 
