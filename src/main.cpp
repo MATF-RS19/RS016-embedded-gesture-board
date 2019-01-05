@@ -8,6 +8,9 @@
 #include "BlinkLed.h"
 #include "gesture.h"
 #include "gestureDefs.h"
+#include "cGest.h"
+#include "ci2c.h"
+#include "cUart.h"
 
 unsigned int touch_evt, touch_evt_old;
 char gest_evt, gest_evt_old, gest_class, gest_recognition, gest_edge_flick;
@@ -49,59 +52,84 @@ void initPins() {
 	setRDYPinToInput();
 }
 
+//ci2c c;
+cGest cg;
+cUart cu;
+
+void uart_sendValid();
+
 int
 main(int argc, char* argv[]) {
 
-  initPins();
-  //initUart();
-  setRSTpin(0);
-  initI2c();
-  trace_puts("Hello ARM World!");
+	  initPins();
+	  //initUart();
+	  setRSTpin(0);
+	//  initI2c();
 
-  getFWInfo();
-  HAL_Delay(2000);
-  if((uint8_t)(mGesture.FWVersionInfo.FWValid) == (uint8_t)FW_VALID)
-  {
-	  trace_printf("VALID FW!");
-  }
-  else
-  {
-	  trace_printf("INVALID FW! HALT PROGRAM!");
+	  //c.init(0x42);
+	  cg.start();
+	  cu.init();
+	  trace_printf("Gesture started\r\n");
+	  uint8_t i = 0;
+	  while(1)
+	  {
+		  for(i = 0; i < 17; i++)
+		  {
+			  //uartSendGestureData(i);
+			  cu.send(&i,1);
+			  HAL_Delay(2000);
+		  }
+
+	  }
+	  while(1)
+	  {
+		  cg.updateGestureData();
+		  cg.parseData();
+	  }
+	  getFWInfo();
+	  HAL_Delay(2000);
+	  if((uint8_t)(mGesture.FWVersionInfo.FWValid) == (uint8_t)FW_VALID)
+	  {
+		  trace_printf("VALID FW!");
+		  uart_sendValid();
+	  }
+	  else
+	  {
+		  trace_printf("INVALID FW! HALT PROGRAM!");
+		  while(1);
+	  }
+
+	  setTrigger(0x00);
+	  HAL_Delay(10);
+	  TransFreqSelect(0x05,0x43210);
+	  HAL_Delay(10);
+	  setEnableAllGestures();
+	  HAL_Delay(10);
+	  HAL_Delay(100);
+
+	  if ((GPIOA->ODR & 0b1000000) == 0) {
+	      setRSTpin(1);
+	      HAL_Delay(100);
+	   }
+
+	  while (1) {
+	     updateGestureData();
+	  //   Display_Values();
+
+	   }
+
 	  while(1);
-  }
+	  // At this stage the system clock should have already been configured
+	  // at high speed.
+	  trace_printf("System clock: %u Hz\n", SystemCoreClock);
 
-  setTrigger(0x00);
-  HAL_Delay(10);
-  TransFreqSelect(0x05,0x43210);
-  HAL_Delay(10);
-  setEnableAllGestures();
-  HAL_Delay(10);
-  HAL_Delay(100);
-
-  if ((GPIOA->ODR & 0b1000000) == 0) {
-      setRSTpin(1);
-      HAL_Delay(100);
-   }
-
-  while (1) {
-     updateGestureData();
-     Display_Values();
-
-   }
-
-  while(1);
-  // At this stage the system clock should have already been configured
-  // at high speed.
-  trace_printf("System clock: %u Hz\n", SystemCoreClock);
-
-  Timer timer;
-  timer.start ();
+	  Timer timer;
+	  timer.start ();
 
 }
 
-
-void gestureDisplayValues()
-{
+/*
+void gestureDisplayValues() {
 	touch_evt = (unsigned int) mGesture.DataOut.TouchInfo & 0xFFFF;
     if ((touch_evt != 0) && (touch_evt != touch_evt_old))
     {
@@ -109,14 +137,14 @@ void gestureDisplayValues()
     	if(touch_evt < 0x00000201)
     	{
     		flag=1;
-/*
+
         if(touch_evt & TouchSouth) trace_printf("touch south\r\n");
         if(touch_evt & TouchWest) trace_printf("touch west\r\n");
         if(touch_evt & TouchNorth) trace_printf("touch north\r\n");
         if(touch_evt & TouchEast) trace_printf("touch east\r\n");
         //if(touch_evt & TouchSouth) TFT_WRITE_TEXT("TOUCH SOUTH",120,90);
         if(touch_evt & TouchCenter) trace_printf("touch center\r\n");
-*/
+
     		if(touch_evt & TapSouth)  uartSendGestureData(7);     //trace_printf("tap south\r\n");
     		if(touch_evt & TapWest)   uartSendGestureData(9); 	  //trace_printf("tap west\r\n");
     		if(touch_evt & TapNorth)  uartSendGestureData(6);     //trace_printf("tap north\r\n");
@@ -159,8 +187,9 @@ void gestureDisplayValues()
     }
 
 }
+*/
 
-
+/*
 void Display_Values() {
 
 	//trace_printf("%u \r\n",mGesture.DataOut.Position.X);
@@ -171,14 +200,14 @@ void Display_Values() {
       //TFT_Rectangle(80,60,320,240);
       if(touch_evt < 0x00000201) {
         flag=1;
-/*
+
         if(touch_evt & TouchSouth) trace_printf("touch south\r\n");
         if(touch_evt & TouchWest) trace_printf("touch west\r\n");
         if(touch_evt & TouchNorth) trace_printf("touch north\r\n");
         if(touch_evt & TouchEast) trace_printf("touch east\r\n");
         //if(touch_evt & TouchSouth) TFT_WRITE_TEXT("TOUCH SOUTH",120,90);
         if(touch_evt & TouchCenter) trace_printf("touch center\r\n");
-*/
+
         if(touch_evt & TapSouth) trace_printf("tap south\r\n");
         if(touch_evt & TapWest) trace_printf("tap west\r\n");
         if(touch_evt & TapNorth) trace_printf("tap north\r\n");
@@ -282,7 +311,7 @@ void Display_Values() {
 
 
 }
-
+*/
 
 #pragma GCC diagnostic pop
 
