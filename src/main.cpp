@@ -19,7 +19,7 @@ unsigned int OLDAirWheelInfo=0;
 
 extern s_Gesture mGesture;
 
-void Display_Values();
+//void Display_Values();
 // ----------------------------------------------------------------------------
 
 namespace {
@@ -57,6 +57,7 @@ cGest cg;
 cUart cu;
 
 void uart_sendValid();
+void Display_Values();
 
 int
 main(int argc, char* argv[]) {
@@ -64,13 +65,37 @@ main(int argc, char* argv[]) {
 	  initPins();
 	  //initUart();
 	  setRSTpin(0);
-	//  initI2c();
+	  initI2c();
 
 	  //c.init(0x42);
 	  cg.start();
-	  cu.init();
+
+	  //cu.init();
 	  trace_printf("Gesture started\r\n");
+
+	  cg.setTrigger(0x00);
+	  HAL_Delay(10);
+	  cg.TransFreqSelect(0x05,0x43210);
+	  HAL_Delay(10);
+	  cg.setEnableAllGestures();
+	  HAL_Delay(10);
+	  HAL_Delay(100);
+
+	  if ((GPIOA->ODR & 0b1000000) == 0)
+	  {
+	     setRSTpin(1);
+	     HAL_Delay(100);
+	  }
+
+	  while (1)
+	  {
+	  	 cg.updateGestureData();
+	  	 cg.parseData();
+	  	     //Display_Values();
+	  }
+
 	  uint8_t i = 0;
+	/*
 	  while(1)
 	  {
 		  for(i = 0; i < 17; i++)
@@ -81,29 +106,13 @@ main(int argc, char* argv[]) {
 		  }
 
 	  }
-	  while(1)
-	  {
-		  cg.updateGestureData();
-		  cg.parseData();
-	  }
-	  getFWInfo();
-	  HAL_Delay(2000);
-	  if((uint8_t)(mGesture.FWVersionInfo.FWValid) == (uint8_t)FW_VALID)
-	  {
-		  trace_printf("VALID FW!");
-		  uart_sendValid();
-	  }
-	  else
-	  {
-		  trace_printf("INVALID FW! HALT PROGRAM!");
-		  while(1);
-	  }
+	  */
 
-	  setTrigger(0x00);
+	  cg.setTrigger(0x00);
 	  HAL_Delay(10);
-	  TransFreqSelect(0x05,0x43210);
+	  cg.TransFreqSelect(0x05,0x43210);
 	  HAL_Delay(10);
-	  setEnableAllGestures();
+	  cg.setEnableAllGestures();
 	  HAL_Delay(10);
 	  HAL_Delay(100);
 
@@ -112,11 +121,13 @@ main(int argc, char* argv[]) {
 	      HAL_Delay(100);
 	   }
 
-	  while (1) {
-	     updateGestureData();
-	  //   Display_Values();
 
-	   }
+	  while(1)
+	  {
+		  cg.updateGestureData();
+		  cg.parseData();
+	  }
+
 
 	  while(1);
 	  // At this stage the system clock should have already been configured
@@ -189,7 +200,7 @@ void gestureDisplayValues() {
 }
 */
 
-/*
+
 void Display_Values() {
 
 	//trace_printf("%u \r\n",mGesture.DataOut.Position.X);
@@ -311,7 +322,7 @@ void Display_Values() {
 
 
 }
-*/
+
 
 #pragma GCC diagnostic pop
 

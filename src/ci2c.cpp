@@ -6,6 +6,7 @@
  */
 
 #include "ci2c.h"
+#include "i2c.h"
 
 ci2c::ci2c() {
 	// TODO Auto-generated constructor stub
@@ -49,9 +50,11 @@ void ci2c::init(uint8_t slave_Address) {
 }
 
 void ci2c::readData(uint8_t *in, uint8_t size) {
-	HAL_I2C_Master_Transmit(&I2cHandle,slaveAddress<<1,in,size,10000);
+	//HAL_I2C_Master_Transmit(&I2cHandle,slaveAddress<<1,in,size,10000);
+	i2cApi_read(in,size);
 }
 
 void ci2c::writeData(uint8_t *out, uint8_t size) {
-	HAL_I2C_Master_Receive(&I2cHandle,slaveAddress<<1,out,size,10000);
+	//HAL_I2C_Master_Receive(&I2cHandle,slaveAddress<<1,out,size,10000);
+	i2cApi_write(out,size);
 }

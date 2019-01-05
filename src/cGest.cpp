@@ -6,6 +6,7 @@
  */
 
 #include "cGest.h"
+#include "i2c.h"
 #define GEST_I2CADDRESS 0x42
 
 cGest::cGest() {
@@ -103,8 +104,8 @@ void cGest::GestIC_Read(char msgLen){
 //  I2C1_Read(MGC_ADDR0, msgData, msgLen , END_MODE_STOP);
 //  delay_us(200);
 //	raw_data[0] = 0;
-	//i2cApi_read(raw_data, msgLen);
-	c.readData(raw_data, msgLen);
+	i2cApi_read(raw_data, msgLen);
+	//c.readData(raw_data, msgLen);
 }
 
 void cGest::GestIC_Write( uint8_t msgLen) {
@@ -113,8 +114,8 @@ void cGest::GestIC_Write( uint8_t msgLen) {
 //  delay_us(200);
 	//i2cWrite(msgData+1, msgLen, msgData);
 //	i2cWrite(1, 2, 3);
-	//i2cApi_write(raw_data, msgLen);
-	cGest::c.writeData(raw_data, msgLen);
+	i2cApi_write(raw_data, msgLen);
+	//c.writeData(raw_data, msgLen);
 }
 
 char cGest::setAirWheel(char ENABLE) {
@@ -788,7 +789,8 @@ void cGest::updateRawData() {
 
 void cGest::start()
 {
-	c.init(GEST_I2CADDRESS);
+	//c.init(GEST_I2CADDRESS);
+	cu.init();
 	getFWInfo();
 	HAL_Delay(2000);
     if((uint8_t)(mGesture.FWVersionInfo.FWValid) == (uint8_t)FW_VALID)
@@ -851,20 +853,21 @@ void cGest::parseData()
 	        //if(touch_evt & TouchSouth) TFT_WRITE_TEXT("TOUCH SOUTH",120,90);
 	        if(touch_evt & TouchCenter) trace_printf("touch center\r\n");
 	*/
-	        if(touch_evt & TapSouth)  temp = 7; //uartSendGestureData(7);     //trace_printf("tap south\r\n");
-	        if(touch_evt & TapWest)   temp = 9; //uartSendGestureData(9);     //trace_printf("tap west\r\n");
-	        if(touch_evt & TapNorth)  temp = 6; //uartSendGestureData(6);     //trace_printf("tap north\r\n");
-	        if(touch_evt & TapEast)   temp = 8; //uartSendGestureData(8);     //trace_printf("tap east\r\n");
-	        if(touch_evt & TapCenter) temp = 14; //uartSendGestureData(14);    //trace_printf("tap center\r\n");
+	        if(touch_evt & TapSouth) {temp = 7;  trace_printf("tap south\r\n");} //uartSendGestureData(7);
+	        if(touch_evt & TapWest)   {temp = 9; trace_printf("tap west\r\n");} //uartSendGestureData(9);     //
+	        if(touch_evt & TapNorth)  {temp = 6; trace_printf("tap north\r\n");} //uartSendGestureData(6);     //
+	        if(touch_evt & TapEast)   {temp = 8; trace_printf("tap east\r\n");} //uartSendGestureData(8);     //
+	        if(touch_evt & TapCenter) {temp = 14; trace_printf("tap center\r\n");} //uartSendGestureData(14);    //
 	        cu.send(&temp, 1);
 	      }
 	      else
 	      {
-	        if(touch_evt & DoubleTapSouth)  temp = 11; //uartSendGestureData(11); //trace_printf("double tap south\r\n");
-	        if(touch_evt & DoubleTapWest)   temp = 7; //uartSendGestureData(7); //trace_printf("double tap west\r\n");
-	        if(touch_evt & DoubleTapNorth)  temp = 13;//uartSendGestureData(13);  //trace_printf("double tap north\r\n");
-	        if(touch_evt & DoubleTapEast)   temp = 12;//uartSendGestureData(12);  //trace_printf("double tap east\r\n");
-	        if(touch_evt & DoubleTapCenter) temp = 15;//uartSendGestureData(15);//trace_printf("double tap center\r\n");
+	        if(touch_evt & DoubleTapSouth)  {temp = 11; trace_printf("double tap south\r\n");}  //uartSendGestureData(11); //
+	        if(touch_evt & DoubleTapWest)   {temp = 7;  trace_printf("double tap west\r\n");}  //uartSendGestureData(7); //
+	        if(touch_evt & DoubleTapNorth)  {temp = 13; trace_printf("double tap north\r\n");}  //uartSendGestureData(13);  //
+	        if(touch_evt & DoubleTapEast)   {temp = 12; trace_printf("double tap east\r\n");}  //uartSendGestureData(12);  //
+	        if(touch_evt & DoubleTapCenter) {temp = 15; trace_printf("double tap center\r\n");}  //uartSendGestureData(15);//
+	        cu.send(&temp, 1);
 	      }
 	      touch_evt_old = touch_evt;
 	    }
@@ -877,7 +880,8 @@ void cGest::parseData()
 
 	    if (gest_evt)
 	    {
-	    	temp = gest_evt;//uartSendGestureData(gest_evt);
+	    	temp = gest_evt;
+	    	uartSendGestureData(gest_evt);
 	    	cu.send(&temp, 1);
 	    }
 
@@ -897,5 +901,6 @@ void cGest::parseData()
 	                                                        // print out the airwheel counter info
 	      OLDAirWheelInfo=mGesture.DataOut.AirWheelInfo;
 	      cu.send(&temp,1);
+	      uartSendGestureData(temp);
 	    }
 }
