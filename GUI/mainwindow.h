@@ -27,6 +27,9 @@ private slots:
 
     void on_pushButtonSubwaySurf_clicked();
 
+    // uart
+    void serialRecieved();
+
 private:
     Ui::MainWindow *ui;
     Tetris *tetrisWindow;

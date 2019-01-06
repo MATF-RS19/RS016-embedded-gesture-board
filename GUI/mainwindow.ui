@@ -21,20 +21,10 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="7" column="2" alignment="Qt::AlignRight|Qt::AlignBottom">
-     <widget class="QPushButton" name="pushButtonExit">
-      <property name="text">
-       <string>Exit</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="2">
-     <widget class="QPushButton" name="pushButtonTetris">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
+    <item row="3" column="0">
+     <widget class="QPushButton" name="pushButtonSlideShow">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -45,15 +35,12 @@
         <bold>true</bold>
        </font>
       </property>
-      <property name="mouseTracking">
-       <bool>false</bool>
-      </property>
       <property name="text">
-       <string>Tetris</string>
+       <string>SlideShow</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="2">
+    <item row="2" column="0">
      <widget class="QPushButton" name="pushButtonSubwaySurf">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -81,10 +68,20 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="2">
-     <widget class="QPushButton" name="pushButtonSlideShow">
+    <item row="7" column="0" alignment="Qt::AlignRight|Qt::AlignBottom">
+     <widget class="QPushButton" name="pushButtonExit">
+      <property name="text">
+       <string>Exit</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QPushButton" name="pushButtonTetris">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+       <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -95,8 +92,11 @@
         <bold>true</bold>
        </font>
       </property>
+      <property name="mouseTracking">
+       <bool>false</bool>
+      </property>
       <property name="text">
-       <string>SlideShow</string>
+       <string>Tetris</string>
       </property>
      </widget>
     </item>

@@ -1,0 +1,10 @@
+debug/main.o
+debug/mainwindow.o
+debug/tetris.o
+debug/slideshow.o
+debug/subwaysurf.o
+debug/qrc_resources.o
+debug/moc_mainwindow.o
+debug/moc_tetris.o
+debug/moc_slideshow.o
+debug/moc_subwaysurf.o
