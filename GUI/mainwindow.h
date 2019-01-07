@@ -1,10 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
 #include <QMainWindow>
 #include "tetris.h"
 #include "slideshow.h"
 #include "subwaysurf.h"
+#include "tetrisprozor.h"
 
 namespace Ui {
 class MainWindow;
@@ -32,7 +32,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    Tetris *tetrisWindow;
+    tetrisprozor tetrisWindow;
+    // Tetris *tetrisWindow;
     SlideShow *slideShowWindow;
     SubwaySurf *subwaySurfWindow;
 };

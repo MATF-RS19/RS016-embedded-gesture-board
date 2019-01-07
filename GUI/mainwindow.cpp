@@ -4,6 +4,8 @@
 #include <QPixmap>
 #include <QPalette>
 
+#include <QWidget>
+
 // uart
 #include <QSerialPort>
 #include <QDebug>
@@ -34,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //serial->write("ok");
 
     connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecieved()));
-    printf("Connect\n");
+
 
    QMainWindow::showFullScreen();
 }
@@ -59,8 +61,9 @@ void MainWindow::on_pushButtonExit_clicked()
 void MainWindow::on_pushButtonTetris_clicked()
 {
     hide();
-    tetrisWindow = new Tetris(this);
-    tetrisWindow->show();
+//    tetrisWindow = new Tetris(this);
+    tetrisWindow.show();
+
 }
 
 void MainWindow::on_pushButtonSlideShow_clicked()
@@ -95,7 +98,7 @@ void MainWindow::serialRecieved()
     case 0x07:
       // printf("TAP DOWN\n");
        ui->pushButtonTetris->click();
-        break;
+       break;
 
     case 0xE:
        // printf("TAP CENTER\n");
