@@ -10,7 +10,7 @@
 #include <QSerialPort>
 #include <QDebug>
 #include <QKeyEvent>
-
+  #include <windows.h>
 QSerialPort *serial;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -61,8 +61,7 @@ void MainWindow::on_pushButtonExit_clicked()
 void MainWindow::on_pushButtonTetris_clicked()
 {
     hide();
-//    tetrisWindow = new Tetris(this);
-    tetrisWindow.show();
+    tetrisWindow.showFullScreen();
 
 }
 
@@ -88,39 +87,85 @@ void MainWindow::serialRecieved()
     // citanje serijskog porta
     ba = serial->readAll();
 
-    // tap na gesture ---> klik na dugme
+    // gesture komande
     switch(ba[0]) {
+
+    case 0x02:
+        // LEFT TO RIGHT
+        keybd_event(VK_RIGHT,0x27,0,0);
+        break;
+
+   case 0x03:
+        // RIGHT TO LEFT
+        keybd_event(VK_LEFT,0x25,0,0);
+        break;
+
+   case 0x04:
+        // BOTTOM TO TOP
+
+        break;
+
+   case 0x05:
+        // TOP TO BOTTOM
+        keybd_event(VK_SPACE,0x20,0,0);
+        break;
+
     case 0x06:
-       // printf("TAP UP\n");
-        ui->pushButtonSubwaySurf->click();
+       // TAP UP
+       // ui->pushButtonSubwaySurf->click();
         break;
 
     case 0x07:
-      // printf("TAP DOWN\n");
-       ui->pushButtonTetris->click();
+      // TAP DOWN
+      // ui->pushButtonTetris->click();
+      keybd_event(0x44, 0x44, 0, 0);
        break;
-
-    case 0xE:
-       // printf("TAP CENTER\n");
-        ui->pushButtonSlideShow->click();
-        break;
-
-    case 0x10:
-       // exit dugme
-       // printf("CLOCKWISE\n");
-        ui->pushButtonExit->click();
-        break;
-
-    case 0x09:
-        // kad se otvori exit poruka sa pitanjem, levo je yes
-        // printf("TAP LEFT\n");
-        QApplication::exit();
-        break;
 
     case 0x08:
         // za odgovor no
         // TAP RIGHT
         // TODO djole
+        break;
+
+    case 0x09:
+        // kad se otvori exit poruka sa pitanjem, levo je yes
+        // TAP LEFT
+       // QApplication::exit();
+        break;
+
+    case 0x10:
+       // exit dugme
+       // COUNTER-CLOCKWISE
+        keybd_event(VK_DOWN,0x28,0,0);
+      //  ui->pushButtonExit->click();
+        break;
+
+   case 0x11:
+        // CLOCKWISE
+        keybd_event(VK_UP,0x26,0,0);
+        break;
+
+   case 0xB:
+        // DOUBLE TAP DOWN
+        ui->pushButtonTetris->click();
+        break;
+
+   case 0xC:
+        // DOUBLE TAP RIGHT
+        break;
+
+   case 0xD:
+        // DOUBLE TAP UP
+        ui->pushButtonSubwaySurf->click();
+        break;
+
+   case 0xE:
+        // TAP CENTER
+        break;
+
+    case 0xF:
+       // DOUBLE TAP CENTER\n
+        ui->pushButtonSlideShow->click();
         break;
     }
 

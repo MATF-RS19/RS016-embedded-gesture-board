@@ -28,7 +28,7 @@ private slots:
     void on_pushButtonSubwaySurf_clicked();
 
     // uart
-    void serialRecieved();
+   void serialRecieved();
 
 private:
     Ui::MainWindow *ui;

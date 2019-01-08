@@ -2,7 +2,6 @@
 
 #include "tetrisigra.h"
 
-
 tetrisigra::tetrisigra(QWidget *parent)
     : QFrame(parent)
 {
@@ -100,7 +99,8 @@ void tetrisigra::paintEvent(QPaintEvent *event)
 //MIIIIIIIIIIIIIIIIIIIIIII SEEEEEEEEEEEEEEE VOOOOOOOOOOOOOLLLLLLLLLLLLLLLIIIIIIIIIIIMMMMOOOOO
 //UCIIIIIIIMOOOO DA BROJIIIMOOOOOO
 //GDE SI ANOOOOOOOO, DJOLE TEBE NIKI NIJE ZVAO, SAMO SE JA I ANA OVDE DRUZIMO!
-//CEO DAN SUTRA TREBA DA KOMENTARISEM OVE KODOVE POSTO SAM VECINU PREPISAO, ALI MI JE TREBALO 2 DANA DA PREPISEM SAMO :D
+//CEO DAN SUTRA TREBA DA KOMENTARISEM OVE KODOVE POSTO SAM VECINU PREPISAO,
+// ALI MI JE TREBALO 2 DANA DA PREPISEM SAMO :D
 void tetrisigra::keyPressEvent(QKeyEvent *event)
 {
     if (!isStarted || isPaused || curPiece.shape() == NoShape) {
@@ -305,3 +305,12 @@ void tetrisigra::drawSquare(QPainter &painter, int x, int y, tetrisoblici shape)
     painter.drawLine(x + squareWidth() - 1, y + squareHeight() - 1,
                      x + squareWidth() - 1, y + 1);
 }
+
+
+
+
+
+
+
+
+
