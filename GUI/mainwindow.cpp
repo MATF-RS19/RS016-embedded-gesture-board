@@ -10,7 +10,7 @@
 #include <QSerialPort>
 #include <QDebug>
 #include <QKeyEvent>
-  #include <windows.h>
+#include <windows.h>
 QSerialPort *serial;
 
 MainWindow::MainWindow(QWidget *parent) :

@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include <QMainWindow>
-#include "tetris.h"
 #include "slideshow.h"
 #include "subwaysurf.h"
 #include "tetrisprozor.h"

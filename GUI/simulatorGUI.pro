@@ -27,7 +27,6 @@ CONFIG += c++14
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    tetris.cpp \
     slideshow.cpp \
     subwaysurf.cpp \
     tetrisigra.cpp \
@@ -36,7 +35,6 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
-    tetris.h \
     slideshow.h \
     subwaysurf.h \
     tetrisigra.h \
@@ -46,7 +44,6 @@ HEADERS += \
 
 FORMS += \
         mainwindow.ui \
-    tetris.ui \
     slideshow.ui \
     subwaysurf.ui
 
