@@ -13,6 +13,23 @@
 #include <windows.h>
 QSerialPort *serial;
 
+// bajtovi koji stizu sa ploce
+#define LEFT_TO_RIGHT 0x02
+#define RIGHT_TO_LEFT 0x03
+#define BOTTOM_TO_TOP 0x04
+#define TOP_TO_BOTTOM 0x05
+#define TAP_UP 0x06
+#define TAP_DOWN 0x07
+#define TAP_RIGHT 0x08
+#define TAP_LEFT 0x09
+#define COUNTER_CLOCKWISE 0x10
+#define CLOCKWISE 0x11
+#define DOUBLE_TAP_DOWN 0xB
+#define DOUBLE_TAP_RIGHT 0xC
+#define DOUBLE_TAP_UP 0xD
+#define TAP_CENTER 0xE
+#define DOUBLE_TAP_CENTER 0xF
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -90,86 +107,67 @@ void MainWindow::serialRecieved()
     // gesture komande
     switch(ba[0]) {
 
-    case 0x02:
-        // LEFT TO RIGHT
+    case LEFT_TO_RIGHT:
         keybd_event(VK_RIGHT,0x27,0,0);
         break;
 
-   case 0x03:
-        // RIGHT TO LEFT
+   case RIGHT_TO_LEFT:
         keybd_event(VK_LEFT,0x25,0,0);
         break;
 
-   case 0x04:
-        // BOTTOM TO TOP
+   case BOTTOM_TO_TOP:
 
         break;
 
-   case 0x05:
-        // TOP TO BOTTOM
+   case TOP_TO_BOTTOM:
         keybd_event(VK_SPACE,0x20,0,0);
         break;
 
-    case 0x06:
-       // TAP UP
+    case TAP_UP:
        // ui->pushButtonSubwaySurf->click();
         break;
 
-    case 0x07:
-      // TAP DOWN
+    case TAP_DOWN:
       // ui->pushButtonTetris->click();
       keybd_event(0x44, 0x44, 0, 0);
        break;
 
-    case 0x08:
-        // za odgovor no
-        // TAP RIGHT
-        // TODO djole
+    case TAP_RIGHT:
+
         break;
 
-    case 0x09:
-        // kad se otvori exit poruka sa pitanjem, levo je yes
-        // TAP LEFT
-       // QApplication::exit();
+    case TAP_LEFT:
+
         break;
 
-    case 0x10:
-       // exit dugme
-       // COUNTER-CLOCKWISE
+    case COUNTER_CLOCKWISE:
         keybd_event(VK_DOWN,0x28,0,0);
       //  ui->pushButtonExit->click();
         break;
 
-   case 0x11:
-        // CLOCKWISE
+   case CLOCKWISE:
         keybd_event(VK_UP,0x26,0,0);
         break;
 
-   case 0xB:
-        // DOUBLE TAP DOWN
+   case DOUBLE_TAP_DOWN:
         ui->pushButtonTetris->click();
         break;
 
-   case 0xC:
-        // DOUBLE TAP RIGHT
+   case DOUBLE_TAP_RIGHT:
         break;
 
-   case 0xD:
-        // DOUBLE TAP UP
+   case DOUBLE_TAP_UP:
         ui->pushButtonSubwaySurf->click();
         break;
 
-   case 0xE:
-        // TAP CENTER
+   case TAP_CENTER:
+
         break;
 
-    case 0xF:
-       // DOUBLE TAP CENTER\n
+    case DOUBLE_TAP_CENTER:
         ui->pushButtonSlideShow->click();
         break;
     }
 
-   // ui->labela->setText(ba);
-   // printf(ba);
     qDebug()<<ba;
 }
