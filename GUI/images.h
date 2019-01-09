@@ -17,6 +17,8 @@ public:
     void addMember(const QString &name);
     void removeMember(const QString &name);
     QString names(unsigned int i) const;
+    unsigned int size();
+
 
 private:
     unsigned int m_num;

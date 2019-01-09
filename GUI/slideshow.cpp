@@ -11,6 +11,7 @@
 #include "images.h"
 
 Images images(5);
+QString currentImageName;
 
 SlideShow::SlideShow(QWidget *parent) :
     QMainWindow(parent),
@@ -23,8 +24,7 @@ SlideShow::SlideShow(QWidget *parent) :
     images.addMember(":/new/prefix1/pic3");
     images.addMember(":/new/prefix1/pic4");
     images.addMember(":/new/prefix1/pic5");
-
-   // ui->image->setPixmap(QPixmap(":/new/prefix1/pic1"));
+    images.addMember(":/new/prefix1/pic6");
 
     QString s1 = images.names(0);
     QString s2 = images.names(1);
@@ -33,6 +33,7 @@ SlideShow::SlideShow(QWidget *parent) :
     QString s5 = images.names(4);
 
     ui->image->setPixmap(QPixmap(s1));
+    currentImageName = s1;
    // std::cout << s1.toStdString() << std::endl;
 
 }
@@ -50,15 +51,72 @@ void SlideShow::on_exitButton_clicked()
 
 void SlideShow::on_nextButton_clicked()
 {
-    keybd_event(VK_LEFT,0x25,0,0);
-    ui->image->setPixmap(QPixmap(images.names(1)));
+
+    QString first = images.names(0);
+
+    if(!(currentImageName.compare(first))) {
+        ui->image->setPixmap(QPixmap(images.names(1)));
+        currentImageName = images.names(1);
+    }
+
+    else if(!(currentImageName.compare(images.names(1)))) {
+        ui->image->setPixmap(QPixmap(images.names(2)));
+        currentImageName = images.names(2);
+    }
+
+    else if(!(currentImageName.compare(images.names(2)))) {
+        ui->image->setPixmap(QPixmap(images.names(3)));
+        currentImageName = images.names(3);
+    }
+
+    else if(!(currentImageName.compare(images.names(3)))) {
+        ui->image->setPixmap(QPixmap(images.names(4)));
+        currentImageName = images.names(4);
+    }
+
+    else if(!(currentImageName.compare(images.names(4)))) {
+        ui->image->setPixmap(QPixmap(images.names(5)));
+        currentImageName = images.names(5);
+    }
+
+    else if(!(currentImageName.compare(images.names(5)))) {
+        ui->image->setPixmap(QPixmap(images.names(0)));
+        currentImageName = images.names(0);
+    }
 }
 
 void SlideShow::on_previousButton_clicked()
 {
-    keybd_event(VK_RIGHT,0x27,0,0);
 
-    ui->image->setPixmap(QPixmap(images.names(0)));
+    if(!(currentImageName.compare(images.names(0)))) {
+        ui->image->setPixmap(QPixmap(images.names(5)));
+        currentImageName = images.names(5);
+    }
+
+    else if(!(currentImageName.compare(images.names(1)))) {
+        ui->image->setPixmap(QPixmap(images.names(0)));
+        currentImageName = images.names(0);
+    }
+
+    else if(!(currentImageName.compare(images.names(2)))) {
+        ui->image->setPixmap(QPixmap(images.names(1)));
+        currentImageName = images.names(1);
+    }
+
+    else if(!(currentImageName.compare(images.names(3)))) {
+        ui->image->setPixmap(QPixmap(images.names(2)));
+        currentImageName = images.names(2);
+    }
+
+    else if(!(currentImageName.compare(images.names(4)))) {
+        ui->image->setPixmap(QPixmap(images.names(3)));
+        currentImageName = images.names(3);
+    }
+
+    else if(!(currentImageName.compare(images.names(5)))) {
+        ui->image->setPixmap(QPixmap(images.names(4)));
+        currentImageName = images.names(4);
+    }
 }
 
 void SlideShow::keyPressEvent(QKeyEvent *event)
@@ -68,7 +126,6 @@ void SlideShow::keyPressEvent(QKeyEvent *event)
 
     switch (event->key()) {
     case Qt::Key_Left:
-        QApplication::exit();
         ui->previousButton->click();
         break;
     case Qt::Key_Right:

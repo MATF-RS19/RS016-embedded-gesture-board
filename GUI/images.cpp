@@ -24,6 +24,10 @@ QString Images::names(unsigned int i) const
     return m_names[i];
 }
 
+unsigned int Images::size() {
+    return m_names.size();
+}
+
 
 
 
