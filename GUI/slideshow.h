@@ -17,9 +17,6 @@ public:
     explicit SlideShow(QWidget *parent = nullptr);
     ~SlideShow();
 
-protected:
-    void keyPressEvent(QKeyEvent *event) override;
-
 private slots:
 
     void on_exitButton_clicked();
@@ -27,6 +24,10 @@ private slots:
     void on_nextButton_clicked();
 
     void on_previousButton_clicked();
+
+    void on_rotateLButton_clicked();
+
+    void on_rotateRButton_clicked();
 
 private:
     Ui::SlideShow *ui;

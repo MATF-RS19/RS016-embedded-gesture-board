@@ -5,13 +5,18 @@
 #include <windows.h>
 #include <QKeyEvent>
 #include <QFrame>
+#include <QPainter>
 #include <stdio.h>
 #include <iostream>
 
 #include "images.h"
 
-Images images(5);
-QString currentImageName;
+#define NUM_OF_IMAGES 6
+
+static Images images(NUM_OF_IMAGES);
+static QString currentImageName;
+
+static int rotation = 1;
 
 SlideShow::SlideShow(QWidget *parent) :
     QMainWindow(parent),
@@ -27,15 +32,16 @@ SlideShow::SlideShow(QWidget *parent) :
     images.addMember(":/new/prefix1/pic6");
 
     QString s1 = images.names(0);
-    QString s2 = images.names(1);
-    QString s3 = images.names(2);
-    QString s4 = images.names(3);
-    QString s5 = images.names(4);
 
     ui->image->setPixmap(QPixmap(s1));
     currentImageName = s1;
    // std::cout << s1.toStdString() << std::endl;
 
+
+    ui->nextButton->setShortcut(QKeySequence(Qt::Key_Right));
+    ui->previousButton->setShortcut(QKeySequence(Qt::Key_Left));
+    ui->rotateLButton->setShortcut(QKeySequence(Qt::Key_Up));
+    ui->rotateRButton->setShortcut(QKeySequence(Qt::Key_Down));
 }
 
 SlideShow::~SlideShow()
@@ -46,6 +52,7 @@ SlideShow::~SlideShow()
 
 void SlideShow::on_exitButton_clicked()
 {
+    rotation = 0;
     QApplication::activeWindow()->hide();
 }
 
@@ -119,39 +126,44 @@ void SlideShow::on_previousButton_clicked()
     }
 }
 
-void SlideShow::keyPressEvent(QKeyEvent *event)
+
+void SlideShow::on_rotateLButton_clicked()
 {
-
-     //QFrame::keyPressEvent(event);
-
-    switch (event->key()) {
-    case Qt::Key_Left:
-        ui->previousButton->click();
-        break;
-    case Qt::Key_Right:
-        ui->nextButton->click();
-        break;
-    case Qt::Key_Down:
-        ui->rotateLButton->click();
-        break;
-    case Qt::Key_Up:
-        ui->rotateRButton->click();
-        break;
-    case Qt::Key_Space:
-
-        break;
-    case Qt::Key_D:
-
-        break;
-   // default:
-
-
+    QPixmap pixmap(*ui->image->pixmap());
+    QMatrix rm;
+    rm.rotate(-90);
+    pixmap = pixmap.transformed(rm);
+    if(rotation == 1) {
+        ui->image->setGeometry(250, 100, 500, 333);
+        ui->image->setPixmap(pixmap);
+        rotation = 0;
     }
+
+    else {
+        ui->image->setGeometry(200, 100, 500, 333);
+        ui->image->setPixmap(pixmap);
+        rotation = 1;
+    }
+
 }
 
+void SlideShow::on_rotateRButton_clicked()
+{
+    QPixmap pixmap(*ui->image->pixmap());
+    QMatrix rm;
+    rm.rotate(90);
+    pixmap = pixmap.transformed(rm);
+    if(rotation == 1) {
+        ui->image->setGeometry(250, 100, 500, 333);
+        ui->image->setPixmap(pixmap);
+        rotation = 0;
+    }
 
+    else {
+        ui->image->setGeometry(200, 100, 500, 333);
+        ui->image->setPixmap(pixmap);
+        rotation = 1;
+    }
 
-
-
-
+}
 

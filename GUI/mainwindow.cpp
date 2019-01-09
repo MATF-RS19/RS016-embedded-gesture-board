@@ -50,7 +50,6 @@ MainWindow::MainWindow(QWidget *parent) :
     serial->setStopBits(QSerialPort::OneStop);
     serial->setFlowControl(QSerialPort::NoFlowControl);
     serial->open(QIODevice::ReadWrite);
-    //serial->write("ok");
 
     connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecieved()));
 
@@ -70,8 +69,6 @@ void MainWindow::on_pushButtonExit_clicked()
 
     if(reply == QMessageBox::Yes)
         QApplication::exit();
-    // TODO djole : else if(reply == QMessageBox::No)
-
 
 }
 
@@ -104,7 +101,7 @@ void MainWindow::serialRecieved()
     // citanje serijskog porta
     ba = serial->readAll();
 
-    // gesture komande
+    // simulira se pritiskanje na tastaturi
     switch(ba[0]) {
 
     case LEFT_TO_RIGHT:
@@ -130,7 +127,7 @@ void MainWindow::serialRecieved()
     case TAP_DOWN:
       // ui->pushButtonTetris->click();
       keybd_event(0x44, 0x44, 0, 0);
-       break;
+      break;
 
     case TAP_RIGHT:
 
