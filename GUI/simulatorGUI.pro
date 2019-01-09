@@ -31,7 +31,8 @@ SOURCES += \
     subwaysurf.cpp \
     tetrisigra.cpp \
     tetrisdeo.cpp \
-    tetrisprozor.cpp
+    tetrisprozor.cpp \
+    images.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -39,7 +40,8 @@ HEADERS += \
     subwaysurf.h \
     tetrisigra.h \
     tetrisdeo.h \
-    tetrisprozor.h
+    tetrisprozor.h \
+    images.h
 
 
 FORMS += \
@@ -55,4 +57,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resources.qrc \
-    img/pic1.qrc
+    img/pic1.qrc \
+    img/pic2.qrc

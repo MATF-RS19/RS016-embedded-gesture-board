@@ -2,6 +2,8 @@
 #define SLIDESHOW_H
 
 #include <QMainWindow>
+#include <QWidget>
+#include <QtGui>
 
 namespace Ui {
 class SlideShow;
@@ -15,10 +17,16 @@ public:
     explicit SlideShow(QWidget *parent = nullptr);
     ~SlideShow();
 
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
+
 private slots:
-    void on_pushButton_3_clicked();
 
     void on_exitButton_clicked();
+
+    void on_nextButton_clicked();
+
+    void on_previousButton_clicked();
 
 private:
     Ui::SlideShow *ui;
