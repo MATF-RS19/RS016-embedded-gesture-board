@@ -5,17 +5,20 @@
 
 #include <windows.h>
 #include <QKeyEvent>
-#include <QFrame>
-#include <QPainter>
 #include <stdio.h>
 #include <iostream>
 
-
-#define NUM_OF_IMAGES 6
+#define NUM_OF_IMAGES 10
 
 // makroi za prepoznavanje da li je kliknuto dugme next ili previous
 #define NEXT 1
 #define PREVIOUS 0
+
+// makroi za dimenzije
+#define X 480
+#define Y 140
+#define WIDTH 551
+#define HEIGHT 391
 
 // globalna promenljiva klase Images
 static Images images(NUM_OF_IMAGES);
@@ -34,6 +37,7 @@ SlideShow::SlideShow(QWidget *parent) :
     ui(new Ui::SlideShow)
 {
     ui->setupUi(this);
+    setWindowTitle("Slideshow");
 
     // dodaju se fotografije u vector images
     images.addMember(":/new/prefix1/pic1");
@@ -58,8 +62,10 @@ SlideShow::SlideShow(QWidget *parent) :
     // koje se povezuju sa gesture pokretima
     ui->nextButton->setShortcut(QKeySequence(Qt::Key_Right));
     ui->previousButton->setShortcut(QKeySequence(Qt::Key_Left));
-    ui->rotateLButton->setShortcut(QKeySequence(Qt::Key_Up));
-    ui->rotateRButton->setShortcut(QKeySequence(Qt::Key_Down));
+    ui->rotateLButton->setShortcut(QKeySequence(Qt::Key_Z));
+    ui->rotateRButton->setShortcut(QKeySequence(Qt::Key_X));
+    ui->zoomInButton->setShortcut(QKeySequence(Qt::Key_Down));
+    ui->zoomOutButton->setShortcut(QKeySequence(Qt::Key_Up));
 
 }
 
@@ -80,7 +86,7 @@ void SlideShow::reset() {
     rotationHorizontal = 1;
     scale = 1.0;
     zoom(1.0);
-    ui->image->setGeometry(200, 100, 500, 333);
+    ui->image->setGeometry(X, Y, WIDTH, HEIGHT);
 }
 
 
@@ -157,21 +163,29 @@ void SlideShow::rotate(double a) {
 
     QPixmap pixmap(*ui->image->pixmap());
     QMatrix rm;
+
     rm.rotate(a);
     pixmap = pixmap.transformed(rm);
+
+    int height = ui->image->geometry().height();
+    int width  = ui->image->geometry().width();
+
+    // ako je horizontalno slika, menjaju se koordinate, dimenzije
+    // i rotacija se postavlja na vertikalnu
     if(rotationHorizontal == 1) {
-        ui->image->setGeometry(250, 100, 333, 500);
+
+        ui->image->setGeometry(X, Y, height, width);
         ui->image->setPixmap(pixmap);
         rotationHorizontal = 0;
     }
 
+    // isto za vertikalnu
     else {
-        ui->image->setGeometry(200, 100, 500, 333);
+        ui->image->setGeometry(X, Y, height, width);
         ui->image->setPixmap(pixmap);
         rotationHorizontal = 1;
     }
 }
-
 void SlideShow::zoom(double s) {
     scale *= s;
 

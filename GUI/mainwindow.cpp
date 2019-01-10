@@ -24,6 +24,7 @@ QSerialPort *serial;
 #define TAP_LEFT 0x09
 #define COUNTER_CLOCKWISE 0x10
 #define CLOCKWISE 0x11
+#define DOUBLE_TAP_LEFT 0xA
 #define DOUBLE_TAP_DOWN 0xB
 #define DOUBLE_TAP_RIGHT 0xC
 #define DOUBLE_TAP_UP 0xD
@@ -121,29 +122,32 @@ void MainWindow::serialRecieved()
         break;
 
     case TAP_UP:
-       // ui->pushButtonSubwaySurf->click();
+        keybd_event(0x57, 0x57, 0, 0);  // W key
         break;
 
     case TAP_DOWN:
-      // ui->pushButtonTetris->click();
-      keybd_event(0x44, 0x44, 0, 0);
+      keybd_event(0x53, 0x53, 0, 0);  // S key
       break;
 
     case TAP_RIGHT:
-
+        keybd_event(0x44, 0x44, 0, 0);  // D key
         break;
 
     case TAP_LEFT:
-
+        keybd_event(0x41, 0x41, 0, 0);  // A key
         break;
 
     case COUNTER_CLOCKWISE:
-        keybd_event(VK_DOWN,0x28,0,0);
-      //  ui->pushButtonExit->click();
+        keybd_event(0x58, 0x58, 0, 0);  // X key
         break;
 
    case CLOCKWISE:
-        keybd_event(VK_UP,0x26,0,0);
+        keybd_event(0x5A,0x5A,0,0);     // Z key
+        break;
+
+
+   case DOUBLE_TAP_LEFT:
+
         break;
 
    case DOUBLE_TAP_DOWN:
@@ -151,6 +155,7 @@ void MainWindow::serialRecieved()
         break;
 
    case DOUBLE_TAP_RIGHT:
+        QApplication::exit();
         break;
 
    case DOUBLE_TAP_UP:
@@ -165,6 +170,8 @@ void MainWindow::serialRecieved()
         ui->pushButtonSlideShow->click();
         break;
     }
+
+    qDebug()<<ba;
 
     qDebug()<<ba;
 }
