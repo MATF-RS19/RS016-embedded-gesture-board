@@ -23,10 +23,6 @@ private:
     QLabel *createLabel(const QString &text);
     tetrisigra *board;
     QLabel *sledeciDeoLabela;
-    //QLCDNumber su samo lepsi brojevi
-    QLCDNumber *skor;
-    QLCDNumber *level;
-    QLCDNumber *linije;
     QPushButton *startButton;
     QPushButton *quitButton;
     QPushButton *pauseButton;

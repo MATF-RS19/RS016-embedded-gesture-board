@@ -43,16 +43,8 @@ void tetrisigra::start()
 
     isStarted = true;
     isWaitingAfterLine = false;
-    numLinesRemoved = 0;
     numPiecesDropped = 0;
-    score = 0;
-    level = 1;
     clearBoard();
-
-    emit linesRemovedChanged(numLinesRemoved);
-    emit scoreChanged(score);
-    emit levelChanged(level);
-
     newPiece();
     timer.start(750, this);
 }
@@ -118,16 +110,16 @@ void tetrisigra::keyPressEvent(QKeyEvent *event)
     case Qt::Key_Right:
         tryMove(curPiece, curX + 1, curY);
         break;
-    case Qt::Key_Down:
+    case Qt::Key_X:
         tryMove(curPiece.rotatedRight(), curX, curY);
         break;
-    case Qt::Key_Up:
+    case Qt::Key_Z:
         tryMove(curPiece.rotatedLeft(), curX, curY);
         break;
-    case Qt::Key_Space:
+    case Qt::Key_Down:
         dropDown();
         break;
-    case Qt::Key_D:
+    case Qt::Key_S:
         oneLineDown();
         break;
     default:
@@ -165,16 +157,16 @@ void tetrisigra::dropDown()
         --newY;
         ++dropHeight;
     }
-    pieceDropped(dropHeight);
+    pieceDropped();
 }
 
 void tetrisigra::oneLineDown()
 {
     if (!tryMove(curPiece, curX, curY - 1))
-        pieceDropped(0);
+        pieceDropped();
 }
 
-void tetrisigra::pieceDropped(int dropHeight)
+void tetrisigra::pieceDropped()
 {
     for (int i = 0; i < 4; ++i) {
         int x = curX + curPiece.x(i);
@@ -183,14 +175,6 @@ void tetrisigra::pieceDropped(int dropHeight)
     }
 
     ++numPiecesDropped;
-    if (numPiecesDropped % 25 == 0) {
-        ++level;
-        timer.start(timeoutTime(), this);
-        emit levelChanged(level);
-    }
-
-    score += dropHeight + 7;
-    emit scoreChanged(score);
     removeFullLines();
 
     if (!isWaitingAfterLine)
@@ -221,12 +205,7 @@ void tetrisigra::removeFullLines()
                 oblikAt(j, BoardHeight - 1) = Nooblik;
         }
     }
-    if (numFullLines > 0) {
-        numLinesRemoved += numFullLines;
-        score += 10 * numFullLines;
-        emit linesRemovedChanged(numLinesRemoved);
-        emit scoreChanged(score);
-
+    if (numFullLines > 0){
         timer.start(750, this);
         isWaitingAfterLine = true;
         curPiece.setoblik(Nooblik);
