@@ -20,7 +20,7 @@ void Images::removeMember(const QString &name) {
 
 QString Images::names(unsigned int i) const
  {
-
+   //std::cout << m_names[i] << std::endl;
     return m_names[i];
 }
 

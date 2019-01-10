@@ -17,6 +17,11 @@ public:
     explicit SlideShow(QWidget *parent = nullptr);
     ~SlideShow();
 
+    void rotate(double a);
+    void zoom(double s);
+    void reset();
+    void importImages(int type);
+
 private slots:
 
     void on_exitButton_clicked();
@@ -28,6 +33,10 @@ private slots:
     void on_rotateLButton_clicked();
 
     void on_rotateRButton_clicked();
+
+    void on_zoomInButton_clicked();
+
+    void on_zoomOutButton_clicked();
 
 private:
     Ui::SlideShow *ui;
