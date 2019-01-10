@@ -175,8 +175,9 @@ void SlideShow::rotate(double a) {
 void SlideShow::zoom(double s) {
     scale *= s;
 
-    QSize size = ui->image->pixmap()->size() * scale;
-    ui->image->resize(size);
+//    QSize size = ui->image->pixmap()->size() * scale;
+//    ui->image->resize(size);
+    ui->image->setGeometry(200-50*s, 100-50*s, 500/s, 333/s);
 }
 
 void SlideShow::on_rotateLButton_clicked()

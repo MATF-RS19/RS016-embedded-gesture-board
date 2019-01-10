@@ -1,18 +1,18 @@
 #ifndef TETRISDEO_H
 #define TETRISDEO_H
 
-enum tetrisoblici { NoShape, ZShape, SShape, LineShape, TShape, SquareShape,
-                   LShape, MirroredLShape };
+enum tetrisoblici { Nooblik, Zoblik, Soblik, Lineoblik, Toblik, Squareoblik,
+                   Loblik, MirroredLoblik };
 
 class tetrisdeo
 {
 public:
-    tetrisdeo() { setShape(NoShape); }
+    tetrisdeo() { setoblik(Nooblik); }
 
-    void setRandomShape();
-    void setShape(tetrisoblici shape);
+    void setRandomoblik();
+    void setoblik(tetrisoblici oblik);
 
-    tetrisoblici shape() const { return pieceShape; }
+    tetrisoblici oblik() const { return oblikDela; }
     int x(int index) const { return koordirante[index][0]; }
     int y(int index) const { return koordirante[index][1]; }
     int minX() const;
@@ -26,7 +26,7 @@ private:
     void setX(int index, int x) { koordirante[index][0] = x; }
     void setY(int index, int y) { koordirante[index][1] = y; }
 
-    tetrisoblici pieceShape;
+    tetrisoblici oblikDela;
     int koordirante[4][2];
 };
 

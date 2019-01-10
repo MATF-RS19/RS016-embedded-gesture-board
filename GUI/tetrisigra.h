@@ -3,6 +3,7 @@
 
 #include <QBasicTimer>
 #include <QFrame>
+#include <QObject>
 #include <QPointer>
 
 #include "tetrisdeo.h"
@@ -26,11 +27,6 @@ public slots:
     void start();
     void pause();
 
-signals:
-    void scoreChanged(int score);
-    void levelChanged(int level);
-    void linesRemovedChanged(int numLines);
-
 protected:
     void paintEvent(QPaintEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
@@ -39,19 +35,19 @@ protected:
 private:
     enum { BoardWidth = 10, BoardHeight = 22 };
 
-    tetrisoblici &shapeAt(int x, int y) { return board[(y * BoardWidth) + x]; }
-    int timeoutTime() { return 1000 / (1 + level); }
+    tetrisoblici &oblikAt(int x, int y) { return board[(y * BoardWidth) + x]; }
+    int timeoutTime() { return 750; }
     int squareWidth() { return contentsRect().width() / BoardWidth; }
     int squareHeight() { return contentsRect().height() / BoardHeight; }
     void clearBoard();
     void dropDown();
     void oneLineDown();
-    void pieceDropped(int dropHeight);
+    void pieceDropped();
     void removeFullLines();
     void newPiece();
     void showNextPiece();
     bool tryMove(const tetrisdeo &newPiece, int newX, int newY);
-    void drawSquare(QPainter &painter, int x, int y, tetrisoblici shape);
+    void drawSquare(QPainter &painter, int x, int y, tetrisoblici oblik);
 
     QBasicTimer timer;
     QPointer<QLabel> nextPieceLabel;
@@ -62,10 +58,7 @@ private:
     tetrisdeo nextPiece;
     int curX;
     int curY;
-    int numLinesRemoved;
     int numPiecesDropped;
-    int score;
-    int level;
     tetrisoblici board[BoardWidth * BoardHeight];
 };
 

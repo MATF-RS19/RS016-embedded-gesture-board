@@ -2,16 +2,22 @@
 
 #include "tetrisigra.h"
 
+
 tetrisigra::tetrisigra(QWidget *parent)
     : QFrame(parent)
 {
     setFrameStyle(QFrame::Panel | QFrame::Sunken);
     setFocusPolicy(Qt::StrongFocus);
+    this->setGeometry(0, 0, 300, 100);
+    QPalette pal = palette();
+    pal.setColor(QPalette::Background, Qt::black);
+    this->setAutoFillBackground(true);
+    this->setPalette(pal);
     isStarted = false;
     isPaused = false;
     clearBoard();
 
-    nextPiece.setRandomShape();
+    nextPiece.setRandomoblik();
 }
 
 void tetrisigra::setNextPieceLabel(QLabel *label)
@@ -19,7 +25,7 @@ void tetrisigra::setNextPieceLabel(QLabel *label)
     nextPieceLabel = label;
 }
 
-QSize tetrisigra::sizeHint() const
+QSize tetrisigra::sizeHint() const//ova i sledeca funkcije se koriste za velicine svakog QWidget-a
 {
     return QSize(BoardWidth * 15 + frameWidth() * 2,
                  BoardHeight * 15 + frameWidth() * 2);
@@ -37,18 +43,10 @@ void tetrisigra::start()
 
     isStarted = true;
     isWaitingAfterLine = false;
-    numLinesRemoved = 0;
     numPiecesDropped = 0;
-    score = 0;
-    level = 1;
     clearBoard();
-
-    emit linesRemovedChanged(numLinesRemoved);
-    emit scoreChanged(score);
-    emit levelChanged(level);
-
     newPiece();
-    timer.start(timeoutTime(), this);
+    timer.start(750, this);
 }
 
 void tetrisigra::pause()
@@ -60,7 +58,7 @@ void tetrisigra::pause()
     if (isPaused) {
         timer.stop();
     } else {
-        timer.start(timeoutTime(), this);
+        timer.start(750, this);
     }
     update();
 }
@@ -68,6 +66,7 @@ void tetrisigra::pause()
 void tetrisigra::paintEvent(QPaintEvent *event)
 {
     QFrame::paintEvent(event);
+
 
     QPainter painter(this);
     QRect rect = contentsRect();
@@ -80,26 +79,26 @@ void tetrisigra::paintEvent(QPaintEvent *event)
 
     for (int i = 0; i < BoardHeight; ++i) {
         for (int j = 0; j < BoardWidth; ++j) {
-            tetrisoblici shape = shapeAt(j, BoardHeight - i - 1);
-            if (shape != NoShape)
+            tetrisoblici oblik = oblikAt(j, BoardHeight - i - 1);
+            if (oblik != Nooblik)
                 drawSquare(painter, rect.left() + j * squareWidth(),
-                           boardTop + i * squareHeight(), shape);
+                           boardTop + i * squareHeight(), oblik);
         }
     }
-    if (curPiece.shape() != NoShape) {
+    if (curPiece.oblik() != Nooblik) {
         for (int i = 0; i < 4; ++i) {
             int x = curX + curPiece.x(i);
             int y = curY - curPiece.y(i);
             drawSquare(painter, rect.left() + x * squareWidth(),
                        boardTop + (BoardHeight - y - 1) * squareHeight(),
-                       curPiece.shape());
+                       curPiece.oblik());
         }
     }
 }
 
 void tetrisigra::keyPressEvent(QKeyEvent *event)
 {
-    if (!isStarted || isPaused || curPiece.shape() == NoShape) {
+    if (!isStarted || isPaused || curPiece.oblik() == Nooblik) {
         QFrame::keyPressEvent(event);
         return;
     }
@@ -111,16 +110,16 @@ void tetrisigra::keyPressEvent(QKeyEvent *event)
     case Qt::Key_Right:
         tryMove(curPiece, curX + 1, curY);
         break;
-    case Qt::Key_Down:
+    case Qt::Key_X:
         tryMove(curPiece.rotatedRight(), curX, curY);
         break;
-    case Qt::Key_Up:
+    case Qt::Key_Z:
         tryMove(curPiece.rotatedLeft(), curX, curY);
         break;
-    case Qt::Key_Space:
+    case Qt::Key_Down:
         dropDown();
         break;
-    case Qt::Key_D:
+    case Qt::Key_S:
         oneLineDown();
         break;
     default:
@@ -134,7 +133,7 @@ void tetrisigra::timerEvent(QTimerEvent *event)
         if (isWaitingAfterLine) {
             isWaitingAfterLine = false;
             newPiece();
-            timer.start(timeoutTime(), this);
+            timer.start(750, this);
         } else {
             oneLineDown();
         }
@@ -145,7 +144,7 @@ void tetrisigra::timerEvent(QTimerEvent *event)
 void tetrisigra::clearBoard()
 {
     for (int i = 0; i < BoardHeight * BoardWidth; ++i)
-        board[i] = NoShape;
+        board[i] = Nooblik;
 }
 
 void tetrisigra::dropDown()
@@ -158,32 +157,24 @@ void tetrisigra::dropDown()
         --newY;
         ++dropHeight;
     }
-    pieceDropped(dropHeight);
+    pieceDropped();
 }
 
 void tetrisigra::oneLineDown()
 {
     if (!tryMove(curPiece, curX, curY - 1))
-        pieceDropped(0);
+        pieceDropped();
 }
 
-void tetrisigra::pieceDropped(int dropHeight)
+void tetrisigra::pieceDropped()
 {
     for (int i = 0; i < 4; ++i) {
         int x = curX + curPiece.x(i);
         int y = curY - curPiece.y(i);
-        shapeAt(x, y) = curPiece.shape();
+        oblikAt(x, y) = curPiece.oblik();
     }
 
     ++numPiecesDropped;
-    if (numPiecesDropped % 25 == 0) {
-        ++level;
-        timer.start(timeoutTime(), this);
-        emit levelChanged(level);
-    }
-
-    score += dropHeight + 7;
-    emit scoreChanged(score);
     removeFullLines();
 
     if (!isWaitingAfterLine)
@@ -198,7 +189,7 @@ void tetrisigra::removeFullLines()
         bool lineIsFull = true;
 
         for (int j = 0; j < BoardWidth; ++j) {
-            if (shapeAt(j, i) == NoShape) {
+            if (oblikAt(j, i) == Nooblik) {
                 lineIsFull = false;
                 break;
             }
@@ -208,21 +199,16 @@ void tetrisigra::removeFullLines()
             ++numFullLines;
             for (int k = i; k < BoardHeight - 1; ++k) {
                 for (int j = 0; j < BoardWidth; ++j)
-                    shapeAt(j, k) = shapeAt(j, k + 1);
+                    oblikAt(j, k) = oblikAt(j, k + 1);
             }
             for (int j = 0; j < BoardWidth; ++j)
-                shapeAt(j, BoardHeight - 1) = NoShape;
+                oblikAt(j, BoardHeight - 1) = Nooblik;
         }
     }
-    if (numFullLines > 0) {
-        numLinesRemoved += numFullLines;
-        score += 10 * numFullLines;
-        emit linesRemovedChanged(numLinesRemoved);
-        emit scoreChanged(score);
-
-        timer.start(500, this);
+    if (numFullLines > 0){
+        timer.start(750, this);
         isWaitingAfterLine = true;
-        curPiece.setShape(NoShape);
+        curPiece.setoblik(Nooblik);
         update();
     }
 }
@@ -230,13 +216,13 @@ void tetrisigra::removeFullLines()
 void tetrisigra::newPiece()
 {
     curPiece = nextPiece;
-    nextPiece.setRandomShape();
+    nextPiece.setRandomoblik();
     showNextPiece();
     curX = BoardWidth / 2 + 1;
     curY = BoardHeight - 1 + curPiece.minY();
 
     if (!tryMove(curPiece, curX, curY)) {
-        curPiece.setShape(NoShape);
+        curPiece.setoblik(Nooblik);
         timer.stop();
         isStarted = false;
     }
@@ -258,7 +244,7 @@ void tetrisigra::showNextPiece()
         int x = nextPiece.x(i) - nextPiece.minX();
         int y = nextPiece.y(i) - nextPiece.minY();
         drawSquare(painter, x * squareWidth(), y * squareHeight(),
-                   nextPiece.shape());
+                   nextPiece.oblik());
     }
     nextPieceLabel->setPixmap(pixmap);
 }
@@ -270,7 +256,7 @@ bool tetrisigra::tryMove(const tetrisdeo &newPiece, int newX, int newY)
         int y = newY - newPiece.y(i);
         if (x < 0 || x >= BoardWidth || y < 0 || y >= BoardHeight)
             return false;
-        if (shapeAt(x, y) != NoShape)
+        if (oblikAt(x, y) != Nooblik)
             return false;
     }
     curPiece = newPiece;
@@ -280,14 +266,14 @@ bool tetrisigra::tryMove(const tetrisdeo &newPiece, int newX, int newY)
     return true;
 }
 
-void tetrisigra::drawSquare(QPainter &painter, int x, int y, tetrisoblici shape)
+void tetrisigra::drawSquare(QPainter &painter, int x, int y, tetrisoblici oblik)
 {
     static const QRgb colorTable[8] = {
         0x000000, 0xCC6666, 0x66CC66, 0x6666CC,
         0xCCCC66, 0xCC66CC, 0x66CCCC, 0xDAAA00
     };
 
-    QColor color = colorTable[int(shape)];
+    QColor color = colorTable[int(oblik)];
     painter.fillRect(x + 1, y + 1, squareWidth() - 2, squareHeight() - 2,
                      color);
 
@@ -301,12 +287,4 @@ void tetrisigra::drawSquare(QPainter &painter, int x, int y, tetrisoblici shape)
     painter.drawLine(x + squareWidth() - 1, y + squareHeight() - 1,
                      x + squareWidth() - 1, y + 1);
 }
-
-
-
-
-
-
-
-
 

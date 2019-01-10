@@ -75,7 +75,7 @@ void MainWindow::on_pushButtonExit_clicked()
 void MainWindow::on_pushButtonTetris_clicked()
 {
     hide();
-    tetrisWindow.showFullScreen();
+    tetrisWindow.show();
 
 }
 

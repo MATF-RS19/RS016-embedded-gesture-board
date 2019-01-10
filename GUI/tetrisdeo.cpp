@@ -4,12 +4,12 @@
 
 #include "tetrisdeo.h"
 
-void tetrisdeo::setRandomShape()
+void tetrisdeo::setRandomoblik()
 {
-    setShape(tetrisoblici(QRandomGenerator::global()->bounded(7) + 1));
+    setoblik(tetrisoblici(QRandomGenerator::global()->bounded(7) + 1));
 }
 
-void tetrisdeo::setShape(tetrisoblici shape)
+void tetrisdeo::setoblik(tetrisoblici oblik)//dodeljujemo koordinate teminima
 {
     static const int coordsTable[8][4][2] = {
         { { 0, 0 },   { 0, 0 },   { 0, 0 },   { 0, 0 } },
@@ -24,9 +24,9 @@ void tetrisdeo::setShape(tetrisoblici shape)
 
     for (int i = 0; i < 4 ; i++) {
         for (int j = 0; j < 2; ++j)
-            koordirante[i][j] = coordsTable[shape][i][j];
+            koordirante[i][j] = coordsTable[oblik][i][j];
     }
-    pieceShape = shape;
+    oblikDela = oblik;
 }
 
 int tetrisdeo::minX() const
@@ -61,12 +61,12 @@ int tetrisdeo::maxY() const
 }
 tetrisdeo tetrisdeo::rotatedLeft() const
 {
-    if (pieceShape == SquareShape)
+    if (oblikDela == Squareoblik)//ako je oblik kocka onda nema okretanja
         return *this;
 
     tetrisdeo rez;
-    rez.pieceShape = pieceShape;
-    for (int i = 0; i < 4; ++i) {
+    rez.oblikDela = oblikDela;
+    for (int i = 0; i < 4; ++i) {//za sva cetri dela puzle vrsimo pomeranje koordinata
         rez.setX(i, y(i));
         rez.setY(i, -x(i));
     }
@@ -75,11 +75,11 @@ tetrisdeo tetrisdeo::rotatedLeft() const
 
 tetrisdeo tetrisdeo::rotatedRight() const
 {
-    if (pieceShape == SquareShape)
+    if (oblikDela == Squareoblik)
         return *this;
 
     tetrisdeo rez;
-    rez.pieceShape = pieceShape;
+    rez.oblikDela = oblikDela;
     for (int i = 0; i < 4; ++i) {
         rez.setX(i, -y(i));
         rez.setY(i, x(i));
