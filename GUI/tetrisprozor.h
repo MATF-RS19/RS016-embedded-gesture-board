@@ -31,7 +31,6 @@ private:
     QPushButton *quitButton;
     QPushButton *pauseButton;
 
-private slots:
-    void serialRecievedTetris();
+
 };
 #endif

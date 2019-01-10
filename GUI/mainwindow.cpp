@@ -113,11 +113,11 @@ void MainWindow::serialRecieved()
         break;
 
    case BOTTOM_TO_TOP:
-
+        keybd_event(VK_UP,0x26,0,0);
         break;
 
    case TOP_TO_BOTTOM:
-        keybd_event(VK_SPACE,0x20,0,0);
+        keybd_event(VK_DOWN,0x28,0,0);
         break;
 
     case TAP_UP:
