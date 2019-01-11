@@ -1,6 +1,6 @@
 #include "spaceglider.h"
 #include "ui_spaceglider.h"
-
+#include "mainwindow.h"
 #include <QtCore>
 #include <QBasicTimer>
 #include <QtDebug>
@@ -13,11 +13,18 @@ SpaceGlider::SpaceGlider(QWidget *parent) :
     ui(new Ui::SpaceGlider)
 {
     ui->setupUi(this);
-//    init();
+    init();
 
     timer = new QTimer();
 
+    setFocusPolicy(Qt::StrongFocus);
+
+
     connect(timer, SIGNAL(timeout()), this, SLOT(mySlot()));
+
+//    qDebug() << QApplication::focusWidget();
+
+    ui->pushButton_start->setFocusPolicy(Qt::StrongFocus);
 
     ui->pushButton_exit->setShortcut(QKeySequence(Qt::Key_Escape));
     ui->pushButton_start->setShortcut(QKeySequence(Qt::Key_W));
@@ -75,11 +82,11 @@ void SpaceGlider::on_pushButton_exit_clicked()
 }
 
 void SpaceGlider::keyPressEvent(QKeyEvent *event) {
-    if (!isPaused) {
+ /*   if (!isPaused) {
         QMainWindow::keyPressEvent(event);
         return;
     }
-
+*/
     switch(event->key()) {
     case Qt::Key_Left:
         qDebug() << "LIJEVA SKIJA SUADE!";
@@ -87,6 +94,11 @@ void SpaceGlider::keyPressEvent(QKeyEvent *event) {
     case Qt::Key_Right:
         qDebug() << "DESNA SKIJA SUADE";
         break;
+
+    case Qt::Key_D:
+        qDebug() << "D D D D D ";
+        break;
+
     default:
         QMainWindow::keyPressEvent(event);
     }

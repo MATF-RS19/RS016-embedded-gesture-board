@@ -54,6 +54,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
    connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecieved()));
 
+   ui->pushButtonSpaceGlider->setFocusPolicy(Qt::StrongFocus);
+
    ui->pushButtonExit->setShortcut(QKeySequence(Qt::Key_Escape));
    QMainWindow::showFullScreen();
 }
@@ -89,7 +91,8 @@ void MainWindow::on_pushButtonSlideShow_clicked()
 
 void MainWindow::on_pushButtonSpaceGlider_clicked()
 {
-    // hide();
+    // TODO zakomentarisi hide
+    hide();
     SpaceGliderWindow = new SpaceGlider(this);
     SpaceGliderWindow->show();
 }
@@ -174,7 +177,3 @@ void MainWindow::serialRecieved()
     qDebug()<<ba;
 }
 
-void MainWindow::on_pushButtonSpaceGlider_toggled(bool checked)
-{
-
-}

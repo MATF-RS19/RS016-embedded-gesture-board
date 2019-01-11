@@ -21,7 +21,7 @@ public:
     void rotate(double a);
     void zoom(double s, double f);
     void reset();
-    void importImages(int type);
+    //void importImages(int type);
 
 private slots:
 
