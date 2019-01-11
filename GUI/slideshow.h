@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QtGui>
 
+
 namespace Ui {
 class SlideShow;
 }
@@ -18,7 +19,7 @@ public:
     ~SlideShow();
 
     void rotate(double a);
-    void zoom(double s);
+    void zoom(double s, double f);
     void reset();
     void importImages(int type);
 
@@ -40,6 +41,7 @@ private slots:
 
 private:
     Ui::SlideShow *ui;
+
 };
 
 #endif // SLIDESHOW_H

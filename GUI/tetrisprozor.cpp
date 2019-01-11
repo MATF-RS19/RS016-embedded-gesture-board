@@ -19,9 +19,8 @@ tetrisprozor::tetrisprozor()
     pauseButton->setFocusPolicy(Qt::NoFocus);
 
     connect(startButton, &QPushButton::clicked, board, &tetrisigra::start);
-    connect(quitButton , &QPushButton::clicked, qApp, &QApplication::quit);
+    connect(quitButton , &QPushButton::clicked, this, &tetrisprozor::hide);
     connect(pauseButton, &QPushButton::clicked, board, &tetrisigra::pause);
-
 
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(board, 3, 0, 7, 1);
@@ -30,6 +29,7 @@ tetrisprozor::tetrisprozor()
     layout->addWidget(pauseButton, 1, 0);
     setLayout(layout);
 
+     quitButton->setShortcut(QKeySequence(Qt::Key_Escape));
     setWindowTitle(tr("Tetris"));
     resize(300, 550);
 }

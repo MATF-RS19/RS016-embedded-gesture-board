@@ -15,9 +15,9 @@ SpaceGlider::SpaceGlider(QWidget *parent) :
 
     timer = new QTimer();
 
-
-
     connect(timer, SIGNAL(timeout()), this, SLOT(mySlot()));
+
+    ui->pushButton_exit->setShortcut(QKeySequence(Qt::Key_Escape));
 }
 
 SpaceGlider::~SpaceGlider()
@@ -52,25 +52,22 @@ void SpaceGlider::on_pushButton_pause_clicked()
     if(isPaused == false) {
          timer->stop();
          isPaused = true;
+    } else {
+        timer->start();
+        isPaused = false;
     }
 }
 
 void SpaceGlider::on_pushButton_start_clicked()
 {
     if(isPaused == true) {
+        init();
         timer->start(100);
         isPaused = false;
     }
 }
 
-void SpaceGlider::on_pushButton_restart_clicked()
-{
-    init();
-    isPaused = false;
-    timer->start(100);
-}
-
 void SpaceGlider::on_pushButton_exit_clicked()
 {
-    QApplication::quit();
+    QApplication::activeWindow()->hide();
 }

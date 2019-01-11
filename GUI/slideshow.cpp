@@ -15,10 +15,13 @@
 #define PREVIOUS 0
 
 // makroi za dimenzije
-#define X 480
-#define Y 140
-#define WIDTH 551
-#define HEIGHT 391
+#define X 390
+#define Y 220
+#define WIDTH 641
+#define HEIGHT 431
+
+#define ZOOM_IN 1.0
+#define ZOOM_OUT 0.0
 
 // globalna promenljiva klase Images
 static Images images(NUM_OF_IMAGES);
@@ -31,6 +34,8 @@ static int rotationHorizontal = 1;
 
 // faktor skaliranja
 static double scale = 1.0;
+
+static int counterIn = 0;
 
 SlideShow::SlideShow(QWidget *parent) :
     QMainWindow(parent),
@@ -66,6 +71,7 @@ SlideShow::SlideShow(QWidget *parent) :
     ui->rotateRButton->setShortcut(QKeySequence(Qt::Key_X));
     ui->zoomInButton->setShortcut(QKeySequence(Qt::Key_Down));
     ui->zoomOutButton->setShortcut(QKeySequence(Qt::Key_Up));
+    ui->exitButton->setShortcut(QKeySequence(Qt::Key_Escape));
 
 }
 
@@ -83,9 +89,10 @@ void SlideShow::on_exitButton_clicked()
 void SlideShow::reset() {
     // kad se ucita naredna slika, rotacija, faktor skaliranja
     // i koordinate slike se postavljaju na prvobitne
+    counterIn = 0;
     rotationHorizontal = 1;
     scale = 1.0;
-    zoom(1.0);
+    zoom(1.0, 1.0);
     ui->image->setGeometry(X, Y, WIDTH, HEIGHT);
 }
 
@@ -186,12 +193,24 @@ void SlideShow::rotate(double a) {
         rotationHorizontal = 1;
     }
 }
-void SlideShow::zoom(double s) {
+void SlideShow::zoom(double s, double f) {
     scale *= s;
 
     QSize size = ui->image->pixmap()->size() * scale;
+
+    int x = ui->image->geometry().x();
+    int y = ui->image->geometry().y();
     ui->image->resize(size);
-//    ui->image->setGeometry(200-50*s, 100-50*s, 500/s, 333/s);
+
+    if(f == ZOOM_IN) {
+        ui->image->move(x - x*0.1/2, y -y*0.1/2);
+    }
+    else {
+        ui->image->move(x + x*0.1/2, y + y*0.1/2);
+    }
+
+    qDebug() << x - x*s/2 << " " << y - y*s/2;
+//    ui->image->setGeometry(200-50*s, 100-50*s, 551/s, 391/s);
 }
 
 void SlideShow::on_rotateLButton_clicked()
@@ -206,10 +225,17 @@ void SlideShow::on_rotateRButton_clicked()
 
 void SlideShow::on_zoomInButton_clicked()
 {
-    zoom(1.1);
+    if(counterIn < 7) {
+        zoom(1.1, ZOOM_IN);
+        counterIn++;
+    }
 }
 
 void SlideShow::on_zoomOutButton_clicked()
 {
-    zoom(1/1.1);
+    if(counterIn > -7) {
+        zoom(1/1.1, ZOOM_OUT);
+        counterIn--;
+    }
+
 }
