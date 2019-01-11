@@ -20,8 +20,8 @@
 #define WIDTH 551
 #define HEIGHT 391
 
-#define IN 1.0
-#define OUT 0.0
+#define ZOOM_IN 1.0
+#define ZOOM_OUT 0.0
 
 // globalna promenljiva klase Images
 static Images images(NUM_OF_IMAGES);
@@ -36,7 +36,6 @@ static int rotationHorizontal = 1;
 static double scale = 1.0;
 
 static int counterIn = 0;
-static int counterOut = 0;
 
 SlideShow::SlideShow(QWidget *parent) :
     QMainWindow(parent),
@@ -201,7 +200,7 @@ void SlideShow::zoom(double s, double f) {
     int y = ui->image->geometry().y();
     ui->image->resize(size);
 
-    if(f == IN) {
+    if(f == ZOOM_IN) {
         ui->image->move(x - x*0.1/2, y -y*0.1/2);
     }
     else {
@@ -225,7 +224,7 @@ void SlideShow::on_rotateRButton_clicked()
 void SlideShow::on_zoomInButton_clicked()
 {
     if(counterIn < 7) {
-        zoom(1.1, IN);
+        zoom(1.1, ZOOM_IN);
         counterIn++;
     }
 }
@@ -233,7 +232,7 @@ void SlideShow::on_zoomInButton_clicked()
 void SlideShow::on_zoomOutButton_clicked()
 {
     if(counterIn > -7) {
-        zoom(1/1.1, OUT);
+        zoom(1/1.1, ZOOM_OUT);
         counterIn--;
     }
 

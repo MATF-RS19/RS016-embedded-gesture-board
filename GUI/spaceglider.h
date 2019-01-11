@@ -29,8 +29,6 @@ private slots:
 
     void on_pushButton_start_clicked();
 
-    void on_pushButton_restart_clicked();
-
 private:
     Ui::SpaceGlider *ui;
     QTimer *timer;
