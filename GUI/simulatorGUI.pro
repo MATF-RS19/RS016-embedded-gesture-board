@@ -28,26 +28,25 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     slideshow.cpp \
-    subwaysurf.cpp \
     tetrisigra.cpp \
     tetrisdeo.cpp \
     tetrisprozor.cpp \
-    images.cpp
+    images.cpp \
+    spaceglider.cpp
 
 HEADERS += \
         mainwindow.h \
     slideshow.h \
-    subwaysurf.h \
     tetrisigra.h \
     tetrisdeo.h \
     tetrisprozor.h \
-    images.h
-
+    images.h \
+    spaceglider.h
 
 FORMS += \
         mainwindow.ui \
     slideshow.ui \
-    subwaysurf.ui
+    spaceglider.ui
 
 
 # Default rules for deployment.

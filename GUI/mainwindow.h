@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 #include <QMainWindow>
 #include "slideshow.h"
-#include "subwaysurf.h"
+#include "spaceglider.h"
 #include "tetrisprozor.h"
 
 namespace Ui {
@@ -24,7 +24,7 @@ private slots:
 
     void on_pushButtonSlideShow_clicked();
 
-    void on_pushButtonSubwaySurf_clicked();
+    void on_pushButtonSpaceGlider_clicked();
 
     // uart
    void serialRecieved();
@@ -34,7 +34,7 @@ private:
     tetrisprozor tetrisWindow;
     // Tetris *tetrisWindow;
     SlideShow *slideShowWindow;
-    SubwaySurf *subwaySurfWindow;
+    SpaceGlider *SpaceGliderWindow;
 };
 
 #endif // MAINWINDOW_H

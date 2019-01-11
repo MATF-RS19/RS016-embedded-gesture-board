@@ -87,11 +87,11 @@ void MainWindow::on_pushButtonSlideShow_clicked()
     slideShowWindow->show();
 }
 
-void MainWindow::on_pushButtonSubwaySurf_clicked()
+void MainWindow::on_pushButtonSpaceGlider_clicked()
 {
     hide();
-    subwaySurfWindow = new SubwaySurf(this);
-    subwaySurfWindow->show();
+    SpaceGliderWindow = new SpaceGlider(this);
+    SpaceGliderWindow->show();
 }
 
 // uart
@@ -159,7 +159,7 @@ void MainWindow::serialRecieved()
         break;
 
    case DOUBLE_TAP_UP:
-        ui->pushButtonSubwaySurf->click();
+        ui->pushButtonSpaceGlider->click();
         break;
 
    case TAP_CENTER:

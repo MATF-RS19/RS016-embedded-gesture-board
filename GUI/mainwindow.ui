@@ -41,7 +41,7 @@
      </widget>
     </item>
     <item row="2" column="0">
-     <widget class="QPushButton" name="pushButtonSubwaySurf">
+     <widget class="QPushButton" name="pushButtonSpaceGlider">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
         <horstretch>0</horstretch>
@@ -58,7 +58,7 @@
        <bool>false</bool>
       </property>
       <property name="text">
-       <string>SubwaySurf</string>
+       <string>Space Glider</string>
       </property>
       <property name="autoDefault">
        <bool>false</bool>
