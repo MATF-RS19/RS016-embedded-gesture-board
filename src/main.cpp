@@ -96,19 +96,8 @@ main(int argc, char* argv[]) {
 
 	  uint8_t i = 0;
 
-	  // PROVERA
-	  /*
-	  while(1)
-	  {
-		  for(i = 0; i < 17; i++)
-		  {
-			  //uartSendGestureData(i);
-			  cu.send(&i,1);
-			  HAL_Delay(2000);
-		  }
 
-	  }
-	  */
+
 
 	  cg.setTrigger(0x00);
 	  HAL_Delay(10);

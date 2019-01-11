@@ -863,7 +863,7 @@ void cGest::parseData()
 	      else
 	      {
 	        if(touch_evt & DoubleTapSouth)  {temp = 11; trace_printf("double tap south\r\n");}  //uartSendGestureData(11); //
-	        if(touch_evt & DoubleTapWest)   {temp = 7;  trace_printf("double tap west\r\n");}  //uartSendGestureData(7); //
+	        if(touch_evt & DoubleTapWest)   {temp = 10;  trace_printf("double tap west\r\n");}  //uartSendGestureData(7); //
 	        if(touch_evt & DoubleTapNorth)  {temp = 13; trace_printf("double tap north\r\n");}  //uartSendGestureData(13);  //
 	        if(touch_evt & DoubleTapEast)   {temp = 12; trace_printf("double tap east\r\n");}  //uartSendGestureData(12);  //
 	        if(touch_evt & DoubleTapCenter) {temp = 15; trace_printf("double tap center\r\n");}  //uartSendGestureData(15);//
