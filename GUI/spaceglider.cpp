@@ -15,9 +15,9 @@ SpaceGlider::SpaceGlider(QWidget *parent) :
 
     timer = new QTimer();
 
-
-
     connect(timer, SIGNAL(timeout()), this, SLOT(mySlot()));
+
+    ui->pushButton_exit->setShortcut(QKeySequence(Qt::Key_Escape));
 }
 
 SpaceGlider::~SpaceGlider()
