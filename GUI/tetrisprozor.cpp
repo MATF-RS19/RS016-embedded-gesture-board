@@ -19,7 +19,7 @@ tetrisprozor::tetrisprozor()
     pauseButton->setFocusPolicy(Qt::NoFocus);
 
     connect(startButton, &QPushButton::clicked, board, &tetrisigra::start);
-    connect(quitButton , &QPushButton::clicked, qApp, &QApplication::quit);
+    connect(quitButton , &QPushButton::clicked, this, &tetrisprozor::hide);
     connect(pauseButton, &QPushButton::clicked, board, &tetrisigra::pause);
 
 

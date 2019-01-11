@@ -75,21 +75,21 @@ void MainWindow::on_pushButtonExit_clicked()
 
 void MainWindow::on_pushButtonTetris_clicked()
 {
-    hide();
+    //hide();
     tetrisWindow.show();
 
 }
 
 void MainWindow::on_pushButtonSlideShow_clicked()
 {
-    hide();
+   // hide();
     slideShowWindow = new SlideShow(this);
-    slideShowWindow->show();
+    slideShowWindow->showFullScreen();
 }
 
 void MainWindow::on_pushButtonSpaceGlider_clicked()
 {
-    hide();
+    // hide();
     SpaceGliderWindow = new SpaceGlider(this);
     SpaceGliderWindow->show();
 }

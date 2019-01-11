@@ -26,5 +26,7 @@ private:
     QPushButton *startButton;
     QPushButton *quitButton;
     QPushButton *pauseButton;
+
+
 };
 #endif

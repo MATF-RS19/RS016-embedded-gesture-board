@@ -72,5 +72,5 @@ void SpaceGlider::on_pushButton_restart_clicked()
 
 void SpaceGlider::on_pushButton_exit_clicked()
 {
-    QApplication::quit();
+    QApplication::activeWindow()->hide();
 }
