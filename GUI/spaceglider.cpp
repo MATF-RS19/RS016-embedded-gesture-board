@@ -5,19 +5,23 @@
 #include <QBasicTimer>
 #include <QtDebug>
 #include <QPalette>
+#include <QKeyEvent>
+#include <QFrame>
 
 SpaceGlider::SpaceGlider(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::SpaceGlider)
 {
     ui->setupUi(this);
-    init();
+//    init();
 
     timer = new QTimer();
 
     connect(timer, SIGNAL(timeout()), this, SLOT(mySlot()));
 
     ui->pushButton_exit->setShortcut(QKeySequence(Qt::Key_Escape));
+    ui->pushButton_start->setShortcut(QKeySequence(Qt::Key_W));
+    ui->pushButton_pause->setShortcut(QKeySequence(Qt::Key_S));
 }
 
 SpaceGlider::~SpaceGlider()
@@ -43,8 +47,6 @@ void SpaceGlider::mySlot() {
     int x = ui->label_glider->x();
     int y = ui->label_glider->y();
     ui->label_glider->move(x, y-1);
-    qDebug() << x;
-    qDebug() << y;
 }
 
 void SpaceGlider::on_pushButton_pause_clicked()
@@ -70,4 +72,22 @@ void SpaceGlider::on_pushButton_start_clicked()
 void SpaceGlider::on_pushButton_exit_clicked()
 {
     QApplication::activeWindow()->hide();
+}
+
+void SpaceGlider::keyPressEvent(QKeyEvent *event) {
+    if (!isPaused) {
+        QMainWindow::keyPressEvent(event);
+        return;
+    }
+
+    switch(event->key()) {
+    case Qt::Key_Left:
+        qDebug() << "LIJEVA SKIJA SUADE!";
+        break;
+    case Qt::Key_Right:
+        qDebug() << "DESNA SKIJA SUADE";
+        break;
+    default:
+        QMainWindow::keyPressEvent(event);
+    }
 }

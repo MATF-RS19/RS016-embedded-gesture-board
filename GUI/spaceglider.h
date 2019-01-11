@@ -15,7 +15,7 @@ class SpaceGlider : public QMainWindow
 
 public:
     explicit SpaceGlider(QWidget *parent = nullptr);
-    ~SpaceGlider();
+    ~SpaceGlider() override;
 
     void init();
 
@@ -28,6 +28,9 @@ private slots:
     void on_pushButton_pause_clicked();
 
     void on_pushButton_start_clicked();
+
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
 
 private:
     Ui::SpaceGlider *ui;

@@ -30,8 +30,10 @@ tetrisprozor::tetrisprozor()
     setLayout(layout);
 
      quitButton->setShortcut(QKeySequence(Qt::Key_Escape));
+     startButton->setShortcut(QKeySequence(Qt::Key_W));
+     pauseButton->setShortcut(QKeySequence(Qt::Key_S));
     setWindowTitle(tr("Tetris"));
-    resize(300, 550);
+    resize(380, 700);
 }
 QLabel *tetrisprozor::createLabel(const QString &text)
 {
