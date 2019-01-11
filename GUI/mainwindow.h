@@ -29,6 +29,8 @@ private slots:
     // uart
    void serialRecieved();
 
+   void on_pushButtonSpaceGlider_toggled(bool checked);
+
 private:
     Ui::MainWindow *ui;
     tetrisprozor tetrisWindow;

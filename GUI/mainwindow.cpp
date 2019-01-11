@@ -11,7 +11,7 @@
 #include <QDebug>
 #include <QKeyEvent>
 #include <windows.h>
-QSerialPort *serial;
+static QSerialPort *serial;
 
 // bajtovi koji stizu sa ploce
 #define LEFT_TO_RIGHT 0x02
@@ -35,26 +35,26 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
-    QPixmap bkgnd(":/resource/img/background.jpg");
-    QPalette palette;
-    palette.setBrush(QPalette::Background, bkgnd);
-    this->setPalette(palette);
+   ui->setupUi(this);
+   QPixmap bkgnd(":/resource/img/background.jpg");
+   QPalette palette;
+   palette.setBrush(QPalette::Background, bkgnd);
+   this->setPalette(palette);
 
-    //uart
-    serial = new QSerialPort(this);
+   //uart
+   serial = new QSerialPort(this);
 
-    serial->setPortName("com6");
-    serial->setBaudRate(QSerialPort::Baud115200);
-    serial->setDataBits(QSerialPort::Data8);
-    serial->setParity(QSerialPort::NoParity);
-    serial->setStopBits(QSerialPort::OneStop);
-    serial->setFlowControl(QSerialPort::NoFlowControl);
-    serial->open(QIODevice::ReadWrite);
+   serial->setPortName("com6");
+   serial->setBaudRate(QSerialPort::Baud115200);
+   serial->setDataBits(QSerialPort::Data8);
+   serial->setParity(QSerialPort::NoParity);
+   serial->setStopBits(QSerialPort::OneStop);
+   serial->setFlowControl(QSerialPort::NoFlowControl);
+   serial->open(QIODevice::ReadWrite);
 
-    connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecieved()));
+   connect(serial, SIGNAL(readyRead()), this, SLOT(serialRecieved()));
 
-
+   ui->pushButtonExit->setShortcut(QKeySequence(Qt::Key_Escape));
    QMainWindow::showFullScreen();
 }
 
@@ -147,31 +147,34 @@ void MainWindow::serialRecieved()
 
 
    case DOUBLE_TAP_LEFT:
-
+        keybd_event(VK_ESCAPE, 0x1B, 0, 0);
         break;
 
    case DOUBLE_TAP_DOWN:
-        ui->pushButtonTetris->click();
+        // ui->pushButtonTetris->click();
         break;
 
    case DOUBLE_TAP_RIGHT:
-        QApplication::exit();
+
         break;
 
    case DOUBLE_TAP_UP:
-        ui->pushButtonSpaceGlider->click();
+       // ui->pushButtonSpaceGlider->click();
         break;
 
    case TAP_CENTER:
-
+        keybd_event(VK_SPACE, 0x20, 0, 0);
         break;
 
     case DOUBLE_TAP_CENTER:
-        ui->pushButtonSlideShow->click();
+       // ui->pushButtonSlideShow->click();
         break;
     }
 
     qDebug()<<ba;
+}
 
-    qDebug()<<ba;
+void MainWindow::on_pushButtonSpaceGlider_toggled(bool checked)
+{
+
 }

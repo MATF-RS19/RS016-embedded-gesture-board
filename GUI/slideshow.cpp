@@ -15,10 +15,10 @@
 #define PREVIOUS 0
 
 // makroi za dimenzije
-#define X 480
-#define Y 140
-#define WIDTH 551
-#define HEIGHT 391
+#define X 390
+#define Y 220
+#define WIDTH 641
+#define HEIGHT 431
 
 #define ZOOM_IN 1.0
 #define ZOOM_OUT 0.0
@@ -71,6 +71,7 @@ SlideShow::SlideShow(QWidget *parent) :
     ui->rotateRButton->setShortcut(QKeySequence(Qt::Key_X));
     ui->zoomInButton->setShortcut(QKeySequence(Qt::Key_Down));
     ui->zoomOutButton->setShortcut(QKeySequence(Qt::Key_Up));
+    ui->exitButton->setShortcut(QKeySequence(Qt::Key_Escape));
 
 }
 
@@ -88,6 +89,7 @@ void SlideShow::on_exitButton_clicked()
 void SlideShow::reset() {
     // kad se ucita naredna slika, rotacija, faktor skaliranja
     // i koordinate slike se postavljaju na prvobitne
+    counterIn = 0;
     rotationHorizontal = 1;
     scale = 1.0;
     zoom(1.0, 1.0);
