@@ -68,7 +68,7 @@ SlideShow::SlideShow(QWidget *parent) :
     ui->rotateRButton->setShortcut(QKeySequence(Qt::Key_X));
     ui->zoomInButton->setShortcut(QKeySequence(Qt::Key_Down));
     ui->zoomOutButton->setShortcut(QKeySequence(Qt::Key_Up));
-    ui->exitButton->setShortcut(QKeySequence(Qt::Key_Escape));
+    ui->exitButton->setShortcut(QKeySequence(Qt::Key_D));
 
 }
 
@@ -80,7 +80,7 @@ SlideShow::~SlideShow()
 
 void SlideShow::on_exitButton_clicked()
 {
-    QApplication::activeWindow()->hide();
+    QApplication::activeWindow()->close();
 }
 
 void SlideShow::reset() {

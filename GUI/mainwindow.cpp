@@ -24,10 +24,10 @@ static QSerialPort *serial;
 #define TAP_LEFT 0x09
 #define COUNTER_CLOCKWISE 0x10
 #define CLOCKWISE 0x11
-#define DOUBLE_TAP_LEFT 0xA
+#define DOUBLE_TAP_LEFT 0xD
 #define DOUBLE_TAP_DOWN 0xB
 #define DOUBLE_TAP_RIGHT 0xC
-#define DOUBLE_TAP_UP 0xD
+#define DOUBLE_TAP_UP 0xA
 #define TAP_CENTER 0xE
 #define DOUBLE_TAP_CENTER 0xF
 
@@ -56,7 +56,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
    ui->pushButtonSpaceGlider->setFocusPolicy(Qt::StrongFocus);
 
-   ui->pushButtonExit->setShortcut(QKeySequence(Qt::Key_Escape));
+   ui->pushButtonExit->setShortcut(QKeySequence(Qt::Key_Q));
+   ui->pushButtonSpaceGlider->setShortcut(QKeySequence(Qt::Key_J));
+   ui->pushButtonSlideShow->setShortcut(QKeySequence(Qt::Key_K));
+   ui->pushButtonTetris->setShortcut(QKeySequence(Qt::Key_L));
    QMainWindow::showFullScreen();
 }
 
@@ -68,10 +71,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonExit_clicked()
 {
-    QMessageBox::StandardButton reply = QMessageBox::question(this, "Exit", "Are you sure you want to exit", QMessageBox::Yes | QMessageBox::No);
+    //QMessageBox::StandardButton reply = QMessageBox::question(this, "Exit", "Are you sure you want to exit", QMessageBox::Yes | QMessageBox::No);
 
-    if(reply == QMessageBox::Yes)
-        QApplication::exit();
+    //if(reply == QMessageBox::Yes)
+    QApplication::exit();
 
 }
 
@@ -151,11 +154,13 @@ void MainWindow::serialRecieved()
 
 
    case DOUBLE_TAP_LEFT:
-        keybd_event(VK_ESCAPE, 0x1B, 0, 0);
+        keybd_event(0x51, 0x51, 0, 0);  // Q
         break;
 
    case DOUBLE_TAP_DOWN:
-        // ui->pushButtonTetris->click();
+
+        keybd_event(0x4C, 0x4C, 0, 0);  //L
+
         break;
 
    case DOUBLE_TAP_RIGHT:
@@ -163,16 +168,20 @@ void MainWindow::serialRecieved()
         break;
 
    case DOUBLE_TAP_UP:
-       // ui->pushButtonSpaceGlider->click();
+
+            keybd_event(0x4A, 0x4A, 0, 0);  // J
+
         break;
 
    case TAP_CENTER:
-        keybd_event(VK_SPACE, 0x20, 0, 0);
+
         break;
 
     case DOUBLE_TAP_CENTER:
-       // ui->pushButtonSlideShow->click();
-        break;
+        // K
+          keybd_event(0x4B, 0x4B, 0, 0);
+
+      break;
     }
 
     qDebug()<<ba;
