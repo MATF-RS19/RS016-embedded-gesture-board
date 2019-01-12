@@ -8,8 +8,6 @@
 #include <stdio.h>
 #include <iostream>
 
-#define NUM_OF_IMAGES 10
-
 // makroi za prepoznavanje da li je kliknuto dugme next ili previous
 #define NEXT 1
 #define PREVIOUS 0
@@ -24,10 +22,7 @@
 #define ZOOM_OUT 0.0
 
 // globalna promenljiva klase Images
-static Images images(NUM_OF_IMAGES);
-
-// promenljiva u kojoj se cuva ime trenutne fotografije
-static QString currentImageName;
+static Images images;
 
 // parametar za rotaciju (na pocetku su sve slike horizontalno postavljene)
 static int rotationHorizontal = 1;
@@ -35,6 +30,7 @@ static int rotationHorizontal = 1;
 // faktor skaliranja
 static double scale = 1.0;
 
+// brojac za zoom
 static int counterIn = 0;
 
 SlideShow::SlideShow(QWidget *parent) :
@@ -44,21 +40,22 @@ SlideShow::SlideShow(QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle("Slideshow");
 
-    // dodaju se fotografije u vector images
-    images.addMember(":/new/prefix1/pic1");
+    // dodaju se slike u vektor m_names klase images
+  //  images.addMember(":/new/prefix1/pic1");
+
     images.addMember(":/new/prefix1/pic2");
     images.addMember(":/new/prefix1/pic3");
     images.addMember(":/new/prefix1/pic4");
     images.addMember(":/new/prefix1/pic5");
     images.addMember(":/new/prefix1/pic6");
+    images.addMember(":/new/prefix1/pic7");
+    images.addMember(":/new/prefix1/pic1");
+    images.addMember(":/new/prefix1/pic9");
 
     QString s1 = images.names(0);
 
-    // labela se postavlja na prvu fotografiju iz vektora
+    // labela se postavlja na prvu sliku iz vektora
     ui->image->setPixmap(QPixmap(s1));
-
-    // azurira se trenutna fotografija
-    currentImageName = s1;
 
     // omoguceno skaliranje labele image
     ui->image->setScaledContents(true);
@@ -87,7 +84,7 @@ void SlideShow::on_exitButton_clicked()
 }
 
 void SlideShow::reset() {
-    // kad se ucita naredna slika, rotacija, faktor skaliranja
+    // kad se ucita naredna slika, brojac zooma, rotacija, faktor skaliranja
     // i koordinate slike se postavljaju na prvobitne
     counterIn = 0;
     rotationHorizontal = 1;
@@ -97,72 +94,17 @@ void SlideShow::reset() {
 }
 
 
-void SlideShow::importImages(int type) {
-
-    unsigned n = images.size();
-    QString first = images.names(0);
-    QString last = images.names(n-1);
-
-    // proverava se da li je ime trenutno prikazane slike
-    // jednako imenu slike iz vektora i kad se poklope
-    // slika se postavlja na narednu tj. prethodnu
-    // i azurira se ime trenutno prikazane slike
-
-    // ako je type 1, onda se ucitava naredna
-    if(type == NEXT) {
-
-        // ako je trenutna poslednja, naredna je prva
-        if(!(currentImageName.compare(last))) {
-                ui->image->setPixmap(QPixmap(first));
-                currentImageName = first;
-         }
-
-        else {
-            for(unsigned i = 0; i < n-1; i++) {
-                if(!(currentImageName.compare(images.names(i)))) {
-                        unsigned j = i;
-                        ui->image->setPixmap(QPixmap(images.names(j+1)));
-                        currentImageName = images.names(j+1);
-                        break;
-                 }
-            }
-        }
-
-    }
-
-    // ako je type 0 ucitava se prethodna slika
-    else if(type == PREVIOUS) {
-
-        // ako je trenutna prva, prethodna je poslednja
-        if(!(currentImageName.compare(first))) {
-            ui->image->setPixmap(QPixmap(last));
-            currentImageName = last;
-        }
-
-        else {
-            for(unsigned i = 1; i < n; i++) {
-                if(!(currentImageName.compare(images.names(i)))) {
-                        ui->image->setPixmap(QPixmap(images.names(i-1)));
-                        currentImageName = images.names(i-1);
-                    }
-            }
-        }
-    }
-
-    else return;
-}
-
 void SlideShow::on_nextButton_clicked()
 {
     // pocetno stanje slike
     reset();
-    importImages(NEXT);
+    images.importImages(NEXT, ui->image);
 }
 
 void SlideShow::on_previousButton_clicked()
 {
     reset();
-    importImages(PREVIOUS);
+    images.importImages(PREVIOUS, ui->image);
 }
 
 
@@ -193,6 +135,7 @@ void SlideShow::rotate(double a) {
         rotationHorizontal = 1;
     }
 }
+
 void SlideShow::zoom(double s, double f) {
     scale *= s;
 
@@ -209,8 +152,8 @@ void SlideShow::zoom(double s, double f) {
         ui->image->move(x + x*0.1/2, y + y*0.1/2);
     }
 
-    qDebug() << x - x*s/2 << " " << y - y*s/2;
-//    ui->image->setGeometry(200-50*s, 100-50*s, 551/s, 391/s);
+//    qDebug() << x - x*s/2 << " " << y - y*s/2;
+
 }
 
 void SlideShow::on_rotateLButton_clicked()

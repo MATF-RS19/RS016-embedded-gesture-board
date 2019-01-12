@@ -99,10 +99,32 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="resources.qrc">:/resource/img/images.jpg</pixmap>
+        <pixmap resource="resources.qrc">:/resource/img/raketa.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="raketla">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>-161</y>
+         <width>61</width>
+         <height>161</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="resources.qrc">:/resource/img/tip_6.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
        </property>
       </widget>
      </widget>

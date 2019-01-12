@@ -8,11 +8,11 @@
 #include <string>
 #include <iostream>
 #include <QPixmap>
-
+#include <QLabel>
 class Images
 {
 public:
-    Images(unsigned int num);
+    Images();
     virtual ~Images();
     void addMember(const QString &name);
     void removeMember(const QString &name);
@@ -20,9 +20,13 @@ public:
     unsigned int size();
 
 
+    void importImages(int type, QLabel* label);
+    QString getCurrentImageName();
+
 private:
-    unsigned int m_num;
+
     std::vector<QString> m_names;
+    QString m_currentImageName;
 };
 
 #endif // IMAGES_H

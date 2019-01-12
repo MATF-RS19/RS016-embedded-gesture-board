@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QtCore>
-
+#include <QLabel>
 
 namespace Ui {
 class SpaceGlider;
@@ -19,8 +19,13 @@ public:
 
     void init();
 
-public slots:
-    void mySlot();
+    void turnLeft();
+    void turnRight();
+    void goForward();
+    void goBackward();
+
+    QLabel* fireMissile();
+
 
 private slots:
     void on_pushButton_exit_clicked();
@@ -29,6 +34,8 @@ private slots:
 
     void on_pushButton_start_clicked();
 
+    void timerSlot();
+
 protected:
     void keyPressEvent(QKeyEvent *event) override;
 
@@ -36,6 +43,13 @@ private:
     Ui::SpaceGlider *ui;
     QTimer *timer;
     bool isPaused;
+
+    int positionH;
+    int positionV;
+
+    int nextMissile;
+
+    QVector<QLabel*> missiles;
 };
 
 #endif // SPACEGLIDER_H

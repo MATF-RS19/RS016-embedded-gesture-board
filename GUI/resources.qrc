@@ -2,5 +2,12 @@
     <qresource prefix="/resource">
         <file>img/background.jpg</file>
         <file>img/images.jpg</file>
+        <file>img/raketa.png</file>
+        <file>img/tip_1.png</file>
+        <file>img/tip_2.png</file>
+        <file>img/tip_3.png</file>
+        <file>img/tip_5.png</file>
+        <file>img/tip_6.png</file>
+        <file>img/tip_4.png</file>
     </qresource>
 </RCC>
