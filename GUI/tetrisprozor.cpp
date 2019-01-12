@@ -15,7 +15,7 @@ tetrisprozor::tetrisprozor()
     quitButton = new QPushButton(tr("&tap right to Quit"));
     quitButton->setFocusPolicy(Qt::NoFocus);
 
-    pauseButton = new QPushButton(tr("&tap down to Pause"));
+    pauseButton = new QPushButton(tr("&tap down to Pause/Resume"));
     pauseButton->setFocusPolicy(Qt::NoFocus);
 
     connect(startButton, &QPushButton::clicked, board, &tetrisigra::start);

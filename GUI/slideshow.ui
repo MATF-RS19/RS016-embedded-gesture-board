@@ -149,9 +149,9 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
     <widget class="QPushButton" name="exitButton">
      <property name="geometry">
       <rect>
-       <x>1250</x>
+       <x>1162</x>
        <y>710</y>
-       <width>93</width>
+       <width>181</width>
        <height>37</height>
       </rect>
      </property>
@@ -160,7 +160,7 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
 font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
      </property>
      <property name="text">
-      <string>Exit</string>
+      <string>Tap right to exit</string>
      </property>
      <property name="autoDefault">
       <bool>true</bool>
