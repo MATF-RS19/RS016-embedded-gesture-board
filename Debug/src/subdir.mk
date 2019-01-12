@@ -12,10 +12,8 @@ CPP_SRCS += \
 ../src/Timer.cpp \
 ../src/cGest.cpp \
 ../src/cUart.cpp \
-../src/gesture.cpp \
 ../src/i2c.cpp \
-../src/main.cpp \
-../src/uart.cpp 
+../src/main.cpp 
 
 OBJS += \
 ./src/Timer.o \
@@ -23,11 +21,9 @@ OBJS += \
 ./src/_write.o \
 ./src/cGest.o \
 ./src/cUart.o \
-./src/gesture.o \
 ./src/i2c.o \
 ./src/main.o \
-./src/stm32f4xx_hal_msp.o \
-./src/uart.o 
+./src/stm32f4xx_hal_msp.o 
 
 C_DEPS += \
 ./src/_initialize_hardware.d \
@@ -38,10 +34,8 @@ CPP_DEPS += \
 ./src/Timer.d \
 ./src/cGest.d \
 ./src/cUart.d \
-./src/gesture.d \
 ./src/i2c.d \
-./src/main.d \
-./src/uart.d 
+./src/main.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

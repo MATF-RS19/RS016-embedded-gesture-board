@@ -4,13 +4,8 @@
 
 #include "diag/Trace.h"
 #include "i2c.h"
-
-//#include "Timer.h"
-//#include "gesture.h"
-//#include "gestureDefs.h"
 #include "cGest.h"
 #include "cUart.h"
-
 
 // Sample pragmas to cope with warnings. Please note the related line at
 // the end of this function, used to pop the compiler diagnostics status.
@@ -63,15 +58,15 @@ main(int argc, char* argv[]) {
 	  cg.TransFreqSelect(0x05,0x43210);
 	  HAL_Delay(10);
 	  cg.setEnableAllGestures();
-	  HAL_Delay(10);
 	  HAL_Delay(100);
 	  // eof TODO
 
-	  // TODO  ODR = otput data register
-	  if ((GPIOA->ODR & 0b1000000) == 0)
+	  // citamo stanje RST pina, ako je 0, setujemo na 1 da bismo resetovali gesture
+	  // i cekamo 100 milisekndi
+	  if (cg.readRSTpin() == 0)
 	  {
-	     cg.setRSTpin(1);
-	     HAL_Delay(100);
+		  cg.setRSTpin(1);
+		  HAL_Delay(100);
 	  }
 
 	  // Citaju se podaci koji stizu i parsiraju se

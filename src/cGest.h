@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 #include "gestureDefs.h"
-#include "gesture.h"
+//#include "gesture.h"
 
 #include "cUart.h"
 //#include "uart.h"
@@ -32,21 +32,23 @@ public:
 
 	void setRSTpin(uint8_t s);
 
+	uint8_t readRSTpin();
+
 	uint8_t readRDYpin();
 
 	void GestIC_Read(char msgLen);
 
 	void GestIC_Write( uint8_t msgLen);
 
-	char setAirWheel(char ENABLE);
+	//char setAirWheel(char ENABLE);
 
-	char setTouchDetection(char ENABLE);
+	//char setTouchDetection(char ENABLE);
 
-	char setApproachDetection(char ENABLE);
+	//char setApproachDetection(char ENABLE);
 	/*
 	This command is not anymore supported starting from V1.0 release.
 	*/
-	char setApproachDetection2(char ENABLE);
+	//char setApproachDetection2(char ENABLE);
 
 	/* Parameters:
 	0 - Enable All Gestures
@@ -122,8 +124,8 @@ private:
 
 	cUart cu;
 	unsigned int touch_evt, touch_evt_old;
-	char gest_evt, gest_evt_old, gest_class, gest_recognition, gest_edge_flick;
-	unsigned int color, flag, clk, cclk;
+	char gest_evt, gest_evt_old;// gest_class, gest_recognition, gest_edge_flick;
+	unsigned int flag;
 	unsigned int OLDAirWheelInfo=0;
 
 };
