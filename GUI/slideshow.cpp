@@ -41,15 +41,13 @@ SlideShow::SlideShow(QWidget *parent) :
     setWindowTitle("Slideshow");
 
     // dodaju se slike u vektor m_names klase images
-  //  images.addMember(":/new/prefix1/pic1");
-
     images.addMember(":/new/prefix1/pic2");
     images.addMember(":/new/prefix1/pic3");
     images.addMember(":/new/prefix1/pic4");
     images.addMember(":/new/prefix1/pic5");
     images.addMember(":/new/prefix1/pic6");
     images.addMember(":/new/prefix1/pic7");
-    images.addMember(":/new/prefix1/pic1");
+    images.addMember(":/new/prefix1/pic8");
     images.addMember(":/new/prefix1/pic9");
 
     QString s1 = images.names(0);

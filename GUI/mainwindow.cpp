@@ -82,7 +82,7 @@ void MainWindow::on_pushButtonTetris_clicked()
 {
     //hide();
     tetrisWindow.show();
-    this->showMinimized();
+  //  this->showMinimized();
 
 }
 
@@ -91,12 +91,12 @@ void MainWindow::on_pushButtonSlideShow_clicked()
    // hide();
     slideShowWindow = new SlideShow();
     slideShowWindow->showFullScreen();
-    this->showMinimized();
+  //  this->showMinimized();
 }
 
 void MainWindow::on_pushButtonSpaceGlider_clicked()
 {
-    this->showMinimized();
+    //this->showMinimized();
     SpaceGliderWindow = new SpaceGlider(this);
     SpaceGliderWindow->show();
 }
@@ -169,8 +169,7 @@ void MainWindow::serialRecieved()
 
    case DOUBLE_TAP_UP:
 
-            keybd_event(0x4A, 0x4A, 0, 0);  // J
-
+        keybd_event(0x4A, 0x4A, 0, 0);  // J
         break;
 
    case TAP_CENTER:
@@ -179,9 +178,8 @@ void MainWindow::serialRecieved()
 
     case DOUBLE_TAP_CENTER:
         // K
-          keybd_event(0x4B, 0x4B, 0, 0);
-
-      break;
+        keybd_event(0x4B, 0x4B, 0, 0);
+        break;
     }
 
     qDebug()<<ba;

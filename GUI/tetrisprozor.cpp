@@ -29,7 +29,6 @@ tetrisprozor::tetrisprozor()
     layout->addWidget(pauseButton, 1, 0);
     setLayout(layout);
 
-
     quitButton->setShortcut(QKeySequence(Qt::Key_D));
     startButton->setShortcut(QKeySequence(Qt::Key_W));
     pauseButton->setShortcut(QKeySequence(Qt::Key_S));
