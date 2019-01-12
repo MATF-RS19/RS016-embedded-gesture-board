@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[7];
-    char stringdata0[144];
+    char stringdata0[145];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,14 +36,14 @@ QT_MOC_LITERAL(1, 11, 25), // "on_pushButtonExit_clicked"
 QT_MOC_LITERAL(2, 37, 0), // ""
 QT_MOC_LITERAL(3, 38, 27), // "on_pushButtonTetris_clicked"
 QT_MOC_LITERAL(4, 66, 30), // "on_pushButtonSlideShow_clicked"
-QT_MOC_LITERAL(5, 97, 31), // "on_pushButtonSubwaySurf_clicked"
-QT_MOC_LITERAL(6, 129, 14) // "serialRecieved"
+QT_MOC_LITERAL(5, 97, 32), // "on_pushButtonSpaceGlider_clicked"
+QT_MOC_LITERAL(6, 130, 14) // "serialRecieved"
 
     },
     "MainWindow\0on_pushButtonExit_clicked\0"
     "\0on_pushButtonTetris_clicked\0"
     "on_pushButtonSlideShow_clicked\0"
-    "on_pushButtonSubwaySurf_clicked\0"
+    "on_pushButtonSpaceGlider_clicked\0"
     "serialRecieved"
 };
 #undef QT_MOC_LITERAL
@@ -87,7 +87,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 0: _t->on_pushButtonExit_clicked(); break;
         case 1: _t->on_pushButtonTetris_clicked(); break;
         case 2: _t->on_pushButtonSlideShow_clicked(); break;
-        case 3: _t->on_pushButtonSubwaySurf_clicked(); break;
+        case 3: _t->on_pushButtonSpaceGlider_clicked(); break;
         case 4: _t->serialRecieved(); break;
         default: ;
         }

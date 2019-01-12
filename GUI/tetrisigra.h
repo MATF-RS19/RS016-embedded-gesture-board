@@ -45,12 +45,10 @@ private:
     void pieceDropped();
     void removeFullLines();
     void newPiece();
-    void showNextPiece();
     bool tryMove(const tetrisdeo &newPiece, int newX, int newY);
     void drawSquare(QPainter &painter, int x, int y, tetrisoblici oblik);
 
     QBasicTimer timer;
-    QPointer<QLabel> nextPieceLabel;
     bool isStarted;
     bool isPaused;
     bool isWaitingAfterLine;

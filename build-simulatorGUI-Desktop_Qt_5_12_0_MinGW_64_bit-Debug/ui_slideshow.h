@@ -13,10 +13,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QStatusBar>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -25,9 +22,7 @@ class Ui_SlideShow
 {
 public:
     QWidget *centralwidget;
-    QVBoxLayout *verticalLayout;
     QWidget *widget;
-    QLabel *image;
     QPushButton *previousButton;
     QPushButton *nextButton;
     QPushButton *rotateLButton;
@@ -35,66 +30,82 @@ public:
     QPushButton *zoomInButton;
     QPushButton *zoomOutButton;
     QPushButton *exitButton;
-    QMenuBar *menubar;
-    QStatusBar *statusbar;
+    QLabel *image;
+    QLabel *label;
+    QLabel *label_2;
 
     void setupUi(QMainWindow *SlideShow)
     {
         if (SlideShow->objectName().isEmpty())
             SlideShow->setObjectName(QString::fromUtf8("SlideShow"));
-        SlideShow->resize(903, 577);
+        SlideShow->resize(1366, 768);
         SlideShow->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 0);"));
         centralwidget = new QWidget(SlideShow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        verticalLayout = new QVBoxLayout(centralwidget);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         widget = new QWidget(centralwidget);
         widget->setObjectName(QString::fromUtf8("widget"));
-        image = new QLabel(widget);
-        image->setObjectName(QString::fromUtf8("image"));
-        image->setGeometry(QRect(200, 100, 500, 333));
+        widget->setGeometry(QRect(10, 10, 1366, 768));
         previousButton = new QPushButton(widget);
         previousButton->setObjectName(QString::fromUtf8("previousButton"));
-        previousButton->setGeometry(QRect(310, 10, 51, 51));
+        previousButton->setGeometry(QRect(630, 10, 51, 51));
         previousButton->setStyleSheet(QString::fromUtf8("color: rgb(0, 170, 255);\n"
 "font: 75 20pt \"MS Shell Dlg 2\";"));
+        previousButton->setAutoDefault(true);
         nextButton = new QPushButton(widget);
         nextButton->setObjectName(QString::fromUtf8("nextButton"));
-        nextButton->setGeometry(QRect(380, 10, 51, 51));
+        nextButton->setGeometry(QRect(700, 10, 51, 51));
         nextButton->setStyleSheet(QString::fromUtf8("color: rgb(0, 170, 255);\n"
 "font: 75 20pt \"MS Shell Dlg 2\";"));
+        nextButton->setAutoDefault(true);
         rotateLButton = new QPushButton(widget);
         rotateLButton->setObjectName(QString::fromUtf8("rotateLButton"));
-        rotateLButton->setGeometry(QRect(100, 20, 93, 28));
-        rotateLButton->setStyleSheet(QString::fromUtf8("color: rgb(0, 170, 255);"));
+        rotateLButton->setGeometry(QRect(250, 10, 131, 41));
+        rotateLButton->setStyleSheet(QString::fromUtf8("color: rgb(0, 170, 255);\n"
+"font: 9pt \"MS Shell Dlg 2\";"));
+        rotateLButton->setAutoDefault(true);
         rotateRButton = new QPushButton(widget);
         rotateRButton->setObjectName(QString::fromUtf8("rotateRButton"));
-        rotateRButton->setGeometry(QRect(200, 20, 93, 28));
-        rotateRButton->setStyleSheet(QString::fromUtf8("\n"
+        rotateRButton->setGeometry(QRect(380, 10, 141, 41));
+        rotateRButton->setStyleSheet(QString::fromUtf8("font: 9pt \"MS Shell Dlg 2\";\n"
 "color: rgb(0, 170, 255);"));
+        rotateRButton->setAutoDefault(true);
         zoomInButton = new QPushButton(widget);
         zoomInButton->setObjectName(QString::fromUtf8("zoomInButton"));
-        zoomInButton->setGeometry(QRect(520, 20, 93, 28));
-        zoomInButton->setStyleSheet(QString::fromUtf8("color: rgb(0, 170, 255);"));
+        zoomInButton->setGeometry(QRect(830, 20, 151, 28));
+        zoomInButton->setStyleSheet(QString::fromUtf8("color: rgb(0, 170, 255);\n"
+"font: 9pt \"MS Shell Dlg 2\";"));
+        zoomInButton->setAutoDefault(true);
         zoomOutButton = new QPushButton(widget);
         zoomOutButton->setObjectName(QString::fromUtf8("zoomOutButton"));
-        zoomOutButton->setGeometry(QRect(630, 20, 93, 28));
-        zoomOutButton->setStyleSheet(QString::fromUtf8("color: rgb(0, 170, 255);"));
+        zoomOutButton->setGeometry(QRect(1000, 20, 161, 28));
+        zoomOutButton->setStyleSheet(QString::fromUtf8("color: rgb(0, 170, 255);\n"
+"font: 9pt \"MS Shell Dlg 2\";"));
+        zoomOutButton->setAutoDefault(true);
         exitButton = new QPushButton(widget);
         exitButton->setObjectName(QString::fromUtf8("exitButton"));
-        exitButton->setGeometry(QRect(822, 0, 61, 28));
-        exitButton->setStyleSheet(QString::fromUtf8("color: rgb(0, 170, 255);"));
-
-        verticalLayout->addWidget(widget);
-
+        exitButton->setGeometry(QRect(1250, 710, 93, 37));
+        exitButton->setStyleSheet(QString::fromUtf8("color: rgb(0, 170, 255);\n"
+"font: 14pt \"MS Shell Dlg 2\";"));
+        exitButton->setAutoDefault(true);
+        image = new QLabel(widget);
+        image->setObjectName(QString::fromUtf8("image"));
+        image->setGeometry(QRect(390, 220, 641, 431));
+        image->setStyleSheet(QString::fromUtf8("border-color: rgb(0, 170, 255);\n"
+"border-top-color: rgb(0, 170, 255);\n"
+"border-left-color: rgb(0, 170, 255);\n"
+"border-right-color: rgb(0, 170, 255);\n"
+"border-bottom-color: rgb(0, 170, 255);"));
+        label = new QLabel(widget);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(720, 60, 101, 21));
+        label->setStyleSheet(QString::fromUtf8("color: rgb(0, 170, 255);\n"
+"font: 9pt \"MS Shell Dlg 2\";"));
+        label_2 = new QLabel(widget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setGeometry(QRect(610, 60, 81, 20));
+        label_2->setStyleSheet(QString::fromUtf8("color: rgb(0, 170, 255);\n"
+"font: 9pt \"MS Shell Dlg 2\";"));
         SlideShow->setCentralWidget(centralwidget);
-        menubar = new QMenuBar(SlideShow);
-        menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 903, 26));
-        SlideShow->setMenuBar(menubar);
-        statusbar = new QStatusBar(SlideShow);
-        statusbar->setObjectName(QString::fromUtf8("statusbar"));
-        SlideShow->setStatusBar(statusbar);
 
         retranslateUi(SlideShow);
 
@@ -104,14 +115,16 @@ public:
     void retranslateUi(QMainWindow *SlideShow)
     {
         SlideShow->setWindowTitle(QApplication::translate("SlideShow", "MainWindow", nullptr));
-        image->setText(QApplication::translate("SlideShow", "TextLabel", nullptr));
         previousButton->setText(QApplication::translate("SlideShow", "<", nullptr));
         nextButton->setText(QApplication::translate("SlideShow", ">", nullptr));
         rotateLButton->setText(QApplication::translate("SlideShow", "Rotate left", nullptr));
         rotateRButton->setText(QApplication::translate("SlideShow", "Rotate Right", nullptr));
-        zoomInButton->setText(QApplication::translate("SlideShow", "Zoom in", nullptr));
-        zoomOutButton->setText(QApplication::translate("SlideShow", "Zoom out", nullptr));
+        zoomInButton->setText(QApplication::translate("SlideShow", "Flick down to zoom in", nullptr));
+        zoomOutButton->setText(QApplication::translate("SlideShow", "Flick up to zoom out", nullptr));
         exitButton->setText(QApplication::translate("SlideShow", "Exit", nullptr));
+        image->setText(QApplication::translate("SlideShow", "TextLabel", nullptr));
+        label->setText(QApplication::translate("SlideShow", "Swipe right", nullptr));
+        label_2->setText(QApplication::translate("SlideShow", "Swipe left", nullptr));
     } // retranslateUi
 
 };

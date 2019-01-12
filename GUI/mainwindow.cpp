@@ -79,20 +79,21 @@ void MainWindow::on_pushButtonTetris_clicked()
 {
     //hide();
     tetrisWindow.show();
+    this->showMinimized();
 
 }
 
 void MainWindow::on_pushButtonSlideShow_clicked()
 {
    // hide();
-    slideShowWindow = new SlideShow(this);
+    slideShowWindow = new SlideShow();
     slideShowWindow->showFullScreen();
+    this->showMinimized();
 }
 
 void MainWindow::on_pushButtonSpaceGlider_clicked()
 {
-    // TODO zakomentarisi hide
-    hide();
+    this->showMinimized();
     SpaceGliderWindow = new SpaceGlider(this);
     SpaceGliderWindow->show();
 }

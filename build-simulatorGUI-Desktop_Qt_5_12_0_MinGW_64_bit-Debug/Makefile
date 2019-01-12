@@ -220,6 +220,7 @@ Makefile: ../GUI/simulatorGUI.pro ../../../Qt/5.12.0/mingw73_64/mkspecs/win32-g+
 		../../../Qt/5.12.0/mingw73_64/mkspecs/features/qt_config.prf \
 		../../../Qt/5.12.0/mingw73_64/mkspecs/win32-g++/qmake.conf \
 		../../../Qt/5.12.0/mingw73_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../Qt/5.12.0/mingw73_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt/5.12.0/mingw73_64/mkspecs/features/toolchain.prf \
 		../../../Qt/5.12.0/mingw73_64/mkspecs/features/default_pre.prf \
@@ -408,6 +409,7 @@ Makefile: ../GUI/simulatorGUI.pro ../../../Qt/5.12.0/mingw73_64/mkspecs/win32-g+
 ../../../Qt/5.12.0/mingw73_64/mkspecs/features/qt_config.prf:
 ../../../Qt/5.12.0/mingw73_64/mkspecs/win32-g++/qmake.conf:
 ../../../Qt/5.12.0/mingw73_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../Qt/5.12.0/mingw73_64/mkspecs/features/exclusive_builds.prf:
 ../../../Qt/5.12.0/mingw73_64/mkspecs/features/toolchain.prf:
 ../../../Qt/5.12.0/mingw73_64/mkspecs/features/default_pre.prf:

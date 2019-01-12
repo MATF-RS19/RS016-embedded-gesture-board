@@ -20,11 +20,6 @@ tetrisigra::tetrisigra(QWidget *parent)
     nextPiece.setRandomoblik();
 }
 
-void tetrisigra::setNextPieceLabel(QLabel *label)
-{
-    nextPieceLabel = label;
-}
-
 QSize tetrisigra::sizeHint() const//ova i sledeca funkcije se koriste za velicine svakog QWidget-a
 {
     return QSize(BoardWidth * 15 + frameWidth() * 2,
@@ -60,9 +55,8 @@ void tetrisigra::pause()
     } else {
         timer.start(750, this);
     }
-    update();
 }
-
+//funkcije za crtanje su preuzete iz primera QtWidgets Tetris example
 void tetrisigra::paintEvent(QPaintEvent *event)
 {
     QFrame::paintEvent(event);
@@ -160,13 +154,13 @@ void tetrisigra::dropDown()
     pieceDropped();
 }
 
-void tetrisigra::oneLineDown()
+void tetrisigra::oneLineDown() //spustamo se za jedan nize, ukoliko ne moze onda smo stigli do dna
 {
     if (!tryMove(curPiece, curX, curY - 1))
         pieceDropped();
 }
 
-void tetrisigra::pieceDropped()
+void tetrisigra::pieceDropped() //kada smo stigli do dna onda
 {
     for (int i = 0; i < 4; ++i) {
         int x = curX + curPiece.x(i);
@@ -217,7 +211,6 @@ void tetrisigra::newPiece()
 {
     curPiece = nextPiece;
     nextPiece.setRandomoblik();
-    showNextPiece();
     curX = BoardWidth / 2 + 1;
     curY = BoardHeight - 1 + curPiece.minY();
 
@@ -226,27 +219,6 @@ void tetrisigra::newPiece()
         timer.stop();
         isStarted = false;
     }
-}
-
-void tetrisigra::showNextPiece()
-{
-    if (!nextPieceLabel)
-        return;
-
-    int dx = nextPiece.maxX() - nextPiece.minX() + 1;
-    int dy = nextPiece.maxY() - nextPiece.minY() + 1;
-
-    QPixmap pixmap(dx * squareWidth(), dy * squareHeight());
-    QPainter painter(&pixmap);
-    painter.fillRect(pixmap.rect(), nextPieceLabel->palette().background());
-
-    for (int i = 0; i < 4; ++i) {
-        int x = nextPiece.x(i) - nextPiece.minX();
-        int y = nextPiece.y(i) - nextPiece.minY();
-        drawSquare(painter, x * squareWidth(), y * squareHeight(),
-                   nextPiece.oblik());
-    }
-    nextPieceLabel->setPixmap(pixmap);
 }
 
 bool tetrisigra::tryMove(const tetrisdeo &newPiece, int newX, int newY)
@@ -265,7 +237,7 @@ bool tetrisigra::tryMove(const tetrisdeo &newPiece, int newX, int newY)
     update();
     return true;
 }
-
+//funkcije za crtanje su preuzete iz primera QtWidgets Tetris example
 void tetrisigra::drawSquare(QPainter &painter, int x, int y, tetrisoblici oblik)
 {
     static const QRgb colorTable[8] = {
@@ -277,11 +249,8 @@ void tetrisigra::drawSquare(QPainter &painter, int x, int y, tetrisoblici oblik)
     painter.fillRect(x + 1, y + 1, squareWidth() - 2, squareHeight() - 2,
                      color);
 
-    painter.setPen(color.light());
     painter.drawLine(x, y + squareHeight() - 1, x, y);
     painter.drawLine(x, y, x + squareWidth() - 1, y);
-
-    painter.setPen(color.dark());
     painter.drawLine(x + 1, y + squareHeight() - 1,
                      x + squareWidth() - 1, y + squareHeight() - 1);
     painter.drawLine(x + squareWidth() - 1, y + squareHeight() - 1,
