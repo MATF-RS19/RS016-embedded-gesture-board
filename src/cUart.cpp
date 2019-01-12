@@ -8,33 +8,11 @@
 #include "cUart.h"
 
 cUart::cUart() {
-	// TODO Auto-generated constructor stub
 
-}
-
-cUart::~cUart() {
-	// TODO Auto-generated destructor stub
-}
-
-// TODO prebaciti u konstruktor
-void cUart::init() {
-
-	__USART2_CLK_ENABLE();
-
-	GPIO_InitTypeDef GPIO_InitStructure;
-
-	// port D, pin 6 je za rx - recieve
-	GPIO_InitStructure.Pin = GPIO_PIN_6;
-	GPIO_InitStructure.Mode = GPIO_MODE_AF_PP;
-	GPIO_InitStructure.Alternate = GPIO_AF7_USART2;
-	GPIO_InitStructure.Speed = GPIO_SPEED_HIGH;
-	GPIO_InitStructure.Pull = GPIO_NOPULL;
-	HAL_GPIO_Init(GPIOD, &GPIO_InitStructure);
-
-	// port D, pin 5 je za tx - transmit
-	GPIO_InitStructure.Pin = GPIO_PIN_5;
-	GPIO_InitStructure.Mode = GPIO_MODE_AF_OD;
-	HAL_GPIO_Init(GPIOD, &GPIO_InitStructure);
+	txPin = GPIO_PIN_5;
+	rxPin = GPIO_PIN_6;
+	txPort = GPIOD;
+	rxPort = GPIOD;
 
 	// postavljaju se parametri na uart handle
 	s_UARTHandle.Instance        = USART2;				// base address
@@ -44,6 +22,32 @@ void cUart::init() {
 	s_UARTHandle.Init.Parity     = UART_PARITY_NONE;    // ne koristimo parity bit
 	s_UARTHandle.Init.HwFlowCtl  = UART_HWCONTROL_NONE;	// ne koristimo hw flow control
 	s_UARTHandle.Init.Mode       = UART_MODE_TX_RX;		// mod je tx_rx - transmit i recieve
+
+}
+
+cUart::~cUart() {
+
+}
+
+//  prebaciti u konstruktor
+
+void cUart::init() {
+	__USART2_CLK_ENABLE();
+
+	GPIO_InitTypeDef GPIO_InitStructure;
+
+	// port D, pin 6 je za rx - recieve
+	GPIO_InitStructure.Pin = rxPin;
+	GPIO_InitStructure.Mode = GPIO_MODE_AF_PP;
+	GPIO_InitStructure.Alternate = GPIO_AF7_USART2;
+	GPIO_InitStructure.Speed = GPIO_SPEED_HIGH;
+	GPIO_InitStructure.Pull = GPIO_NOPULL;
+	HAL_GPIO_Init(rxPort, &GPIO_InitStructure);
+
+	// port D, pin 5 je za tx - transmit
+	GPIO_InitStructure.Pin = txPin;
+	GPIO_InitStructure.Mode = GPIO_MODE_AF_OD;
+	HAL_GPIO_Init(txPort, &GPIO_InitStructure);
 
 	if (HAL_UART_Init(&s_UARTHandle) != HAL_OK) {
 		trace_puts("Uart init failed");
@@ -57,9 +61,11 @@ void cUart::init() {
 	// HAL_UART_Transmit(&s_UARTHandle, buffer, sizeof(buffer), HAL_MAX_DELAY);
 }
 
-//
+
+// pozivao HAL fukciu za slaje preko uart-a
+// buff - buffer bajtova koji se salje
+// size - broj bajtova koe saljeo
 void cUart::send(uint8_t *buff, uint8_t size)
 {
-//	for(uint8_t i = 0; i<size; i++)
 		HAL_UART_Transmit(&s_UARTHandle, buff, size, HAL_MAX_DELAY);
 }

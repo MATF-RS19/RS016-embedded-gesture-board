@@ -17,11 +17,10 @@
 // ukljucujemo HAL(Hardware apstraction layer) biblioteku
 #include <stm32f4xx_hal.h>
 
-//ci2c c;
+// instanca klase cGest
 cGest cg;
-cUart cu;
 
-// TODO: napraviti System klasu
+
 void initPins() {
 	// Inicijalizuje se hal
 	// Ukljucujemo clock za pinove koje koristimo - port A, port C i port D
@@ -52,31 +51,26 @@ main(int argc, char* argv[]) {
 	  cg.start();
 	  trace_printf("Gesture started\r\n");
 
-	  // TODO
-	  cg.setTrigger(0x00);
+
+	  cg.setTrigger(0x00); // force trigger 0 - nateraj gesture da se re-kalibrise
 	  HAL_Delay(10);
-	  cg.TransFreqSelect(0x05,0x43210);
-	  HAL_Delay(10);
-	  cg.setEnableAllGestures();
+	  cg.setEnableAllGestures();  // posalji komandu da se omoguci prepoznavanje svih pokreta
 	  HAL_Delay(100);
-	  // eof TODO
+
 
 	  // citamo stanje RST pina, ako je 0, setujemo na 1 da bismo resetovali gesture
 	  // i cekamo 100 milisekndi
-	  if (cg.readRSTpin() == 0)
-	  {
+	  if (cg.readRSTpin() == 0) {
 		  cg.setRSTpin(1);
 		  HAL_Delay(100);
 	  }
 
 	  // Citaju se podaci koji stizu i parsiraju se
 	  while (1) {
-	  	 cg.updateGestureData();
-	  	 cg.parseData();
+	  	 cg.updateGestureData();  // uzmi nove podatke o pokretima
+	  	 cg.parseData();			// parsiraj podatke i posalji na uart
 	  }
 
 }
 
-
 #pragma GCC diagnostic pop
-

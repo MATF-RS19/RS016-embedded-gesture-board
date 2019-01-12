@@ -21,6 +21,11 @@ public:
 
 private:
 	UART_HandleTypeDef s_UARTHandle;
+	GPIO_InitTypeDef GPIO_InitStructure;
+	GPIO_TypeDef * txPort;
+	uint32_t txPin;
+	GPIO_TypeDef * rxPort;
+	uint32_t rxPin;
 };
 
 #endif /* CUART_H_ */
