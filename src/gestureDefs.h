@@ -4,14 +4,17 @@
 #ifndef _GESTURE_DEFS
 #define _GESTURE_DEFS
 
+// I2C slave adrese gesture-a
 #define MGC_ADDR0           0x42
 #define MGC_ADDR1           0x43
 
+// vrednosti koje gesture daje kad se cita firmware verzija
 #define FW_EMPTY            0x00
 #define FW_INVALID          0x0A
 #define FW_VALID            0xAA
 
 //Electrode mapping
+/*
 #define Channelmapping_S    0x65
 #define Channelmapping_W    0x66
 #define Channelmapping_N    0x67
@@ -22,13 +25,9 @@
 #define Rx2                 0x02
 #define Rx3                 0x03
 #define Rx4                 0x04
+*/
 
-//Touch events bitmask
-#define  TouchSouth         0x00000001
-#define  TouchWest          0x00000002
-#define  TouchNorth         0x00000004
-#define  TouchEast          0x00000008
-#define  TouchCenter        0x00000010
+// moguce vrednosti gesture dogadjaja
 #define  TapSouth           0x00000020
 #define  TapWest            0x00000040
 #define  TapNorth           0x00000080
@@ -40,12 +39,14 @@
 #define  DoubleTapEast      0x00002000
 #define  DoubleTapCenter    0x00004000
 
+// TODO ovo nam ne treba
 typedef struct {
  unsigned int X;
  unsigned int Y;
  unsigned int Z;
 }s_Position;
 
+// TODO
 typedef struct {
  char FWValid;
  char HWRev[2];                   //2 bytes decimal format interpreter xx.xx
@@ -55,6 +56,7 @@ typedef struct {
  char FwVersion[120];             //za slabije kontrolere izbaciti ovaj parametar
 }s_FWVersionInfo;
 
+// TODO
 typedef struct {
  char Len;
  char Flags;
@@ -71,6 +73,7 @@ typedef struct {
  float NoisePower;
 }s_DataOut;
 
+// TODO
 typedef struct {
  s_DataOut DataOut;
  s_FWVersionInfo FWVersionInfo;

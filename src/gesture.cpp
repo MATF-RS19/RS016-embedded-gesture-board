@@ -3,12 +3,11 @@
 #include "i2c.h"
 #include "gestureDefs.h"
 #include "gesture.h"
-#include "ci2c.h"
 
 
 static uint8_t raw_data[132];
 s_Gesture mGesture;
-extern ci2c c;
+
 /*
 uint8_t MGC_RST;
 uint8_t MGC_RDY_IN;
@@ -103,8 +102,8 @@ void GestIC_Read(char msgLen){
 //  I2C1_Read(MGC_ADDR0, msgData, msgLen , END_MODE_STOP);
 //  delay_us(200);
 //	raw_data[0] = 0;
-//	i2cApi_read(raw_data, msgLen);
-	c.readData(raw_data, msgLen);
+	i2cApi_read(raw_data, msgLen);
+	//c.readData(raw_data, msgLen);
 }
 
 void GestIC_Write( uint8_t msgLen) {
@@ -113,8 +112,8 @@ void GestIC_Write( uint8_t msgLen) {
 //  delay_us(200);
 	//i2cWrite(msgData+1, msgLen, msgData);
 //	i2cWrite(1, 2, 3);
-	//i2cApi_write(raw_data, msgLen);
-	c.writeData(raw_data, msgLen);
+	i2cApi_write(raw_data, msgLen);
+	//1c.writeData(raw_data, msgLen);
 }
 
 char setAirWheel(char ENABLE) {

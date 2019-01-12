@@ -11,9 +11,9 @@
 #include <stdint.h>
 #include "gestureDefs.h"
 #include "gesture.h"
-#include "ci2c.h"
+
 #include "cUart.h"
-#include "uart.h"
+//#include "uart.h"
 #include <stm32f4xx_hal.h>
 
 class cGest {
@@ -119,7 +119,7 @@ public:
 private:
 	uint8_t raw_data[132];
 	s_Gesture mGesture;
-	ci2c c;
+
 	cUart cu;
 	unsigned int touch_evt, touch_evt_old;
 	char gest_evt, gest_evt_old, gest_class, gest_recognition, gest_edge_flick;

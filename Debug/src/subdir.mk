@@ -9,24 +9,20 @@ C_SRCS += \
 ../src/stm32f4xx_hal_msp.c 
 
 CPP_SRCS += \
-../src/BlinkLed.cpp \
 ../src/Timer.cpp \
 ../src/cGest.cpp \
 ../src/cUart.cpp \
-../src/ci2c.cpp \
 ../src/gesture.cpp \
 ../src/i2c.cpp \
 ../src/main.cpp \
 ../src/uart.cpp 
 
 OBJS += \
-./src/BlinkLed.o \
 ./src/Timer.o \
 ./src/_initialize_hardware.o \
 ./src/_write.o \
 ./src/cGest.o \
 ./src/cUart.o \
-./src/ci2c.o \
 ./src/gesture.o \
 ./src/i2c.o \
 ./src/main.o \
@@ -39,11 +35,9 @@ C_DEPS += \
 ./src/stm32f4xx_hal_msp.d 
 
 CPP_DEPS += \
-./src/BlinkLed.d \
 ./src/Timer.d \
 ./src/cGest.d \
 ./src/cUart.d \
-./src/ci2c.d \
 ./src/gesture.d \
 ./src/i2c.d \
 ./src/main.d \

@@ -834,6 +834,67 @@ void cGest::updateGestureData() {
     setRDYPinToInput();
 }
 
+void SendGestureDebug(uint8_t dat)
+{
+    switch (dat)
+    {
+      case 1:
+        trace_printf("Not valid\r\n");
+        break;
+      case 2:
+        trace_printf("flick left to right\r\n");
+        break;
+      case 3:
+       trace_printf("flick right to left\r\n");
+        break;
+      case 4:
+        trace_printf("flick up\r\n");
+        break;
+      case 5:
+        trace_printf("flick down\r\n");
+        break;
+      case 6:
+        trace_printf("Tap north\r\n");
+        break;
+      case 7:
+       trace_printf("Tap south\r\n");
+        break;
+      case 8:
+        trace_printf("Tap east\r\n");
+        break;
+      case 9:
+        trace_printf("Tap west\r\n");
+        break;
+      case 10:
+        trace_printf("Double Tap north\r\n");
+        break;
+      case 11:
+       trace_printf("Double Tap south\r\n");
+        break;
+      case 12:
+        trace_printf("Double Tap east\r\n");
+        break;
+      case 13:
+        trace_printf("Double Tap west\r\n");
+        break;
+      case 14:
+        trace_printf("Tap center\r\n");
+        break;
+      case 15:
+        trace_printf("Double Tap center\r\n");
+        break;
+      case 16:
+        trace_printf("Clockwise\r\n");
+        break;
+      case 17:
+        trace_printf("Counter Clockwise\r\n");
+        break;
+    }
+
+    // HAL funkcija koja salje podatke
+    //HAL_UART_Transmit(&s_UARTHandle, &dat, 1, HAL_MAX_DELAY);
+}
+
 void cGest::parseData()
 {
 	uint8_t temp = 0;
@@ -881,7 +942,7 @@ void cGest::parseData()
 	    if (gest_evt)
 	    {
 	    	temp = gest_evt;
-	    	uartSendGestureData(gest_evt);
+	    	SendGestureDebug(gest_evt);
 	    	cu.send(&temp, 1);
 	    }
 
@@ -901,6 +962,6 @@ void cGest::parseData()
 	                                                        // print out the airwheel counter info
 	      OLDAirWheelInfo=mGesture.DataOut.AirWheelInfo;
 	      cu.send(&temp,1);
-	      uartSendGestureData(temp);
+	      SendGestureDebug(temp);
 	    }
 }
