@@ -4,31 +4,20 @@
 #ifndef _GESTURE_DEFS
 #define _GESTURE_DEFS
 
+// I2C slave adrese gesture-a
+//http://ww1.microchip.com/downloads/en/DeviceDoc/40001718E.pdf strana 13
 #define MGC_ADDR0           0x42
 #define MGC_ADDR1           0x43
 
+// vrednosti koje gesture daje kad se cita firmware verzija
+// http://ww1.microchip.com/downloads/en/DeviceDoc/40001718E.pdf strana 30
 #define FW_EMPTY            0x00
 #define FW_INVALID          0x0A
 #define FW_VALID            0xAA
 
-//Electrode mapping
-#define Channelmapping_S    0x65
-#define Channelmapping_W    0x66
-#define Channelmapping_N    0x67
-#define Channelmapping_E    0x68
-#define Channelmapping_C    0x69
-#define Rx0                 0x00
-#define Rx1                 0x01
-#define Rx2                 0x02
-#define Rx3                 0x03
-#define Rx4                 0x04
-
-//Touch events bitmask
-#define  TouchSouth         0x00000001
-#define  TouchWest          0x00000002
-#define  TouchNorth         0x00000004
-#define  TouchEast          0x00000008
-#define  TouchCenter        0x00000010
+// moguce vrednosti gesture dogadjaja
+// http://ww1.microchip.com/downloads/en/DeviceDoc/40001718E.pdf
+// strana 45
 #define  TapSouth           0x00000020
 #define  TapWest            0x00000040
 #define  TapNorth           0x00000080
@@ -40,21 +29,18 @@
 #define  DoubleTapEast      0x00002000
 #define  DoubleTapCenter    0x00004000
 
-typedef struct {
- unsigned int X;
- unsigned int Y;
- unsigned int Z;
-}s_Position;
 
+// http://ww1.microchip.com/downloads/en/DeviceDoc/40001718E.pdf strana 30
 typedef struct {
  char FWValid;
  char HWRev[2];                   //2 bytes decimal format interpreter xx.xx
  char ParameterStartAddr;
  char LibraryLoaderVersion[3];    //3 bytes decimal format interpreter xx.xx.xx
  char FwStartAddr;
- char FwVersion[120];             //za slabije kontrolere izbaciti ovaj parametar
+ char FwVersion[120];
 }s_FWVersionInfo;
 
+// http://ww1.microchip.com/downloads/en/DeviceDoc/40001718E.pdf strana 42
 typedef struct {
  char Len;
  char Flags;
@@ -67,9 +53,9 @@ typedef struct {
  unsigned long GestureInfo;
  unsigned long TouchInfo;
  unsigned int AirWheelInfo;
- s_Position Position;
  float NoisePower;
 }s_DataOut;
+
 
 typedef struct {
  s_DataOut DataOut;

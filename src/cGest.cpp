@@ -9,64 +9,82 @@
 #include "i2c.h"
 #define GEST_I2CADDRESS 0x42
 
-cGest::cGest() {
-	// TODO Auto-generated constructor stub
+// makroi za razlicite dogadjaje koji se salju na uart
+#define GUART_LEFT_TO_RIGHT 2
+#define GUART_RIGHT_TO_LEFT 3
+#define GUART_UP 4
+#define GUART_DOWN 5
+#define GUART_TAP_NORTH 6
+#define GUART_TAP_SOUTH 7
+#define GUART_TAP_EAST 8
+#define GUART_TAP_WEST 9
+#define GUART_DOUBLE_TAP_NORTH 10
+#define GUART_DOUBLE_TAP_SOUTH 11
+#define GUART_DOUBLE_TAP_EAST 12
+#define GUART_DOUBLE_TAP_WEST 13
+#define GUART_TAP_CENTER 14
+#define GUART_DOUBLE_TAP_CENTER 15
 
+#define GUART_CLOCKWISE 16
+#define GUART_COUNTER_CLOCKWISE 17
+
+
+cGest::cGest() {
+
+	OLDAirWheelInfo = 0;
+	for (int i = 0; i< 132; i++)
+	{
+		rawData[i] = 0;
+	}
+
+	//memset(&mGesture, 0, sizeof(mGesture));
+
+
+	touchEvent = 0;
+	touchEventOld = 0;
+	gestEvent = 0;
+	gestEventOld = 0;
+	OLDAirWheelInfo = 0;
 }
 
 cGest::~cGest() {
-	// TODO Auto-generated destructor stub
+
 }
 
+// funkcija koja postavlja RDY Pin(C1) na mod output
 void cGest::setRDYPinToOutput() {
 	GPIO_InitTypeDef gpioInitStruct;
-	//HAL_GPIO_StructInit(&gpioInitStruct);
 	gpioInitStruct.Pin = GPIO_PIN_1;
 	gpioInitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	gpioInitStruct.Speed = GPIO_SPEED_FAST;
 	gpioInitStruct.Pull = GPIO_PULLUP;
-//	gpioInitStruct.Pull = GPIO_PULLDOWN;
-//	gpioInitStruct.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOC, &gpioInitStruct);
 }
 
+// funkcija koja postavlja RDY pin (C1) na mod input
 void cGest::setRDYPinToInput() {
 	GPIO_InitTypeDef gpioInitStruct;
-	//HAL_GPIO_StructInit(&gpioInitStruct);
 	gpioInitStruct.Pin = GPIO_PIN_1;
 	gpioInitStruct.Mode = GPIO_MODE_INPUT;
 	gpioInitStruct.Speed = GPIO_SPEED_FAST;
-//	gpioInitStruct.Pull = GPIO_PULLDOWN;
 	gpioInitStruct.Pull = GPIO_PULLUP;
-//	gpioInitStruct.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOC, &gpioInitStruct);
 }
 
+// funkcija koja postaclja RST pin(A7) na output
 void cGest::setRSTPinToOutput() {
 
 	GPIO_InitTypeDef gpioInitStruct;
-	//HAL_GPIO_StructInit(&gpioInitStruct);
 	gpioInitStruct.Pin = GPIO_PIN_7;
 	gpioInitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	gpioInitStruct.Speed = GPIO_SPEED_FAST;
-//	gpioInitStruct.Pull = GPIO_NOPULL;
 	gpioInitStruct.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(GPIOA, &gpioInitStruct);
 }
-/*
-void setRSTPinToInput() {
-	GPIO_InitTypeDef gpioInitStruct;
-	//HAL_GPIO_StructInit(&gpioInitStruct);
-	gpioInitStruct.Pin = GPIO_PIN_7;
-	gpioInitStruct.Mode = GPIO_MODE_INPUT;
-	gpioInitStruct.Speed = GPIO_SPEED_FAST;
-	gpioInitStruct.Pull = GPIO_NOPULL;
-	HAL_GPIO_Init(GPIOA, &gpioInitStruct);
-}
-*/
 
-void cGest::setRDYpin(uint8_t s)
-{
+// postavlja ready pin na 1 ili 0
+// rdy pin je C1
+void cGest::setRDYpin(uint8_t s) {
 	if (s > 1)
 		return;
 
@@ -76,8 +94,9 @@ void cGest::setRDYpin(uint8_t s)
 		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_RESET);
 }
 
-void cGest::setRSTpin(uint8_t s)
-{
+// postavlja rst pin na 1 ili 0
+// rst je A7
+void cGest::setRSTpin(uint8_t s) {
 	if (s > 1)
 		return;
 	if (s == 1)
@@ -86,651 +105,117 @@ void cGest::setRSTpin(uint8_t s)
 		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_7, GPIO_PIN_RESET);
 }
 
-
-
-uint8_t cGest::readRDYpin()
-{
+// cita stanje rdy pina
+uint8_t cGest::readRDYpin() {
 	uint8_t temp;
-	temp = GPIOC->IDR;
-	temp = temp >> 1;
-	temp = temp & 0b00000001;
+	temp = GPIOC->IDR;			// input data registar na portu c
+	temp = temp >> 1;			// siftuje se za jedno mesto i onda uporedjuje sa 1
+	temp = temp & 0b00000001;	// da bi se dobila vrednost pina na portu c1
 
 	return temp;
-	//		HAL_GPIO_ReadPin(GPIOC, 1);
 }
 
+// cita stanje rst pina
+uint8_t cGest::readRSTpin() {
+	uint8_t temp;
+	temp = GPIOA->ODR;		// otpt data registar na portu a
+	temp = temp >> 7;		// siftuje se za 7 mesta da bi bit 7 (pin a7) dosao na bit 0
+
+	return temp;
+}
+
+// I2C citanje
 void cGest::GestIC_Read(char msgLen){
- // I2C1_Start();
-//  I2C1_Read(MGC_ADDR0, msgData, msgLen , END_MODE_STOP);
-//  delay_us(200);
-//	raw_data[0] = 0;
-	i2cApi_read(raw_data, msgLen);
-	//c.readData(raw_data, msgLen);
+	i2cApi_read(rawData, msgLen);
 }
 
-void cGest::GestIC_Write( uint8_t msgLen) {
-//  I2C1_Start();
-//  I2C1_Write(MGC_ADDR0,raw_data,msgLen,END_MODE_STOP);
-//  delay_us(200);
-	//i2cWrite(msgData+1, msgLen, msgData);
-//	i2cWrite(1, 2, 3);
-	i2cApi_write(raw_data, msgLen);
-	//c.writeData(raw_data, msgLen);
+// I2C pisanje
+void cGest::GestIC_Write(uint8_t msgLen) {
+	i2cApi_write(rawData, msgLen);
 }
 
-char cGest::setAirWheel(char ENABLE) {
-  ////////////////////////////////////////
-  //             header
-  ////////////////////////////////////////
-  raw_data[0] = 0x10; //raw data size
-  raw_data[1] = 0x00; //flags
-  raw_data[2] = 0x00; //seq
-  raw_data[3] = 0xA2; //ID
-  ////////////////////////////////////////
-  //             payload
-  ////////////////////////////////////////
-  raw_data[4] = 0x90; //Parameter ID
-  raw_data[5] = 0x00;
-  //reserved
-  raw_data[6] = 0x00;
-  raw_data[7] = 0x00;
-  //Argument 0
-  if (ENABLE) {
-    raw_data[8] = 0x20; //MASK
-  }else{
-    raw_data[8] = 0x00; //MASK
-  }
-  raw_data[9] = 0x00;
-  raw_data[10] = 0x00;
-  raw_data[11] = 0x00;
-  //Argument 1
-  raw_data[12] = 0x20;
-  raw_data[13] = 0x00;
-  raw_data[14] = 0x00;
-  raw_data[15] = 0x00;
-  //Send data
-  GestIC_Write(0x10);
-  //ToDo: Read and parse error
-  return 1;
-}
-
-char cGest::setTouchDetection(char ENABLE) {
-  ////////////////////////////////////////
-  //             header
-  ////////////////////////////////////////
-  raw_data[0] = 0x10; //raw data size
-  raw_data[1] = 0x00; //flags
-  raw_data[2] = 0x00; //seq
-  raw_data[3] = 0xA2; //ID
-  ////////////////////////////////////////
-  //             payload
-  ////////////////////////////////////////
-  raw_data[4] = 0x97; //Parameter ID
-  raw_data[5] = 0x00;
-  //reserved
-  raw_data[6] = 0x00;
-  raw_data[7] = 0x00;
-  //Argument 0
-  if (ENABLE) {
-    raw_data[8] = 0x08; //MASK
-  }else{
-    raw_data[8] = 0x00; //MASK
-  }
-  raw_data[9] = 0x00;
-  raw_data[10] = 0x00;
-  raw_data[11] = 0x00;
-  //Argument 1
-  raw_data[12] = 0x08;
-  raw_data[13] = 0x00;
-  raw_data[14] = 0x00;
-  raw_data[15] = 0x00;
-  //Send data
-  GestIC_Write(0x10);
-  //ToDo: Read and parse error
-  return 1;
-}
-
-char cGest::setApproachDetection(char ENABLE) {
-  ////////////////////////////////////////
-  //             header
-  ////////////////////////////////////////
-  raw_data[0] = 0x10; //raw data size
-  raw_data[1] = 0x00; //flags
-  raw_data[2] = 0x00; //seq
-  raw_data[3] = 0xA2; //ID
-  ////////////////////////////////////////
-  //             payload
-  ////////////////////////////////////////
-  raw_data[4] = 0x97; //Parameter ID
-  raw_data[5] = 0x00;
-  //reserved
-  raw_data[6] = 0x00;
-  raw_data[7] = 0x00;
-  //Argument 0
-  if (ENABLE) {
-    raw_data[8] = 0x01; //MASK
-  }else{
-    raw_data[8] = 0x00; //MASK
-  }
-  raw_data[9] = 0x00;
-  raw_data[10] = 0x00;
-  raw_data[11] = 0x00;
-  //Argument 1
-  raw_data[12] = 0x01;
-  raw_data[13] = 0x00;
-  raw_data[14] = 0x00;
-  raw_data[15] = 0x00;
-  //Send data
-  GestIC_Write(0x10);
-  //ToDo: Read and parse error
-  return 1;
-}
-
-/*
-This command is not anymore supported starting from V1.0 release.
-*/
-char cGest::setApproachDetection2(char ENABLE) {
-  ////////////////////////////////////////
-  //             header
-  ////////////////////////////////////////
-  raw_data[0] = 0x10; //raw data size
-  raw_data[1] = 0x00; //flags
-  raw_data[2] = 0x00; //seq
-  raw_data[3] = 0xA2; //ID
-  ////////////////////////////////////////
-  //             payload
-  ////////////////////////////////////////
-  raw_data[4] = 0x81; //Parameter ID
-  raw_data[5] = 0x00;
-  //reserved
-  raw_data[6] = 0x00;
-  raw_data[7] = 0x00;
-  //Argument 0
-  if (ENABLE) {
-    raw_data[8] = 0x01; //MASK
-  }else{
-    raw_data[8] = 0x00; //MASK
-  }
-  raw_data[9] = 0x00;
-  raw_data[10] = 0x00;
-  raw_data[11] = 0x00;
-  //Argument 1
-  raw_data[12] = 0x01;
-  raw_data[13] = 0x00;
-  raw_data[14] = 0x00;
-  raw_data[15] = 0x00;
-  //Send data
-  GestIC_Write(0x10);
-  //ToDo: Read and parse error
-  return 1;
-}
-
-/* Parameters:
-0 - Enable All Gestures
-1 - Enable Only Flick Gestures
-2 - Enable in Addition Circles
-*/
-char cGest::setGestureProcessingHMM(char PARAM) {
-  ////////////////////////////////////////
-  //             header
-  ////////////////////////////////////////
-  raw_data[0] = 0x10; //raw data size
-  raw_data[1] = 0x00; //flags
-  raw_data[2] = 0x00; //seq
-  raw_data[3] = 0xA2; //ID
-  ////////////////////////////////////////
-  //             payload
-  ////////////////////////////////////////
-  raw_data[4] = 0x85; //Parameter ID
-  raw_data[5] = 0x00;
-  //reserved
-  raw_data[6] = 0x00;
-  raw_data[7] = 0x00;
-  switch (PARAM) {
-    case 1:
-      raw_data[8] = 0x1F;
-      raw_data[12] = 0x7F;
-      break;
-    case 2:
-      raw_data[8] = 0x60;
-      raw_data[12] = 0x60;
-      break;
-    default:
-      raw_data[8] = 0x7F;
-      raw_data[12] = 0x7F;
-  }
-  //Argument 0
-  raw_data[9] = 0x00;
-  raw_data[10] = 0x00;
-  raw_data[11] = 0x00;
-  //Argument 1
-  raw_data[13] = 0x00;
-  raw_data[14] = 0x00;
-  raw_data[15] = 0x00;
-  //Send data
-  GestIC_Write(0x10);
-  //ToDo: Read and parse error
-  return 1;
-}
-
-char cGest::setCalibrationOperationMode(char ENABLE) {
-  ////////////////////////////////////////
-  //             header
-  ////////////////////////////////////////
-  raw_data[0] = 0x10; //raw data size
-  raw_data[1] = 0x00; //flags
-  raw_data[2] = 0x00; //seq
-  raw_data[3] = 0xA2; //ID
-  ////////////////////////////////////////
-  //             payload
-  ////////////////////////////////////////
-  raw_data[4] = 0x80; //Parameter ID
-  raw_data[5] = 0x00;
-  //reserved
-  raw_data[6] = 0x00;
-  raw_data[7] = 0x00;
-  //Argument 0
-  if (ENABLE) {
-    raw_data[8] = 0x00; //MASK
-  }else{
-    raw_data[8] = 0x3F; //MASK
-  }
-  raw_data[9] = 0x00;
-  raw_data[10] = 0x00;
-  raw_data[11] = 0x00;
-  //Argument 1
-  raw_data[12] = 0x3F;
-  raw_data[13] = 0x00;
-  raw_data[14] = 0x00;
-  raw_data[15] = 0x00;
-  //Send data
-  GestIC_Write(0x10);
-  //ToDo: Read and parse error
-  return 1;
-}
-
-/* Parameters:
-0 - Enable All Data
-1 - Enable DSP, Gestures and Noise Power
-2 - Enable Only Data: Noise (others not changed)
-3 - Disable Only Data: CIC (others not changed)
-*/
-char cGest::setDataOutputEnableMask(char PARAM) {
-  ////////////////////////////////////////
-  //             header
-  ////////////////////////////////////////
-  raw_data[0] = 0x10; //raw data size
-  raw_data[1] = 0x00; //flags
-  raw_data[2] = 0x00; //seq
-  raw_data[3] = 0xA2; //ID
-  ////////////////////////////////////////
-  //             payload
-  ////////////////////////////////////////
-  raw_data[4] = 0xA0; //Parameter ID
-  raw_data[5] = 0x00;
-  //reserved
-  raw_data[6] = 0x00;
-  raw_data[7] = 0x00;
-  switch (PARAM) {
-    case 1:
-      raw_data[8] = 0x23;
-      raw_data[9] = 0x00;
-      raw_data[12] = 0x3F;
-      raw_data[13] = 0x18;
-      break;
-    case 2:
-      raw_data[8] = 0x10;
-      raw_data[9] = 0x00;
-      raw_data[12] = 0x10;
-      raw_data[13] = 0x00;
-      break;
-     case 3:
-      raw_data[8] = 0x00;
-      raw_data[9] = 0x00;
-      raw_data[12] = 0x00;
-      raw_data[13] = 0x08;
-      break;
-    default:
-      raw_data[8] = 0x3F;
-      raw_data[9] = 0x18;
-      raw_data[12] = 0x3F;
-      raw_data[13] = 0x18;
-  }
-  //Argument 0
-  raw_data[10] = 0x00;
-  raw_data[11] = 0x00;
-  //Argument 1
-  raw_data[14] = 0x00;
-  raw_data[15] = 0x00;
-  //Send data
-  GestIC_Write(0x10);
-  //ToDo: Read and parse error
-  return 1;
-}
-
-/* Parameters:
-0 - Lock All Data
-1 - Lock DSP, Gestures and Noise Power
-2 - Lock Only Data: Noise (others not changed)
-3 - UnLock Only Data: CIC (others not changed)
-*/
-char cGest::setDataOutputLockMask(char PARAM) {
-  ////////////////////////////////////////
-  //             header
-  ////////////////////////////////////////
-  raw_data[0] = 0x10; //raw data size
-  raw_data[1] = 0x00; //flags
-  raw_data[2] = 0x00; //seq
-  raw_data[3] = 0xA2; //ID
-  ////////////////////////////////////////
-  //             payload
-  ////////////////////////////////////////
-  raw_data[4] = 0xA1; //Parameter ID
-  raw_data[5] = 0x00;
-  //reserved
-  raw_data[6] = 0x00;
-  raw_data[7] = 0x00;
-  switch (PARAM) {
-    case 1:
-      raw_data[8] = 0x23;
-      raw_data[9] = 0x00;
-      raw_data[12] = 0x3F;
-      raw_data[13] = 0x18;
-      break;
-    case 2:
-      raw_data[8] = 0x10;
-      raw_data[9] = 0x00;
-      raw_data[12] = 0x10;
-      raw_data[13] = 0x00;
-      break;
-     case 3:
-      raw_data[8] = 0x00;
-      raw_data[9] = 0x00;
-      raw_data[12] = 0x00;
-      raw_data[13] = 0x08;
-      break;
-    default:
-      raw_data[8] = 0x3F;
-      raw_data[9] = 0x18;
-      raw_data[12] = 0x3F;
-      raw_data[13] = 0x18;
-  }
-  //Argument 0
-  raw_data[10] = 0x00;
-  raw_data[11] = 0x00;
-  //Argument 1
-  raw_data[14] = 0x00;
-  raw_data[15] = 0x00;
-  //Send data
-  GestIC_Write(0x10);
-  //ToDo: Read and parse error
-  return 1;
-}
-
-/* Parameters:
-0 - Request All Data
-1 - Request DSP, Gestures and Noise Power
-2 - Request Only Data: Noise
-*/
-char cGest::setDataOutputRequestkMask(char PARAM) {
-  ////////////////////////////////////////
-  //             header
-  ////////////////////////////////////////
-  raw_data[0] = 0x10; //raw data size
-  raw_data[1] = 0x00; //flags
-  raw_data[2] = 0x00; //seq
-  raw_data[3] = 0xA2; //ID
-  ////////////////////////////////////////
-  //             payload
-  ////////////////////////////////////////
-  raw_data[4] = 0xA2; //Parameter ID
-  raw_data[5] = 0x00;
-  //reserved
-  raw_data[6] = 0x00;
-  raw_data[7] = 0x00;
-  switch (PARAM) {
-    case 1:
-      raw_data[8] = 0x23;
-      raw_data[9] = 0x00;
-      raw_data[12] = 0x3F;
-      raw_data[13] = 0x18;
-      break;
-    case 2:
-      raw_data[8] = 0x10;
-      raw_data[9] = 0x00;
-      raw_data[12] = 0x10;
-      raw_data[13] = 0x00;
-      break;
-    default:
-      raw_data[8] = 0x3F;
-      raw_data[9] = 0x18;
-      raw_data[12] = 0x3F;
-      raw_data[13] = 0x18;
-  }
-  //Argument 0
-  raw_data[10] = 0x00;
-  raw_data[11] = 0x00;
-  //Argument 1
-  raw_data[14] = 0x00;
-  raw_data[15] = 0x00;
-  //Send data
-  GestIC_Write(0x10);
-  //ToDo: Read and parse error
-  return 1;
-}
-
-char cGest::setGestureInProgressFlag(char ENABLE) {
-  ////////////////////////////////////////
-  //             header
-  ////////////////////////////////////////
-  raw_data[0] = 0x10; //raw data size
-  raw_data[1] = 0x00; //flags
-  raw_data[2] = 0x00; //seq
-  raw_data[3] = 0xA2; //ID
-  ////////////////////////////////////////
-  //             payload
-  ////////////////////////////////////////
-  raw_data[4] = 0xA3; //Parameter ID
-  raw_data[5] = 0x00;
-  //reserved
-  raw_data[6] = 0x00;
-  raw_data[7] = 0x00;
-  //Argument 0
-  if (ENABLE) {
-    raw_data[8] = 0x01; //MASK
-  }else{
-    raw_data[8] = 0x00; //MASK
-  }
-  raw_data[9] = 0x00;
-  raw_data[10] = 0x00;
-  raw_data[11] = 0x00;
-  //Argument 1
-  raw_data[12] = 0x01;
-  raw_data[13] = 0x00;
-  raw_data[14] = 0x00;
-  raw_data[15] = 0x00;
-  //Send data
-  GestIC_Write(0x10);
-  //ToDo: Read and parse error
-  return 1;
-}
-
-/* Parameters:
-0 - Store RTPs for AFE
-1 - Store RTPs for DSP
-2 - Store RTPs for System
-*/
-char cGest::setMakePersistent(char PARAM) {
-  ////////////////////////////////////////
-  //             header
-  ////////////////////////////////////////
-  raw_data[0] = 0x10; //raw data size
-  raw_data[1] = 0x00; //flags
-  raw_data[2] = 0x00; //seq
-  raw_data[3] = 0xA2; //ID
-  ////////////////////////////////////////
-  //             payload
-  ////////////////////////////////////////
-  raw_data[4] = 0x00; //Parameter ID
-  raw_data[5] = 0xFF;
-  //reserved
-  raw_data[6] = 0x00;
-  raw_data[7] = 0x00;
-  switch (PARAM) {
-    case 1:
-      raw_data[8] = 0x01;
-      break;
-    case 2:
-      raw_data[8] = 0x02;
-      break;
-    default:
-      raw_data[8] = 0x00;
-  }
-  //Argument 0
-  raw_data[9] = 0x00;
-  raw_data[10] = 0x00;
-  raw_data[11] = 0x00;
-  //Argument 1
-  raw_data[12] = 0x00;
-  raw_data[13] = 0x00;
-  raw_data[14] = 0x00;
-  raw_data[15] = 0x00;
-  //Send data
-  GestIC_Write(0x10);
-  //ToDo: Read and parse error
-  return 1;
-}
 
 /* Parameters:
 0 - Force Calibration
 1 - Enter Deep Sleep 1
 2 - Enter Deep Sleep 2
 */
+// http://ww1.microchip.com/downloads/en/DeviceDoc/40001718E.pdf
+// strana 33
+
+// forces a trigger - triggere gesture da uradi jedu od 3 stvari
+// 1. re-kalibracija
+// 2. ulazak u deep sleep mod 1
+// 3. ulazak u deep sleep mod 2
 char cGest::setTrigger(char PARAM) {
   ////////////////////////////////////////
   //             header
   ////////////////////////////////////////
-  raw_data[0] = 0x10; //raw data size
-  raw_data[1] = 0x00; //flags
-  raw_data[2] = 0x00; //seq
-  raw_data[3] = 0xA2; //ID
+  rawData[0] = 0x10; //raw data size
+  rawData[1] = 0x00; //flags
+  rawData[2] = 0x00; //seq
+  rawData[3] = 0xA2; //ID
   ////////////////////////////////////////
   //             payload
   ////////////////////////////////////////
-  raw_data[4] = 0x00; //Parameter ID
-  raw_data[5] = 0x10;
+  rawData[4] = 0x00; //Parameter ID
+  rawData[5] = 0x10;
   //reserved
-  raw_data[6] = 0x00;
-  raw_data[7] = 0x00;
+  rawData[6] = 0x00;
+  rawData[7] = 0x00;
   switch (PARAM) {
     case 1:
-      raw_data[8] = 0x02;
+      rawData[8] = 0x02;
       break;
     case 2:
-      raw_data[8] = 0x03;
+      rawData[8] = 0x03;
       break;
     default:
-      raw_data[8] = 0x00;
+      rawData[8] = 0x00;
   }
   //Argument 0
-  raw_data[9] = 0x00;
-  raw_data[10] = 0x00;
-  raw_data[11] = 0x00;
+  rawData[9] = 0x00;
+  rawData[10] = 0x00;
+  rawData[11] = 0x00;
   //Argument 1
-  raw_data[12] = 0x00;
-  raw_data[13] = 0x00;
-  raw_data[14] = 0x00;
-  raw_data[15] = 0x00;
-  //Send data
-  GestIC_Write(0x10);
-  //ToDo: Read and parse error
+  rawData[12] = 0x00;
+  rawData[13] = 0x00;
+  rawData[14] = 0x00;
+  rawData[15] = 0x00;
+
+  GestIC_Write(0x10); // saljemo 0x10 bajtova preko i2c-a
+
   return 1;
 }
 
-void cGest::setElectrodeMap(char Electrode, char Channel) {
-  ////////////////////////////////////////
-  //             header
-  ////////////////////////////////////////
-  raw_data[0] = 0x10; //raw data size
-  raw_data[1] = 0x00; //flags
-  raw_data[2] = 0x00; //seq
-  raw_data[3] = 0xA2; //ID
-  ////////////////////////////////////////
-  //             payload
-  ////////////////////////////////////////
-  raw_data[4] = Electrode; //Parameter ID
-  raw_data[5] = 0x00;
-  //reserved
-  raw_data[6] = 0x00;
-  raw_data[7] = 0x00;
-  //Argument 0
-  raw_data[8] = Channel;
-  raw_data[9] = 0x00;
-  raw_data[10] = 0x00;
-  raw_data[11] = 0x00;
-  //Argument 1
-  raw_data[12] = 0x00;
-  raw_data[13] = 0x00;
-  raw_data[14] = 0x00;
-  raw_data[15] = 0x00;
-  //Send data
-  GestIC_Write(0x10);
 
-}
-
-void cGest::TransFreqSelect(char FreqCnt, unsigned long FreqOrder) {
-  ////////////////////////////////////////
-  //             header
-  ////////////////////////////////////////
-  raw_data[0] = 0x10; //raw data size
-  raw_data[1] = 0x00; //flags
-  raw_data[2] = 0x00; //seq
-  raw_data[3] = 0xA2; //ID
-  ////////////////////////////////////////
-  //             payload
-  ////////////////////////////////////////
-  raw_data[4] = 0x82; //Parameter ID
-  raw_data[5] = 0x00;
-  //reserved
-  raw_data[6] = 0x00;
-  raw_data[7] = 0x00;
-  //Argument 0
-  raw_data[8] = FreqCnt;
-  raw_data[9] = 0x00;
-  raw_data[10] = 0x00;
-  raw_data[11] = 0x00;
-  //Argument 1
-  raw_data[12] = (char)(FreqOrder & 0x000000FF);
-  raw_data[13] = (char)((FreqOrder >> 8) & 0x000000FF);
-  raw_data[14] = (char)((FreqOrder >> 16) & 0x000000FF);
-  raw_data[15] = (char)((FreqOrder >> 24) & 0x000000FF);
-  //Send data
-  GestIC_Write(0x10);
-}
-
+// http://ww1.microchip.com/downloads/en/DeviceDoc/40001718E.pdf
+// strana 23
+// posalji komandu gesture-u da ukljuci detekticiju svi pokreta
 void cGest::setEnableAllGestures() {
   //header
-  raw_data[0] = 0x10; //raw data size
-  raw_data[1] = 0x00; //flags
-  raw_data[2] = 0x00; //seq
-  raw_data[3] = 0xA2; //ID
+  rawData[0] = 0x10; //raw data size
+  rawData[1] = 0x00; //flags
+  rawData[2] = 0x00; //seq
+  rawData[3] = 0xA2; //ID
   //payload
-  raw_data[4] = 0x85; //param ID
-  raw_data[5] = 0x00;
+  rawData[4] = 0x85; //param ID
+  rawData[5] = 0x00;
 
-  raw_data[6] = 0x00;
-  raw_data[7] = 0x00;
+  rawData[6] = 0x00;
+  rawData[7] = 0x00;
 
-  raw_data[8] = 0x7F; //DATA OUTPUT MASK
-  raw_data[9] = 0x00;
-  raw_data[10] = 0x00;
-  raw_data[11] = 0x00;
+  rawData[8] = 0x7F; //DATA OUTPUT MASK
+  rawData[9] = 0x00;
+  rawData[10] = 0x00;
+  rawData[11] = 0x00;
 
-  raw_data[12] = 0x7F;
-  raw_data[13] = 0x00;
-  raw_data[14] = 0x00;
-  raw_data[15] = 0x00;
+  rawData[12] = 0x7F;
+  rawData[13] = 0x00;
+  rawData[14] = 0x00;
+  rawData[15] = 0x00;
 
+  // salji podatke na i2c
   GestIC_Write(0x10);
 }
 
@@ -738,169 +223,253 @@ void cGest::setEnableAllGestures() {
 //                                           REQUEST FW_VERSION_INFO FROM MGC3130
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// http://ww1.microchip.com/downloads/en/DeviceDoc/40001718E.pdf
+// strana 22
+// posalji komandu za zatev innformacija o FW gesture chipa
+// podatke smesti u nasu strukturu
 void cGest::getFWInfo() {
-  char i;
-  //MGC_RST = 0;
-  setRSTpin(0);
-  //send msg to request fw info
-  raw_data[0] = 0x0C;
-  raw_data[1] = 0x00;
-  raw_data[2] = 0x00;
-  raw_data[3] = 0x06;
-  raw_data[4] = 0x83;
-  raw_data[5] = 0x00;
-  raw_data[6] = 0x00;
-  raw_data[7] = 0x00;
-  raw_data[8] = 0x00;
-  raw_data[9] = 0x00;
-  raw_data[10] = 0x00;
-  raw_data[11] = 0x00;
-  //MGC_RST = 1;
+  unsigned i;
+
+  setRSTpin(0);  // resetuj gesture da dobijemo "sveze" fw podatke
+
+  // napravi poruku za gesture
+  rawData[0] = 0x0C;
+  rawData[1] = 0x00;
+  rawData[2] = 0x00;
+  rawData[3] = 0x06;
+  rawData[4] = 0x83;
+  rawData[5] = 0x00;
+  rawData[6] = 0x00;
+  rawData[7] = 0x00;
+  rawData[8] = 0x00;
+  rawData[9] = 0x00;
+  rawData[10] = 0x00;
+  rawData[11] = 0x00;
+
+  // vrati rst pin na 1
   setRSTpin(1);
   HAL_Delay(10);
+
+  // posalji zahtev za fw version preko i2c-a
   GestIC_Write(0x0C);
-//  while(MGC_RDY_IN);
+
+  // Tscekaj da gesture signalizira da ia ove podatke spremne
   while(readRDYpin() == 1)
   {}
-  //raw_data[0] = 0x00;
+
+  // citamo 0x84 bajtova - 132
   GestIC_Read(0x84);
   HAL_Delay(10);
-  //Parse values
-  mGesture.FWVersionInfo.FWValid = raw_data[4];
-  mGesture.FWVersionInfo.HWRev[0] = raw_data[5];
-  mGesture.FWVersionInfo.HWRev[1] = raw_data[6];
-  mGesture.FWVersionInfo.ParameterStartAddr = raw_data[7];
-  mGesture.FWVersionInfo.LibraryLoaderVersion[0] = raw_data[8];
-  mGesture.FWVersionInfo.LibraryLoaderVersion[1] = raw_data[9];
-  mGesture.FWVersionInfo.LibraryLoaderVersion[3] = raw_data[10];
-  mGesture.FWVersionInfo.FwStartAddr = raw_data[11];
-  //
+
+  //smesti podatke u strukturi, nacin objasnjen u datasheetu strana 22
+  mGesture.FWVersionInfo.FWValid = rawData[4];
+  mGesture.FWVersionInfo.HWRev[0] = rawData[5];
+  mGesture.FWVersionInfo.HWRev[1] = rawData[6];
+  mGesture.FWVersionInfo.ParameterStartAddr = rawData[7];
+  mGesture.FWVersionInfo.LibraryLoaderVersion[0] = rawData[8];
+  mGesture.FWVersionInfo.LibraryLoaderVersion[1] = rawData[9];
+  mGesture.FWVersionInfo.LibraryLoaderVersion[3] = rawData[10];
+  mGesture.FWVersionInfo.FwStartAddr = rawData[11];
+
   for (i=0; i<120; i++) {
-     mGesture.FWVersionInfo.FwVersion[i] = raw_data[i+12];
+     mGesture.FWVersionInfo.FwVersion[i] = rawData[i+12];
   }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                     READ AND PARSE VALUES FROM GESTURE BOARD
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void cGest::updateRawData() {
-  GestIC_Read(64);
-}
+// inicijalizuje uart, uzima FW info gesture-a
+// ako je FW_valid, uspesna je komunikacija sa gesture-om
+// u suprotnom, nesto nije u redu, program staje ovde
 
-void cGest::start()
-{
-	//c.init(GEST_I2CADDRESS);
-	cu.init();
-	getFWInfo();
+void cGest::start() {
+	cu.init(); // inicijalizuj uart
+	getFWInfo(); // uzmi fw info
 	HAL_Delay(2000);
-    if((uint8_t)(mGesture.FWVersionInfo.FWValid) == (uint8_t)FW_VALID)
-	{
-		  trace_printf("VALID FW!");
+
+    if((uint8_t)(mGesture.FWVersionInfo.FWValid) == (uint8_t)FW_VALID) {
+		  trace_printf("VALID FW!\n");
 	}
-	else
-	{
-		  trace_printf("INVALID FW! HALT PROGRAM!");
+	else {
+		  trace_printf("INVALID FW! HALT PROGRAM!\n");
 		  while(1);
 	}
 }
 
+// uzima gesture podatke
 void cGest::updateGestureData() {
-    //while (MGC_RDY_IN);
-	while(readRDYpin())
-	{}
-    //GPIO_Digital_Output (&GPIOD_BASE, _GPIO_PINMASK_10);
+
+	while(readRDYpin())  // cekamo da RDY pin bude 0 - znak da GST ima nove podatke
+	{}					// http://ww1.microchip.com/downloads/en/DeviceDoc/40001667E.pdf - strana 31 pasus 5.5.2
+
+	// setujemo RDY pin da bude output da bismo mogli da ga spustimo
     setRDYPinToOutput();
-    //MGC_RDY_OUT = 0;                                    //Assert TS
-    setRDYpin(0);
-    GestIC_Read(32);
-    //Parse values
-    mGesture.DataOut.Len = raw_data[0];
-    mGesture.DataOut.Flags = raw_data[1];
-    mGesture.DataOut.Seq = raw_data[2];
-    mGesture.DataOut.Id = raw_data[3];
-    mGesture.DataOut.ConfigMask = (raw_data[5] << 8) + raw_data[4];
-    mGesture.DataOut.TimeStamp = raw_data[6];
-    mGesture.DataOut.SystemInfo = raw_data[7];
-    mGesture.DataOut.DSPStatus = (raw_data[9] << 8) + raw_data[8];
-    mGesture.DataOut.GestureInfo = (raw_data[13] << 24) + (raw_data[12] << 16) + (raw_data[11] << 8) + raw_data[10];
-    mGesture.DataOut.TouchInfo = (raw_data[17] << 24) + (raw_data[16] << 16) + (raw_data[15] << 8) + raw_data[14];
-    mGesture.DataOut.AirWheelInfo = (raw_data[19] << 8) + raw_data[18];
-    mGesture.DataOut.Position.X = (raw_data[21] << 8) + raw_data[20];
-    mGesture.DataOut.Position.Y = (raw_data[23] << 8) + raw_data[22];
-    mGesture.DataOut.Position.Z = (raw_data[25] << 8) + raw_data[24];
-    //MGC_RDY_OUT = 1;                                  //Release TS to new measurement
-    setRDYpin(1);
-    //GPIO_Digital_Input (&GPIOD_BASE, _GPIO_PINMASK_10);
-    setRDYPinToInput();
+
+    setRDYpin(0);  // spustamo RDY pin - signalizirao gesturu da ne mozemo primiti jos podataka
+
+
+    GestIC_Read(32);     // citamo 32 bajta preko i2c-a, smestamo  strukturu
+    // nacin smestanja objasnen u datasheetu, strana: 42
+
+    // upisuju se vrednosti
+    mGesture.DataOut.Len = rawData[0];
+    mGesture.DataOut.Flags = rawData[1];
+    mGesture.DataOut.Seq = rawData[2];
+    mGesture.DataOut.Id = rawData[3];
+    mGesture.DataOut.ConfigMask = (rawData[5] << 8) + rawData[4];
+    mGesture.DataOut.TimeStamp = rawData[6];
+    mGesture.DataOut.SystemInfo = rawData[7];
+    mGesture.DataOut.DSPStatus = (rawData[9] << 8) + rawData[8];
+    mGesture.DataOut.GestureInfo = (rawData[13] << 24) + (rawData[12] << 16) + (rawData[11] << 8) + rawData[10];
+    mGesture.DataOut.TouchInfo = (rawData[17] << 24) + (rawData[16] << 16) + (rawData[15] << 8) + rawData[14];
+    mGesture.DataOut.AirWheelInfo = (rawData[19] << 8) + rawData[18];
+
+    setRDYpin(1);   	//vracamo rdy pin na 1, gst ce ga spustiti opet na 0 kad ima nove podatke
+    setRDYPinToInput(); // podesavamo rdy na inpt, da citamo kad gst ima nove podatke
 }
 
-void cGest::parseData()
-{
+// pomocna funkcija, printuje gesture podatke na trace
+void SendGestureDebug(uint8_t dat) {
+    switch (dat) {
+
+      case 1:
+        trace_printf("Not valid\r\n");
+        break;
+      case GUART_LEFT_TO_RIGHT:
+        trace_printf("flick left to right\r\n");
+        break;
+      case GUART_RIGHT_TO_LEFT:
+       trace_printf("flick right to left\r\n");
+        break;
+      case GUART_UP:
+        trace_printf("flick up\r\n");
+        break;
+      case GUART_DOWN:
+        trace_printf("flick down\r\n");
+        break;
+      case GUART_TAP_NORTH:
+        trace_printf("Tap north\r\n");
+        break;
+      case GUART_TAP_SOUTH:
+       trace_printf("Tap south\r\n");
+        break;
+      case GUART_TAP_EAST:
+        trace_printf("Tap east\r\n");
+        break;
+      case GUART_TAP_WEST:
+        trace_printf("Tap west\r\n");
+        break;
+      case GUART_DOUBLE_TAP_NORTH:
+        trace_printf("Double Tap north\r\n");
+        break;
+      case GUART_DOUBLE_TAP_SOUTH:
+       trace_printf("Double Tap south\r\n");
+        break;
+      case GUART_DOUBLE_TAP_EAST:
+        trace_printf("Double Tap east\r\n");
+        break;
+      case GUART_DOUBLE_TAP_WEST:
+        trace_printf("Double Tap west\r\n");
+        break;
+      case GUART_TAP_CENTER:
+        trace_printf("Tap center\r\n");
+        break;
+      case GUART_DOUBLE_TAP_CENTER:
+        trace_printf("Double Tap center\r\n");
+        break;
+      case GUART_CLOCKWISE:
+        trace_printf("Clockwise\r\n");
+        break;
+      case GUART_COUNTER_CLOCKWISE:
+        trace_printf("Counter Clockwise\r\n");
+        break;
+    }
+
+    // HAL funkcija koja salje podatke
+    //HAL_UART_Transmit(&s_UARTHandle, &dat, 1, HAL_MAX_DELAY);
+}
+
+
+// parsira gesture podatke
+// svaki gesture podatak se uporedjuje sa predefinisanim vrednostima u datasheet-u
+// prepoznati gesture se onda salje preko uart-a
+void cGest::parseData() {
+
 	uint8_t temp = 0;
-	touch_evt = (unsigned int) mGesture.DataOut.TouchInfo & 0xFFFF;
-	    if ((touch_evt != 0) && (touch_evt != touch_evt_old))
-	    {
+	touchEvent = (unsigned int) mGesture.DataOut.TouchInfo; //& 0xFFFF;
 
-	      if(touch_evt < 0x00000201)
-	      {
-	        flag=1;
+		// ako imamo novi touch event
+	    if ((touchEvent != 0) && (touchEvent != touchEventOld)) {
 
-	/*
-	        if(touch_evt & TouchSouth) trace_printf("touch south\r\n");
-	        if(touch_evt & TouchWest) trace_printf("touch west\r\n");
-	        if(touch_evt & TouchNorth) trace_printf("touch north\r\n");
-	        if(touch_evt & TouchEast) trace_printf("touch east\r\n");
-	        //if(touch_evt & TouchSouth) TFT_WRITE_TEXT("TOUCH SOUTH",120,90);
-	        if(touch_evt & TouchCenter) trace_printf("touch center\r\n");
-	*/
-	        if(touch_evt & TapSouth) {temp = 7;  trace_printf("tap south\r\n");} //uartSendGestureData(7);
-	        if(touch_evt & TapWest)   {temp = 9; trace_printf("tap west\r\n");} //uartSendGestureData(9);     //
-	        if(touch_evt & TapNorth)  {temp = 6; trace_printf("tap north\r\n");} //uartSendGestureData(6);     //
-	        if(touch_evt & TapEast)   {temp = 8; trace_printf("tap east\r\n");} //uartSendGestureData(8);     //
-	        if(touch_evt & TapCenter) {temp = 14; trace_printf("tap center\r\n");} //uartSendGestureData(14);    //
+	     // http://ww1.microchip.com/downloads/en/DeviceDoc/40001718E.pdf strana 45
+	      if(touchEvent < 0x00000201)  {
+
+	        // uporedjujemo touch event sa predefinisanim vrednostima, da vidimo koji event smo dobili
+	        if(touchEvent & TapSouth)
+	        	temp = GUART_TAP_SOUTH;
+	        if(touchEvent & TapWest)
+	        	temp = GUART_TAP_WEST;
+	        if(touchEvent & TapNorth)
+	        	temp = GUART_TAP_NORTH;
+	        if(touchEvent & TapEast)
+	        	temp = GUART_TAP_EAST;
+	        if(touchEvent & TapCenter)
+	        	temp = GUART_TAP_CENTER;
+
+	        SendGestureDebug(temp);
 	        cu.send(&temp, 1);
 	      }
 	      else
 	      {
-	        if(touch_evt & DoubleTapSouth)  {temp = 11; trace_printf("double tap south\r\n");}  //uartSendGestureData(11); //
-	        if(touch_evt & DoubleTapWest)   {temp = 10;  trace_printf("double tap west\r\n");}  //uartSendGestureData(7); //
-	        if(touch_evt & DoubleTapNorth)  {temp = 13; trace_printf("double tap north\r\n");}  //uartSendGestureData(13);  //
-	        if(touch_evt & DoubleTapEast)   {temp = 12; trace_printf("double tap east\r\n");}  //uartSendGestureData(12);  //
-	        if(touch_evt & DoubleTapCenter) {temp = 15; trace_printf("double tap center\r\n");}  //uartSendGestureData(15);//
-	        cu.send(&temp, 1);
+	    	// uporedjujemo touch event sa predefinisanim vrednostima, da vidimo koji event smo dobili
+	        if(touchEvent & DoubleTapSouth)
+	        	temp = GUART_DOUBLE_TAP_SOUTH;
+
+
+	        if(touchEvent & DoubleTapWest)
+	        	temp = GUART_DOUBLE_TAP_WEST;
+
+
+	        if(touchEvent & DoubleTapNorth)
+	        	temp =  GUART_DOUBLE_TAP_NORTH;
+
+
+	        if(touchEvent & DoubleTapEast)
+	        	temp = GUART_DOUBLE_TAP_EAST;
+
+
+	        if(touchEvent & DoubleTapCenter)
+	        	temp = GUART_DOUBLE_TAP_CENTER;
+
+	        SendGestureDebug(temp);
+	        cu.send(&temp, 1);  // saljemo na uart
 	      }
-	      touch_evt_old = touch_evt;
+
+	      touchEventOld = touchEvent;
 	    }
 
+	    // citamo novi gest event
+	    gestEvent = (char) mGesture.DataOut.GestureInfo; // & 0xFF;
 
-	    gest_evt = (char) mGesture.DataOut.GestureInfo & 0xFF;
-	    gest_class = (char) (mGesture.DataOut.GestureInfo >> 12) & 0x0F;
-	    gest_edge_flick = (char) (mGesture.DataOut.GestureInfo >> 16) & 0x01;
-	    gest_recognition = (char) (mGesture.DataOut.GestureInfo >> 31) & 0x01;
 
-	    if (gest_evt)
-	    {
-	    	temp = gest_evt;
-	    	uartSendGestureData(gest_evt);
-	    	cu.send(&temp, 1);
+	    if (gestEvent) {
+	    	temp = gestEvent;
+	    	SendGestureDebug(gestEvent);
+	    	cu.send(&temp, 1);  // saljemo na uart
 	    }
 
+	    if (mGesture.DataOut.AirWheelInfo !=0) {
 
-
-	    if (mGesture.DataOut.AirWheelInfo !=0)
-	    {
-
-	      if (mGesture.DataOut.AirWheelInfo > OLDAirWheelInfo)            // if the airwheel counter increments,// it is a clockwise rotation
-	      {
-	        temp = 16;//uartSendGestureData(16);
+	      // ako se airwheel povecava, clockwise
+	      if (mGesture.DataOut.AirWheelInfo > OLDAirWheelInfo)  {
+	        temp = GUART_CLOCKWISE;
 	      }
-	      else if  (mGesture.DataOut.AirWheelInfo < OLDAirWheelInfo)                       // if it decrements, // it is counter-clokwise
-	      {
-	        temp = 17;//uartSendGestureData(17);
+
+	      // ako se smanjuje, counter-clockwise
+	      else if  (mGesture.DataOut.AirWheelInfo < OLDAirWheelInfo)  {
+	        temp = GUART_COUNTER_CLOCKWISE;
 	      }
-	                                                        // print out the airwheel counter info
+
 	      OLDAirWheelInfo=mGesture.DataOut.AirWheelInfo;
-	      cu.send(&temp,1);
-	      uartSendGestureData(temp);
+	      cu.send(&temp,1);  // saljemo na uart
+	      SendGestureDebug(temp);
 	    }
 }
