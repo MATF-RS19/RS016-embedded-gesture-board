@@ -17,7 +17,7 @@ SpaceGlider::SpaceGlider(QWidget *parent) :
     ui->setupUi(this);
     isPaused = true;
 
-    ui->frejm->setStyleSheet("background-color: red");
+//    ui->frejm->setStyleSheet("background-color: red");
 
     timer = new QTimer();
 
@@ -68,10 +68,14 @@ void SpaceGlider::timerSlot() {
         if(missiles[i]->y() > ui->frejm->height()) {
             missiles[i]->deleteLater();
             missiles.remove(i);
+            qDebug() << "Missile no: " << i << " removed";
+            continue;
         }
 
         int x = missiles[i]->x();
         int y = missiles[i]->y();
+
+        qDebug()  << "Pusi kurac ko te jebe, moze srpske i bez tebe!";
 
         missiles[i]->move(x, y+2);
 
@@ -168,30 +172,21 @@ void SpaceGlider::goBackward() {
 }
 
 QLabel* SpaceGlider::fireMissile() {
-    QLabel *missile_label = new QLabel(ui->frejm);
+    QLabel *missile_label = new QLabel(this);
     //TODO: srediti nevidljive rakete
-//    missile_label->setFrameStyle(QFrame::Panel | QFrame::Sunken);
+    missile_label->setParent(ui->frejm);
 
     int height = ui->frejm->height()/6;
     int width = height/3;
     int factor = qrand() % 5;
-
     int x = ui->frejm->height()/5 * factor;
     int y = -height;
 
-    QPixmap pix(":/resource/img/tip_1.png");
-
     qDebug() << "Ispaljenja raketa: " << x << " " << y << " " << width << " " << height;
 
-    QPalette sample_palette;
-    sample_palette.setColor(QPalette::Window, Qt::white);
-
-    missile_label->setAutoFillBackground(true);
-    missile_label->setPalette(sample_palette);
-    missile_label->setText("What ever text");
-
     missile_label->setGeometry(x, y, width, height);
-//    missile_label->setPixmap(pix);
+    QPixmap pix(":/resource/img/tip_1.png");
+    missile_label->setPixmap(pix);
 
     return missile_label;
 }

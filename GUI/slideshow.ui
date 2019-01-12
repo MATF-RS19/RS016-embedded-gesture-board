@@ -42,6 +42,9 @@ font: 75 20pt &quot;MS Shell Dlg 2&quot;;</string>
      <property name="text">
       <string>&lt;</string>
      </property>
+     <property name="autoDefault">
+      <bool>true</bool>
+     </property>
     </widget>
     <widget class="QPushButton" name="nextButton">
      <property name="geometry">
@@ -58,6 +61,9 @@ font: 75 20pt &quot;MS Shell Dlg 2&quot;;</string>
      </property>
      <property name="text">
       <string>&gt;</string>
+     </property>
+     <property name="autoDefault">
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QPushButton" name="rotateLButton">
@@ -76,6 +82,9 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
      <property name="text">
       <string>Rotate left</string>
      </property>
+     <property name="autoDefault">
+      <bool>true</bool>
+     </property>
     </widget>
     <widget class="QPushButton" name="rotateRButton">
      <property name="geometry">
@@ -92,6 +101,9 @@ color: rgb(0, 170, 255);</string>
      </property>
      <property name="text">
       <string>Rotate Right</string>
+     </property>
+     <property name="autoDefault">
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QPushButton" name="zoomInButton">
@@ -110,6 +122,9 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
      <property name="text">
       <string>Flick down to zoom in</string>
      </property>
+     <property name="autoDefault">
+      <bool>true</bool>
+     </property>
     </widget>
     <widget class="QPushButton" name="zoomOutButton">
      <property name="geometry">
@@ -127,6 +142,9 @@ font: 9pt &quot;MS Shell Dlg 2&quot;;</string>
      <property name="text">
       <string>Flick up to zoom out</string>
      </property>
+     <property name="autoDefault">
+      <bool>true</bool>
+     </property>
     </widget>
     <widget class="QPushButton" name="exitButton">
      <property name="geometry">
@@ -143,6 +161,9 @@ font: 14pt &quot;MS Shell Dlg 2&quot;;</string>
      </property>
      <property name="text">
       <string>Exit</string>
+     </property>
+     <property name="autoDefault">
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QLabel" name="image">

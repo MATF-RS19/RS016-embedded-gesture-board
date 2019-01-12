@@ -26,6 +26,8 @@ public:
 
     QLabel* fireMissile();
 
+    void create_label();
+
 
 private slots:
     void on_pushButton_exit_clicked();
