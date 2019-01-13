@@ -24,8 +24,9 @@ SpaceGlider::SpaceGlider(QWidget *parent) :
 
     connect(timer, SIGNAL(timeout()), this, SLOT(timerSlot()));
 
-    ui->pushButton_start->setFocusPolicy(Qt::StrongFocus);
-
+    ui->pushButton_start->setFocusPolicy(Qt::NoFocus);
+   ui->pushButton_pause->setFocusPolicy(Qt::NoFocus);
+   ui->pushButton_exit->setFocusPolicy(Qt::NoFocus);
     //Povezivanje dugmica sa tasterima na tastaturi
     ui->pushButton_exit->setShortcut(QKeySequence(Qt::Key_D));
     ui->pushButton_start->setShortcut(QKeySequence(Qt::Key_W));
