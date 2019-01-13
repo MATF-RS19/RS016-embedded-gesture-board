@@ -309,6 +309,9 @@ void cGest::updateGestureData() {
     mGesture.DataOut.GestureInfo = (rawData[13] << 24) + (rawData[12] << 16) + (rawData[11] << 8) + rawData[10];
     mGesture.DataOut.TouchInfo = (rawData[17] << 24) + (rawData[16] << 16) + (rawData[15] << 8) + rawData[14];
     mGesture.DataOut.AirWheelInfo = (rawData[19] << 8) + rawData[18];
+    mGesture.DataOut.Position.X = (raw_data[21] << 8) + raw_data[20];
+    mGesture.DataOut.Position.Y = (raw_data[23] << 8) + raw_data[22];
+    mGesture.DataOut.Position.Z = (raw_data[25] << 8) + raw_data[24];
 
     setRDYpin(1);   	//vracamo rdy pin na 1, gst ce ga spustiti opet na 0 kad ima nove podatke
     setRDYPinToInput(); // podesavamo rdy na inpt, da citamo kad gst ima nove podatke

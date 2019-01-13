@@ -53,6 +53,7 @@ typedef struct {
  unsigned long GestureInfo;
  unsigned long TouchInfo;
  unsigned int AirWheelInfo;
+ s_Position Position;
  float NoisePower;
 }s_DataOut;
 

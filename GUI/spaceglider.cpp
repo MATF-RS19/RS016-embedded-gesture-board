@@ -73,7 +73,7 @@ void SpaceGlider::timerSlot() {
             lineTaken[0] = false;
         }
 
-        ui->prva_traka->move(ui->prva_traka->x(), ui->prva_traka->y()+2);
+        ui->prva_traka->move(ui->prva_traka->x(), ui->prva_traka->y()+1);
 
         if(positionH == -2) {
             int gliderY = ui->label_glider->y();
@@ -90,7 +90,7 @@ void SpaceGlider::timerSlot() {
             lineTaken[1] = false;
         }
 
-        ui->druga_traka->move(ui->druga_traka->x(), ui->druga_traka->y()+2);
+        ui->druga_traka->move(ui->druga_traka->x(), ui->druga_traka->y()+1);
 
         if(positionH == -1) {
             int gliderY = ui->label_glider->y();
@@ -107,7 +107,7 @@ void SpaceGlider::timerSlot() {
             lineTaken[2] = false;
         }
 
-        ui->treca_traka->move(ui->treca_traka->x(), ui->treca_traka->y()+2);
+        ui->treca_traka->move(ui->treca_traka->x(), ui->treca_traka->y()+1);
 
         if(positionH == 0) {
             int gliderY = ui->label_glider->y();
@@ -124,7 +124,7 @@ void SpaceGlider::timerSlot() {
             lineTaken[3] = false;
         }
 
-        ui->cetvrta_traka->move(ui->cetvrta_traka->x(), ui->cetvrta_traka->y()+2);
+        ui->cetvrta_traka->move(ui->cetvrta_traka->x(), ui->cetvrta_traka->y()+1);
 
         if(positionH == 1) {
             int gliderY = ui->label_glider->y();
@@ -141,7 +141,7 @@ void SpaceGlider::timerSlot() {
             lineTaken[4] = false;
         }
 
-        ui->peta_traka->move(ui->peta_traka->x(), ui->peta_traka->y()+2);
+        ui->peta_traka->move(ui->peta_traka->x(), ui->peta_traka->y()+1);
 
         if(positionH == 2) {
             int gliderY = ui->label_glider->y();
