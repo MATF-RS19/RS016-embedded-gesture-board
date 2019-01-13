@@ -47,6 +47,7 @@ private:
     Ui::SpaceGlider *ui;
     QTimer *timer;
     bool isPaused;
+    bool isStarted;
 
     int positionH;
     int positionV;

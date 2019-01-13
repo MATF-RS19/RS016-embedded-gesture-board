@@ -12,18 +12,14 @@
 
 SpaceGlider::SpaceGlider(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::SpaceGlider)
-{
+    ui(new Ui::SpaceGlider) {
     ui->setupUi(this);
-    isPaused = true;
-
-//    ui->frejm->setStyleSheet("background-color: red");
+    isPaused = false;
+    isStarted = false;
 
     timer = new QTimer();
 
     setFocusPolicy(Qt::StrongFocus);
-
-    //TODO: namestiti da se fokusira frejm nakon klika bilo kog dugmeta
 
     connect(timer, SIGNAL(timeout()), this, SLOT(timerSlot()));
 
@@ -34,8 +30,7 @@ SpaceGlider::SpaceGlider(QWidget *parent) :
     ui->pushButton_pause->setShortcut(QKeySequence(Qt::Key_S));
 }
 
-SpaceGlider::~SpaceGlider()
-{
+SpaceGlider::~SpaceGlider() {
     delete ui;
 }
 
@@ -52,14 +47,12 @@ void SpaceGlider::init() {
     int gliderWidth = ui->label_glider->width();
 
     ui->label_glider->resize(frameWidth/8, frameHeight/8);
-
     ui->label_glider->move((frameWidth-gliderWidth)/2, frameHeight-gliderHeight);
 }
 
 void SpaceGlider::timerSlot() {
-    //TODO napisati koliziju
     if(nextMissile == 0) {
-        nextMissile = 150 + qrand() % 250;
+        nextMissile = 100 + qrand() % 200;
 
         fireMissile();
     }
@@ -156,8 +149,6 @@ void SpaceGlider::timerSlot() {
     if(kolizijaPrvaTraka || kolizijaDrugaTraka ||
             kolizijaTrecaTraka || kolizijaCetvrtaTraka || kolizijaPetaTraka) {
         gameOver();
-        qDebug() << kolizijaPrvaTraka << kolizijaDrugaTraka <<
-                   kolizijaTrecaTraka << kolizijaCetvrtaTraka << kolizijaPetaTraka;
     }
 
 
@@ -165,33 +156,32 @@ void SpaceGlider::timerSlot() {
 }
 
 void SpaceGlider::gameOver() {
-    qDebug() << "You died motherfucker";
-    isPaused = true;
+    QPixmap pix(":/resource/img/boomBack.jpg");
+    ui->Boom->setPixmap(pix);
+    ui->Boom->setGeometry(0, 0, ui->frejm->width(), ui->frejm->height());
+    ui->Boom->setScaledContents(true);
     timer->stop();
 }
 
-void SpaceGlider::on_pushButton_pause_clicked()
-{
-    if(isPaused == false) {
+void SpaceGlider::on_pushButton_pause_clicked() {
+    if(isPaused == false && isStarted) {
          timer->stop();
          isPaused = true;
-    } else {
+    } else if(!isPaused == false && isStarted){
         timer->start(10);
         isPaused = false;
     }
 }
 
-void SpaceGlider::on_pushButton_start_clicked()
-{
-    if(isPaused == true) {
+void SpaceGlider::on_pushButton_start_clicked() {
+    if(isStarted == false) {
+        isStarted = true;
         init();
         timer->start(10);
-        isPaused = false;
     }
 }
 
-void SpaceGlider::on_pushButton_exit_clicked()
-{
+void SpaceGlider::on_pushButton_exit_clicked() {
     QApplication::activeWindow()->close();
 }
 
@@ -271,7 +261,7 @@ void SpaceGlider::fireMissile() {
     int missileWidth = frameWidth/20;
     int missileHeight = missileWidth*3;
 
-    QString tip = ":/resource/img/tip_"+ QString::number(i) +".png";
+    QString tip = ":/resource/img/tip_"+ QString::number(i+1) +".png";
 
     QPixmap pix(tip);
 
