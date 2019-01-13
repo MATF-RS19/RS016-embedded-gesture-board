@@ -16,6 +16,9 @@ release/qrc_pic1.o
 release/qrc_pic7.o
 release/qrc_pic8.o
 release/qrc_pic9.o
+release/qrc_pic10.o
+release/qrc_pic12.o
+release/qrc_pic11.o
 release/moc_mainwindow.o
 release/moc_slideshow.o
 release/moc_tetrisigra.o

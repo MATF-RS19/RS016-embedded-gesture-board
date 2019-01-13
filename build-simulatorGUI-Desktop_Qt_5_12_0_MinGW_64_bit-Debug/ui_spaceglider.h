@@ -30,6 +30,11 @@ public:
     QPushButton *pushButton_pause;
     QFrame *frejm;
     QLabel *label_glider;
+    QLabel *prva_traka;
+    QLabel *druga_traka;
+    QLabel *treca_traka;
+    QLabel *cetvrta_traka;
+    QLabel *peta_traka;
 
     void setupUi(QMainWindow *SpaceGlider)
     {
@@ -86,6 +91,21 @@ public:
         label_glider->setGeometry(QRect(2000, 2000, 50, 50));
         label_glider->setPixmap(QPixmap(QString::fromUtf8(":/resource/img/raketa.png")));
         label_glider->setScaledContents(true);
+        prva_traka = new QLabel(frejm);
+        prva_traka->setObjectName(QString::fromUtf8("prva_traka"));
+        prva_traka->setGeometry(QRect(20, 0, 47, 13));
+        druga_traka = new QLabel(frejm);
+        druga_traka->setObjectName(QString::fromUtf8("druga_traka"));
+        druga_traka->setGeometry(QRect(110, 0, 47, 13));
+        treca_traka = new QLabel(frejm);
+        treca_traka->setObjectName(QString::fromUtf8("treca_traka"));
+        treca_traka->setGeometry(QRect(220, 0, 47, 13));
+        cetvrta_traka = new QLabel(frejm);
+        cetvrta_traka->setObjectName(QString::fromUtf8("cetvrta_traka"));
+        cetvrta_traka->setGeometry(QRect(320, 0, 47, 13));
+        peta_traka = new QLabel(frejm);
+        peta_traka->setObjectName(QString::fromUtf8("peta_traka"));
+        peta_traka->setGeometry(QRect(420, 0, 47, 13));
 
         gridLayout->addWidget(frejm, 0, 0, 3, 1);
 
@@ -103,6 +123,11 @@ public:
         pushButton_start->setText(QApplication::translate("SpaceGlider", "Start", nullptr));
         pushButton_pause->setText(QApplication::translate("SpaceGlider", "Stop/Resume", nullptr));
         label_glider->setText(QString());
+        prva_traka->setText(QString());
+        druga_traka->setText(QString());
+        treca_traka->setText(QString());
+        cetvrta_traka->setText(QString());
+        peta_traka->setText(QString());
     } // retranslateUi
 
 };

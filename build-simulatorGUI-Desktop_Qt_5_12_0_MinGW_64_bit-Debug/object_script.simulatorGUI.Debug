@@ -16,6 +16,9 @@ debug/qrc_pic1.o
 debug/qrc_pic7.o
 debug/qrc_pic8.o
 debug/qrc_pic9.o
+debug/qrc_pic10.o
+debug/qrc_pic12.o
+debug/qrc_pic11.o
 debug/moc_mainwindow.o
 debug/moc_slideshow.o
 debug/moc_tetrisigra.o
