@@ -20,7 +20,7 @@ Mogući pokreti :
 
 Hardver je povezan sa PC-jem preko UART klika koji preko serijskog porta šalje bajtove koji se čitaju u aplikaciji. <br/>
 PC deo : Implementirane su 3 mini aplikacije koje se kontrolišu pokretima nad Gesture pločom: <br/>
-* Space Glider - TODO
+* Space Glider - Mini igrica gde igrac upravlja svemirskim brodom i izbegava rakete koje lete ka njemu.
 * Slideshow - album sa slikama koje se mogu listati, rotirati, uveličavati i smanjivati pokretima.
 * Tetris - klasična tetris igrica kojom se upravlja pomoću pokreta iznad ploče. 
 
@@ -36,3 +36,5 @@ PC deo : Implementirane su 3 mini aplikacije koje se kontrolišu pokretima nad G
 * [GNU ARM ECLIPSE](https://gnu-mcu-eclipse.github.io/toolchain/arm/install/) - svi potrebni paketi i alati za rad u eclipsu sa STM32F4 kontrolerima 
 * Qt Creator
 * Qt 5.12
+
+## Prilikom rada je koristećena zvanična Qt dokumentacija, kao i razne druge veb stranice koje su nam pomogne prilikom izrade projekta (npr. Stack Overflow)

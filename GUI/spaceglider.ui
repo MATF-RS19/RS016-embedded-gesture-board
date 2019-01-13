@@ -101,6 +101,9 @@
          <height>50</height>
         </rect>
        </property>
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
        <property name="text">
         <string/>
        </property>

@@ -14,6 +14,7 @@ SpaceGlider::SpaceGlider(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::SpaceGlider) {
     ui->setupUi(this);
+    this->setWindowTitle("Space Glider");
     isPaused = false;
     isStarted = false;
 
@@ -25,6 +26,7 @@ SpaceGlider::SpaceGlider(QWidget *parent) :
 
     ui->pushButton_start->setFocusPolicy(Qt::StrongFocus);
 
+    //Povezivanje dugmica sa tasterima na tastaturi
     ui->pushButton_exit->setShortcut(QKeySequence(Qt::Key_D));
     ui->pushButton_start->setShortcut(QKeySequence(Qt::Key_W));
     ui->pushButton_pause->setShortcut(QKeySequence(Qt::Key_S));
@@ -34,6 +36,7 @@ SpaceGlider::~SpaceGlider() {
     delete ui;
 }
 
+//Funkcija kojom se inicijalizuje aplikacija
 void SpaceGlider::init() {
 
     positionH = 0;
@@ -50,7 +53,9 @@ void SpaceGlider::init() {
     ui->label_glider->move((frameWidth-gliderWidth)/2, frameHeight-gliderHeight);
 }
 
+//Timer funkcija
 void SpaceGlider::timerSlot() {
+    //na svakih sekund do tri sekunde se iskaljuje jedna nova raketa
     if(nextMissile == 0) {
         nextMissile = 100 + qrand() % 200;
 
@@ -60,6 +65,8 @@ void SpaceGlider::timerSlot() {
     bool kolizijaPrvaTraka = false, kolizijaDrugaTraka = false, kolizijaTrecaTraka = false,
             kolizijaCetvrtaTraka = false, kolizijaPetaTraka = false;
 
+    //provera da li je raketa izletela van ekrana i da li je doslo do kolizije,
+    //za svaku od 5 mogucih traka se vrsi provera
     if(lineTaken[0]) {
         if(ui->prva_traka->y() > ui->frejm->height()) {
             ui->prva_traka->move(ui->prva_traka->x(), -ui->prva_traka->height());
@@ -155,6 +162,7 @@ void SpaceGlider::timerSlot() {
     nextMissile--;
 }
 
+//Funkcija koja se izvrsava ukoliko je nas brod pogodjen
 void SpaceGlider::gameOver() {
     QPixmap pix(":/resource/img/boomBack.jpg");
     ui->Boom->setPixmap(pix);
@@ -163,6 +171,7 @@ void SpaceGlider::gameOver() {
     timer->stop();
 }
 
+//funkcija koja se izvrsava nakon klika na dugme stop/resume
 void SpaceGlider::on_pushButton_pause_clicked() {
     if(isPaused == false && isStarted) {
          timer->stop();
@@ -173,6 +182,7 @@ void SpaceGlider::on_pushButton_pause_clicked() {
     }
 }
 
+//funkcija koja se izvrsava nakon klika na dugme start
 void SpaceGlider::on_pushButton_start_clicked() {
     if(isStarted == false) {
         isStarted = true;
@@ -181,10 +191,12 @@ void SpaceGlider::on_pushButton_start_clicked() {
     }
 }
 
+//funkcija koja se izvrsava nakon klika na dugme exit
 void SpaceGlider::on_pushButton_exit_clicked() {
     QApplication::activeWindow()->close();
 }
 
+//funkcija koja ceka i prima dogadjaje pritiska na tastaturu i reaguje na njih
 void SpaceGlider::keyPressEvent(QKeyEvent *event) {
     if(!isPaused) {
         switch(event->key()) {
@@ -206,6 +218,8 @@ void SpaceGlider::keyPressEvent(QKeyEvent *event) {
         }
     }
 }
+
+//komande upravljanja brodom
 
 void SpaceGlider::turnLeft() {
     if(positionH > -2) {
@@ -247,6 +261,9 @@ void SpaceGlider::goBackward() {
     }
 }
 
+//Funkcija koja se poziva kada se ispaljuje nova raketa
+//gde se jednoj od 5 mogucih traka, koje su predstavljene kao labele,
+//dodeli raketa
 void SpaceGlider::fireMissile() {
     int i = qrand() % 5;
 
