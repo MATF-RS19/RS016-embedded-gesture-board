@@ -64,4 +64,7 @@ RESOURCES += \
     img/pic1.qrc \
     img/pic7.qrc \
     img/pic8.qrc \
-    img/pic9.qrc
+    img/pic9.qrc \
+    img/pic10.qrc \
+    img/pic12.qrc \
+    pic11.qrc

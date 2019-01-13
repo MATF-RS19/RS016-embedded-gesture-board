@@ -82,6 +82,7 @@ void MainWindow::on_pushButtonTetris_clicked()
 {
     //hide();
     tetrisWindow.show();
+    tetrisWindow.setWindowIcon(QIcon(":/new/prefix1/pic10"));
   //  this->showMinimized();
 
 }
@@ -90,6 +91,7 @@ void MainWindow::on_pushButtonSlideShow_clicked()
 {
    // hide();
     slideShowWindow = new SlideShow();
+    slideShowWindow->setWindowIcon(QIcon(":/new/prefix1/pic11"));
     slideShowWindow->showFullScreen();
   //  this->showMinimized();
 }
@@ -98,6 +100,7 @@ void MainWindow::on_pushButtonSpaceGlider_clicked()
 {
     //this->showMinimized();
     SpaceGliderWindow = new SpaceGlider(this);
+    SpaceGliderWindow->setWindowIcon(QIcon(":/new/prefix1/pic12"));
     SpaceGliderWindow->show();
 }
 
