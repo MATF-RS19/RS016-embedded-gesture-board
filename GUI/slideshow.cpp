@@ -41,15 +41,13 @@ SlideShow::SlideShow(QWidget *parent) :
     setWindowTitle("Slideshow");
 
     // dodaju se slike u vektor m_names klase images
-  //  images.addMember(":/new/prefix1/pic1");
-
     images.addMember(":/new/prefix1/pic2");
     images.addMember(":/new/prefix1/pic3");
     images.addMember(":/new/prefix1/pic4");
     images.addMember(":/new/prefix1/pic5");
     images.addMember(":/new/prefix1/pic6");
     images.addMember(":/new/prefix1/pic7");
-    images.addMember(":/new/prefix1/pic1");
+    images.addMember(":/new/prefix1/pic8");
     images.addMember(":/new/prefix1/pic9");
 
     QString s1 = images.names(0);
@@ -68,7 +66,7 @@ SlideShow::SlideShow(QWidget *parent) :
     ui->rotateRButton->setShortcut(QKeySequence(Qt::Key_X));
     ui->zoomInButton->setShortcut(QKeySequence(Qt::Key_Down));
     ui->zoomOutButton->setShortcut(QKeySequence(Qt::Key_Up));
-    ui->exitButton->setShortcut(QKeySequence(Qt::Key_Escape));
+    ui->exitButton->setShortcut(QKeySequence(Qt::Key_D));
 
 }
 
@@ -80,7 +78,7 @@ SlideShow::~SlideShow()
 
 void SlideShow::on_exitButton_clicked()
 {
-    QApplication::activeWindow()->hide();
+    QApplication::activeWindow()->close();
 }
 
 void SlideShow::reset() {

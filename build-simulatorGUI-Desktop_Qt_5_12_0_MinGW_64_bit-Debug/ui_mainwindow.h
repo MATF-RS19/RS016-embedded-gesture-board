@@ -25,9 +25,9 @@ public:
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QPushButton *pushButtonSlideShow;
-    QPushButton *pushButtonSubwaySurf;
     QPushButton *pushButtonExit;
     QPushButton *pushButtonTetris;
+    QPushButton *pushButtonSpaceGlider;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -60,17 +60,6 @@ public:
 
         gridLayout->addWidget(pushButtonSlideShow, 3, 0, 1, 1);
 
-        pushButtonSubwaySurf = new QPushButton(centralWidget);
-        pushButtonSubwaySurf->setObjectName(QString::fromUtf8("pushButtonSubwaySurf"));
-        sizePolicy1.setHeightForWidth(pushButtonSubwaySurf->sizePolicy().hasHeightForWidth());
-        pushButtonSubwaySurf->setSizePolicy(sizePolicy1);
-        pushButtonSubwaySurf->setFont(font);
-        pushButtonSubwaySurf->setAutoFillBackground(false);
-        pushButtonSubwaySurf->setAutoDefault(false);
-        pushButtonSubwaySurf->setFlat(false);
-
-        gridLayout->addWidget(pushButtonSubwaySurf, 2, 0, 1, 1);
-
         pushButtonExit = new QPushButton(centralWidget);
         pushButtonExit->setObjectName(QString::fromUtf8("pushButtonExit"));
 
@@ -89,10 +78,23 @@ public:
 
         gridLayout->addWidget(pushButtonTetris, 5, 0, 1, 1);
 
+        pushButtonSpaceGlider = new QPushButton(centralWidget);
+        pushButtonSpaceGlider->setObjectName(QString::fromUtf8("pushButtonSpaceGlider"));
+        sizePolicy1.setHeightForWidth(pushButtonSpaceGlider->sizePolicy().hasHeightForWidth());
+        pushButtonSpaceGlider->setSizePolicy(sizePolicy1);
+        pushButtonSpaceGlider->setFont(font);
+        pushButtonSpaceGlider->setAutoFillBackground(false);
+        pushButtonSpaceGlider->setAutoDefault(false);
+        pushButtonSpaceGlider->setFlat(false);
+
+        gridLayout->addWidget(pushButtonSpaceGlider, 1, 0, 1, 1);
+
         MainWindow->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);
+        QWidget::setTabOrder(pushButtonSlideShow, pushButtonTetris);
+        QWidget::setTabOrder(pushButtonTetris, pushButtonExit);
 
         retranslateUi(MainWindow);
 
@@ -103,9 +105,9 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Gesture Board", nullptr));
         pushButtonSlideShow->setText(QApplication::translate("MainWindow", "SlideShow", nullptr));
-        pushButtonSubwaySurf->setText(QApplication::translate("MainWindow", "SubwaySurf", nullptr));
         pushButtonExit->setText(QApplication::translate("MainWindow", "Exit", nullptr));
         pushButtonTetris->setText(QApplication::translate("MainWindow", "Tetris", nullptr));
+        pushButtonSpaceGlider->setText(QApplication::translate("MainWindow", "Space Glider", nullptr));
     } // retranslateUi
 
 };

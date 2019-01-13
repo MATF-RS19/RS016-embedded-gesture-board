@@ -2,7 +2,7 @@
 
 Images::Images()
 {
-    m_names.push_back(":/new/prefix1/pic8");
+    m_names.push_back(":/new/prefix1/pic1");
     m_currentImageName = m_names[0];
 }
 

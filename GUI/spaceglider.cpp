@@ -29,7 +29,7 @@ SpaceGlider::SpaceGlider(QWidget *parent) :
 
     ui->pushButton_start->setFocusPolicy(Qt::StrongFocus);
 
-    ui->pushButton_exit->setShortcut(QKeySequence(Qt::Key_Escape));
+    ui->pushButton_exit->setShortcut(QKeySequence(Qt::Key_D));
     ui->pushButton_start->setShortcut(QKeySequence(Qt::Key_W));
     ui->pushButton_pause->setShortcut(QKeySequence(Qt::Key_S));
 }
@@ -192,7 +192,7 @@ void SpaceGlider::on_pushButton_start_clicked()
 
 void SpaceGlider::on_pushButton_exit_clicked()
 {
-    QApplication::activeWindow()->hide();
+    QApplication::activeWindow()->close();
 }
 
 void SpaceGlider::keyPressEvent(QKeyEvent *event) {
