@@ -51,7 +51,7 @@ void SpaceGlider::init() {
     int gliderHeight = ui->label_glider->height();
     int gliderWidth = ui->label_glider->width();
 
-    ui->label_glider->resize(frameWidth/5, frameHeight/5);
+    ui->label_glider->resize(frameWidth/8, frameHeight/8);
 
     ui->label_glider->move((frameWidth-gliderWidth)/2, frameHeight-gliderHeight);
 }
@@ -61,27 +61,113 @@ void SpaceGlider::timerSlot() {
     if(nextMissile == 0) {
         nextMissile = 150 + qrand() % 250;
 
-        missiles.append(fireMissile());
+        fireMissile();
     }
 
-    for (int i = 0;i < missiles.length(); i++) {
-        if(missiles[i]->y() > ui->frejm->height()) {
-            missiles[i]->deleteLater();
-            missiles.remove(i);
-            qDebug() << "Missile no: " << i << " removed";
-            continue;
+    bool kolizijaPrvaTraka = false, kolizijaDrugaTraka = false, kolizijaTrecaTraka = false,
+            kolizijaCetvrtaTraka = false, kolizijaPetaTraka = false;
+
+    if(lineTaken[0]) {
+        if(ui->prva_traka->y() > ui->frejm->height()) {
+            ui->prva_traka->move(ui->prva_traka->x(), -ui->prva_traka->height());
+            lineTaken[0] = false;
         }
 
-        int x = missiles[i]->x();
-        int y = missiles[i]->y();
+        ui->prva_traka->move(ui->prva_traka->x(), ui->prva_traka->y()+2);
 
-        qDebug()  << "Pusi kurac ko te jebe, moze srpske i bez tebe!";
+        if(positionH == -2) {
+            int gliderY = ui->label_glider->y();
+            int gliderW = ui->label_glider->width();
+            int raketaY = ui->prva_traka->y();
+            int raketaH = ui->prva_traka->width();
+            kolizijaPrvaTraka = (gliderY < raketaH + raketaY && gliderY + gliderW > raketaH + raketaY)
+                    ||  (gliderY < raketaY && gliderY + gliderW > raketaY);
+        }
+    }
+    if(lineTaken[1]) {
+        if(ui->druga_traka->y() > ui->frejm->height()) {
+            ui->druga_traka->move(ui->druga_traka->x(), -ui->druga_traka->height());
+            lineTaken[1] = false;
+        }
 
-        missiles[i]->move(x, y+2);
+        ui->druga_traka->move(ui->druga_traka->x(), ui->druga_traka->y()+2);
 
+        if(positionH == -1) {
+            int gliderY = ui->label_glider->y();
+            int gliderW = ui->label_glider->height();
+            int raketaY = ui->druga_traka->y();
+            int raketaH = ui->druga_traka->height();
+            kolizijaDrugaTraka = (gliderY < raketaH + raketaY && gliderY + gliderW > raketaH + raketaY)
+                    ||  (gliderY < raketaY && gliderY + gliderW > raketaY);
+        }
+    }
+    if(lineTaken[2]) {
+        if(ui->treca_traka->y() > ui->frejm->height()) {
+            ui->treca_traka->move(ui->treca_traka->x(), -ui->treca_traka->height());
+            lineTaken[2] = false;
+        }
+
+        ui->treca_traka->move(ui->treca_traka->x(), ui->treca_traka->y()+2);
+
+        if(positionH == 0) {
+            int gliderY = ui->label_glider->y();
+            int gliderH = ui->label_glider->height();
+            int raketaY = ui->treca_traka->y();
+            int raketaH = ui->treca_traka->height();
+            kolizijaTrecaTraka = (gliderY < raketaH + raketaY && gliderY + gliderH > raketaH + raketaY)
+                    ||  (gliderY < raketaY && gliderY + gliderH > raketaY);
+        }
+    }
+    if(lineTaken[3]) {
+        if(ui->cetvrta_traka->y() > ui->frejm->height()) {
+            ui->cetvrta_traka->move(ui->cetvrta_traka->x(), -ui->cetvrta_traka->height());
+            lineTaken[3] = false;
+        }
+
+        ui->cetvrta_traka->move(ui->cetvrta_traka->x(), ui->cetvrta_traka->y()+2);
+
+        if(positionH == 1) {
+            int gliderY = ui->label_glider->y();
+            int gliderH = ui->label_glider->height();
+            int raketaY = ui->cetvrta_traka->y();
+            int raketaH = ui->cetvrta_traka->height();
+            kolizijaCetvrtaTraka = (gliderY < raketaH + raketaY && gliderY + gliderH > raketaH + raketaY)
+                    ||  (gliderY < raketaY && gliderY + gliderH > raketaY);
+        }
+    }
+    if(lineTaken[4]) {
+        if(ui->peta_traka->y() > ui->frejm->height()) {
+            ui->peta_traka->move(ui->peta_traka->x(), -ui->peta_traka->height());
+            lineTaken[4] = false;
+        }
+
+        ui->peta_traka->move(ui->peta_traka->x(), ui->peta_traka->y()+2);
+
+        if(positionH == 2) {
+            int gliderY = ui->label_glider->y();
+            int gliderH = ui->label_glider->height();
+            int raketaY = ui->peta_traka->y();
+            int raketaH = ui->peta_traka->width();
+            kolizijaPetaTraka = (gliderY < raketaH + raketaY && gliderY + gliderH > raketaH + raketaY)
+                    ||  (gliderY < raketaY && gliderY + gliderH > raketaY);
+        }
     }
 
+    if(kolizijaPrvaTraka || kolizijaDrugaTraka ||
+            kolizijaTrecaTraka || kolizijaCetvrtaTraka || kolizijaPetaTraka) {
+        gameOver();
+        qDebug() << kolizijaPrvaTraka << kolizijaDrugaTraka <<
+                   kolizijaTrecaTraka << kolizijaCetvrtaTraka << kolizijaPetaTraka;
+    }
+
+
     nextMissile--;
+}
+
+void SpaceGlider::gameOver() {
+    qDebug() << "You died motherfucker";
+    isPaused = true;
+    timer->stop();
 }
 
 void SpaceGlider::on_pushButton_pause_clicked()
@@ -171,22 +257,51 @@ void SpaceGlider::goBackward() {
     }
 }
 
-QLabel* SpaceGlider::fireMissile() {
-    QLabel *missile_label = new QLabel(this);
-    //TODO: srediti nevidljive rakete
-    missile_label->setParent(ui->frejm);
+void SpaceGlider::fireMissile() {
+    int i = qrand() % 5;
 
-    int height = ui->frejm->height()/6;
-    int width = height/3;
-    int factor = qrand() % 5;
-    int x = ui->frejm->height()/5 * factor;
-    int y = -height;
+    while(lineTaken[i])
+        i = qrand() % 5;
 
-    qDebug() << "Ispaljenja raketa: " << x << " " << y << " " << width << " " << height;
+    lineTaken[i] = true;
 
-    missile_label->setGeometry(x, y, width, height);
-    QPixmap pix(":/resource/img/tip_1.png");
-    missile_label->setPixmap(pix);
+    int frameWidth = ui->frejm->width();
+    int x = frameWidth/5;
+    int y = 0;
+    int missileWidth = frameWidth/20;
+    int missileHeight = missileWidth*3;
 
-    return missile_label;
+    QString tip = ":/resource/img/tip_"+ QString::number(i) +".png";
+
+    QPixmap pix(tip);
+
+    switch(i) {
+    case 0:
+        ui->prva_traka->setGeometry(x*0+50, y, missileWidth, missileHeight);
+        ui->prva_traka->setPixmap(pix);
+        ui->prva_traka->setScaledContents(true);
+        break;
+    case 1:
+        ui->druga_traka->setGeometry(x*1+50, y, missileWidth, missileHeight);
+        ui->druga_traka->setPixmap(pix);
+        ui->druga_traka->setScaledContents(true);
+        break;
+    case 2:
+        ui->treca_traka->setGeometry(x*2+50, y, missileWidth, missileHeight);
+        ui->treca_traka->setPixmap(pix);
+        ui->treca_traka->setScaledContents(true);
+        break;
+    case 3:
+        ui->cetvrta_traka->setGeometry(x*3+50, y, missileWidth, missileHeight);
+        ui->cetvrta_traka->setPixmap(pix);
+        ui->cetvrta_traka->setScaledContents(true);
+        break;
+    case 4:
+        ui->peta_traka->setGeometry(x*4+50, y, missileWidth, missileHeight);
+        ui->peta_traka->setPixmap(pix);
+        ui->peta_traka->setScaledContents(true);
+        break;
+    default:
+        break;
+    }
 }

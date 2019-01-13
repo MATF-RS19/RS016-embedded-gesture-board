@@ -24,9 +24,11 @@ public:
     void goForward();
     void goBackward();
 
-    QLabel* fireMissile();
+    void fireMissile();
 
     void create_label();
+
+    void gameOver();
 
 
 private slots:
@@ -51,7 +53,7 @@ private:
 
     int nextMissile;
 
-    QVector<QLabel*> missiles;
+    QVector<bool> lineTaken=  {false, false, false, false, false};
 };
 
 #endif // SPACEGLIDER_H
