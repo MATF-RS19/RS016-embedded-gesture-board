@@ -30,7 +30,7 @@ PC deo : Implementirane su 3 mini aplikacije koje se kontrolišu pokretima nad G
 [Mikromedia za STM32F4](https://www.mikroe.com/mikromedia-7-stm32f4) <br/>
 [UART klik](https://www.mikroe.com/usb-uart-click) <br/>
 [Mikroprog za STM32F4 ](https://www.mikroe.com/mikroprog-stm32) <br/>
-[Shield za mikromedia plocu] (https://www.mikroe.com/mikromedia-3-mikrobus-shield) <br/>
+[mikroBUS Shield za mikromedia](https://www.mikroe.com/mikromedia-3-mikrobus-shield) <br/>
 
 ## Potrebno instalirati:
 * [GNU ARM ECLIPSE](https://gnu-mcu-eclipse.github.io/toolchain/arm/install/) - svi potrebni paketi i alati za rad u eclipsu sa STM32F4 kontrolerima 
