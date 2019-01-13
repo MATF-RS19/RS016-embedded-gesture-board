@@ -7,8 +7,7 @@
 #include "cGest.h"
 #include "cUart.h"
 
-// Sample pragmas to cope with warnings. Please note the related line at
-// the end of this function, used to pop the compiler diagnostics status.
+// automatski generisano, za handlovanje warninga
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 #pragma GCC diagnostic ignored "-Wmissing-declarations"

@@ -39,7 +39,6 @@ cGest::cGest() {
 
 	//memset(&mGesture, 0, sizeof(mGesture));
 
-
 	touchEvent = 0;
 	touchEventOld = 0;
 	gestEvent = 0;
@@ -134,30 +133,22 @@ void cGest::GestIC_Write(uint8_t msgLen) {
 	i2cApi_write(rawData, msgLen);
 }
 
-
-/* Parameters:
-0 - Force Calibration
-1 - Enter Deep Sleep 1
-2 - Enter Deep Sleep 2
-*/
 // http://ww1.microchip.com/downloads/en/DeviceDoc/40001718E.pdf
 // strana 33
 
 // forces a trigger - triggere gesture da uradi jedu od 3 stvari
-// 1. re-kalibracija
-// 2. ulazak u deep sleep mod 1
-// 3. ulazak u deep sleep mod 2
+// 0 re-kalibracija
+// 1 ulazak u deep sleep mod 1
+// 2 ulazak u deep sleep mod 2
 char cGest::setTrigger(char PARAM) {
-  ////////////////////////////////////////
   //             header
-  ////////////////////////////////////////
+ ]
   rawData[0] = 0x10; //raw data size
   rawData[1] = 0x00; //flags
   rawData[2] = 0x00; //seq
   rawData[3] = 0xA2; //ID
-  ////////////////////////////////////////
+
   //             payload
-  ////////////////////////////////////////
   rawData[4] = 0x00; //Parameter ID
   rawData[5] = 0x10;
   //reserved
@@ -219,9 +210,6 @@ void cGest::setEnableAllGestures() {
   GestIC_Write(0x10);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                           REQUEST FW_VERSION_INFO FROM MGC3130
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // http://ww1.microchip.com/downloads/en/DeviceDoc/40001718E.pdf
 // strana 22

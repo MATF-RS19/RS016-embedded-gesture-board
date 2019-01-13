@@ -3,9 +3,9 @@
 #include <stdint.h>
 #include "i2c.h"
 
-I2C_HandleTypeDef I2cHandle;  // adle za i2c koi koristi HAL biblioteka za i2c
+I2C_HandleTypeDef I2cHandle;  // handle za i2c koi koristi HAL biblioteka za i2c
 
-// handler funkcia koja se poziva u HHHHAl biblioteci kad pozovemo HAL_I2c_init
+// handler funkcia koja se poziva u HAl biblioteci kad pozovemo HAL_I2c_init
 void HAL_I2C_MspInit(I2C_HandleTypeDef *hi2c) {
 
 	// inicijalizacija i2c pinova
